@@ -3,9 +3,9 @@
 ## for practice React, React hooks 
 
 This project used React@18 
-## using MIT License product, OPEN API
+## using MIT License products, OPEN API
 
-background- from NASA official website 
+background- from NASA's official website 
 
 ## with Three.js for globe module
 
