@@ -20,3 +20,23 @@
     transform: translate(-50%, -50%) rotate(360deg);
   }
 }
+
+.earth-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+}
