@@ -12,7 +12,7 @@ background- from NASA's official website
 -- update as soon as possible 
 
 ## have to protect against injection attacks, file upload vulnerabilities, etc..
-
-have to be fixed to file extension 
+ 
+have to be fixed file extension 
 
 
