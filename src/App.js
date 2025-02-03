@@ -17,7 +17,7 @@ function App() {
       <Background />
       <Earth />
 
-      {showLogin && <LoginModal />}
+      {/* {showLogin && <LoginModal />} */}
     </div>
   );
 }

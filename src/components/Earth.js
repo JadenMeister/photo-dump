@@ -10,8 +10,8 @@ const Earth = () => {
     const h = window.innerHeight;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 10);
-    camera.position.z = 2;
+    const camera = new THREE.PerspectiveCamera(80, w / h, 0.1, 10);
+    camera.position.z = 2.5;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(w, h);
@@ -22,13 +22,16 @@ const Earth = () => {
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.03;
+    controls.dampingFactor = 0.5;
     controls.enableZoom = false;
 
-    const geo = new THREE.IcosahedronGeometry(1.0, 2);
+    const geo = new THREE.SphereGeometry(1, 64, 64);
+
+    const textureLoader = new THREE.TextureLoader();
+    const earthTexture = textureLoader.load("/images/earthTexture.jpg");
+
     const mat = new THREE.MeshStandardMaterial({
-      color: 0x3266a8,
-      flatShading: true,
+      map: earthTexture // 지구 텍스처 적용
     });
 
     const mesh = new THREE.Mesh(geo, mat);
@@ -36,25 +39,25 @@ const Earth = () => {
 
     const wireMat = new THREE.MeshBasicMaterial({
       color: 0xffffff,
-      wireframe: true,
+      wireframe: true
     });
     const wireMesh = new THREE.Mesh(geo, wireMat);
-    wireMesh.scale.setScalar(1.001);
-    mesh.add(wireMesh);
+    wireMesh.scale.setScalar(1.0);
 
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000);
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff);
     scene.add(hemiLight);
 
     function animate(t = 0) {
-      requestAnimationFrame(animate);
-      mesh.rotation.y += 0.001;
-      renderer.render(scene, camera);
+      requestAnimationFrame(animate); // 애니메이션이 부드럽게 보여지도록
+      mesh.rotation.y = t * 0.0001; // 매 프레임마다 y축으로 회전
+      controls.update();
+      renderer.render(scene, camera); //반복 호출 (애니메이션)
     }
     animate();
-
     return () => {
-      if (mountRef.current) {
-        mountRef.current.removeChild(renderer.domElement);
+      const currentRef = mountRef.current;
+      if (currentRef && currentRef.contains(renderer.domElement)) {
+        currentRef.removeChild(renderer.domElement);
       }
     };
   }, []);
