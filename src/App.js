@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Background from "./components/Background";
 import LoginModal from "./components/LoginModal";
 import Earth from "./components/Earth";
+
 import "./App.css";
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
       <Background />
       <Earth />
 
-      {/* {showLogin && <LoginModal />} */}
+      {showLogin && <LoginModal />}
     </div>
   );
 }
