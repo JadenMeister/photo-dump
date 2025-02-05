@@ -12,6 +12,10 @@ const Earth = () => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(80, w / h, 0.1, 10);
     camera.position.z = 2.5;
+    //  카메라의 x, y, z 좌표
+    camera.position.set(1, 2, 1);
+    // 카메라가 바라보는 지점의 x, y, z 좌표
+    camera.lookAt(2, 3, 3);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(w, h);

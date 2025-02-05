@@ -5,7 +5,9 @@
   width: 100vw;
   height: 100vh;
   background-color: black;
-  background-image: url("https://www.solarsystemscope.com/textures/download/8k_stars_milky_way.jpg");
+
+  /* jpg로 바로 받아오니 로딩이 느려 다운 후 webp로 변환, */
+  background-image: url("../../public/images/spaceBackground.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
