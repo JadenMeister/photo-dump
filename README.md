@@ -11,8 +11,13 @@ background- from NASA's official website
 
 -- update as soon as possible 
 
-## have to protect against injection attacks, file upload vulnerabilities, etc..
+## todo
  
-have to be fixed file extension 
+- Login function 
+- user database build
+- against injection, xss, file upload attacks 
+- fixed file extension
+- transition display - to world map
+  
 
 
