@@ -15,7 +15,7 @@
 .modal {
   background: white;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 40px;
   width: 20vw;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
