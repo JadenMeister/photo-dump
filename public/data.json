@@ -1,0 +1,53 @@
+{
+  "type": "Topology",
+  "arcs": [...],
+  "objects": {
+    "continent": {
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+          "type": "MultiPolygon",
+          "properties": {
+            "continent": "North America"
+          },
+          "arcs": [[0], [1], [2], [3]]
+        },
+        {
+          "type": "MultiPolygon",
+          "properties": {
+            "continent": "South America"
+          },
+          "arcs": [[4], [5]]
+        },
+        {
+          "type": "MultiPolygon",
+          "properties": {
+            "continent": "Europe"
+          },
+          "arcs": [[6], [7], [8]]
+        },
+        {
+          "type": "MultiPolygon",
+          "properties": {
+            "continent": "Africa"
+          },
+          "arcs": [[9], [10]]
+        },
+        {
+          "type": "MultiPolygon",
+          "properties": {
+            "continent": "Asia"
+          },
+          "arcs": [[11], [12], [13]]
+        },
+        {
+          "type": "MultiPolygon",
+          "properties": {
+            "continent": "Oceania"
+          },
+          "arcs": [[14], [15], [16]]
+        }
+      ]
+    }
+  }
+}
