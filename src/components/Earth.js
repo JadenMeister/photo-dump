@@ -35,7 +35,7 @@ const Earth = () => {
     const earthTexture = textureLoader.load("/images/earthTexture.jpg");
 
     const mat = new THREE.MeshStandardMaterial({
-      map: earthTexture // 지구 텍스처 적용
+      map: earthTexture, // 지구 텍스처 적용
     });
 
     const mesh = new THREE.Mesh(geo, mat);
@@ -43,7 +43,7 @@ const Earth = () => {
 
     const wireMat = new THREE.MeshBasicMaterial({
       color: 0xffffff,
-      wireframe: true
+      wireframe: true,
     });
     const wireMesh = new THREE.Mesh(geo, wireMat);
     wireMesh.scale.setScalar(1.0);
