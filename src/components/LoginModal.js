@@ -5,22 +5,23 @@ import "../styles/LoginModal.css";
 function LoginModal() {
   const [formData, setFormData] = useState({
     username: "",
-    password: "",
+    password: ""
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
       const response = await fetch("http://localhost:5000/api/auth/login", {
+        credentials: "include",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       });
 
       const data = await response.json();
@@ -42,11 +43,12 @@ function LoginModal() {
     setError("");
     try {
       const response = await fetch("http://localhost:5000/api/auth/register", {
+        credentials: "include",
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       });
 
       const data = await response.json();
@@ -75,7 +77,7 @@ function LoginModal() {
               type="text"
               placeholder="Username"
               value={formData.username}
-              onChange={e =>
+              onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
               }
             />
@@ -86,7 +88,7 @@ function LoginModal() {
               type="password"
               placeholder="Password"
               value={formData.password}
-              onChange={e =>
+              onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
             />
