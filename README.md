@@ -9,7 +9,7 @@ background- from NASA's official website
 
 ## with Three.js for globe module
 
--- update as soon as possible 
+
 
 ## todo
  
