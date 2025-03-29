@@ -27,7 +27,6 @@ function App() {
           element={
             <div className="app">
               <SpaceBackground/>
-
               {showLogin && <LoginModal />}
             </div>
           }
