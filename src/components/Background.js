@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Earth from "../components/Earth";
 import "../styles/Background.css";
-import LoginModal from "./LoginModal";
+import LoginModal from "./background/ui/LoginModal";
 
 let isCLicked = Boolean;
 

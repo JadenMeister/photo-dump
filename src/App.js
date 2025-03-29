@@ -5,17 +5,18 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Background from "./components/Background";
-import LoginModal from "./components/LoginModal";
-import Earth from "./components/Earth";
+
+import LoginModal from "./components/background/ui/LoginModal";
+
 import WorldMap from "./components/WorldMap";
+import SpaceBackground from "./components/background/SpaceBackground";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowLogin(true), 1000);
-    return () => clearTimeout(timer);
+    // const timer = setTimeout(() => setShowLogin(true), 1000);
+    // return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -25,8 +26,8 @@ function App() {
           path="/"
           element={
             <div className="app">
-              <Background />
-              <Earth />
+              <SpaceBackground/>
+
               {showLogin && <LoginModal />}
             </div>
           }

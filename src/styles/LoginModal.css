@@ -10,9 +10,11 @@
   justify-content: center;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+  z-index: 10;
 }
 
 .modal {
+  position: relative;
   background: white;
   padding: 20px;
   border-radius: 40px;
@@ -95,4 +97,12 @@ p {
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.close{
+    color: black;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
 }
