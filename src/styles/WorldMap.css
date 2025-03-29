@@ -63,3 +63,10 @@
 .upload-modal button:hover {
   background: #444;
 }
+
+.logoutBtn{
+  margin-top: 1rem;
+  align-items: center;
+  width: 30%;
+
+}

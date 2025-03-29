@@ -17,6 +17,17 @@ const WorldMap = () => {
   const [username, setUsername] = useState("");
   const Navigate = useNavigate() ;
 
+
+  function logout() {
+    fetch("http://localhost:8080/api/logout", {
+        method: "POST",
+        credentials: "include",
+    })
+      alert("로그아웃 되었습니다.");
+    Navigate("/");
+  }
+
+
   const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-50m.json";
 
   useEffect(() => {
@@ -38,7 +49,9 @@ const WorldMap = () => {
 
       <div className="welcome-message">
         <h2>환영합니다, {username}님!</h2>
-        <p>지도에서 원하는 대륙을 클릭하여 사진을 업로드하세요.</p>
+        <p>지도에서 원하는 나라를 클릭하여 사진을 업로드하세요.</p>
+
+          <button className="logoutBtn" onClick={() => {logout()} }>Logout</button>
       </div>
 
       <ComposableMap
@@ -66,13 +79,13 @@ const WorldMap = () => {
                       outline: "none",
                     },
                     hover: {
-                      fill: "#F53",
+                      fill: "#383a42",
                       stroke: "#FFFFFF",
                       strokeWidth: 0.5,
                       outline: "none",
                     },
                     pressed: {
-                      fill: "#E42",
+                      fill: "#383a42",
                       stroke: "#FFFFFF",
                       strokeWidth: 0.5,
                       outline: "none",
@@ -89,9 +102,10 @@ const WorldMap = () => {
 
       {selectedContinent && (
         <div className="upload-modal">
+            <div className="close" onClick={() => setSelectedContinent(null)}>x</div>
           <h3>{selectedContinent} 사진 업로드</h3>
           <input type="file" accept="image/*" />
-          <button onClick={() => setSelectedContinent(null)}>닫기</button>
+          <button>올리기</button>
         </div>
       )}
     </div>
