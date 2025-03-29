@@ -15,7 +15,7 @@ const Galaxies =({scene})=>{
         })
 
         const galaxyPositions = []
-        const galaxyCount = 10000
+        const galaxyCount = 0
 
         for (let i = 0; i < galaxyCount; i++) {
             const radius = 100 + Math.random() * 900
