@@ -5,10 +5,6 @@ const pool = require("../config/database");
 
 
 
-
-
-
-
 // 로그인 라우트에서 응답 형식 수정
 router.post("/", async (req, res) => {
   try {
