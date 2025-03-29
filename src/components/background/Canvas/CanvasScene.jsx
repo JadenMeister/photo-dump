@@ -9,49 +9,59 @@ import Galaxies from "../particies/Galaxies";
 const CanvasScene = () => {
     const mountRef = useRef(null)
     const sceneRef =  useRef(new THREE.Scene())
-    const currentRef = mountRef.current
-    const width = window.innerWidth
-    const height = window.innerHeight
-
+    const rendererRef = useRef(null)
+    const cameraRef = useRef(null)
 
     useEffect(() => {
-        const handelResize = () => {
+        const currentRef = mountRef.current;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-            camera.aspect = width / height
-            camera.updateProjectionMatrix()
-            renderer.setSize(width, height)
+
+        //카메라 초기화
+        cameraRef.current = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+        cameraRef.current.position.z = 5;
+
+        // 랜더러 초기화
+        rendererRef.current = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true,
+        });
+        rendererRef.current.setSize(width, height)
+        rendererRef.current.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+
+        currentRef.appendChild(rendererRef.current.domElement);
+
+
+        // 애니메이션 추가
+        const animate = () =>{
+            requestAnimationFrame(animate)
+            sceneRef.current.rotation.y += 0.0005
+            rendererRef.current.render(sceneRef.current, cameraRef.current)
         }
+        animate()
+
+        const handelResize = () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            cameraRef.aspect = width / height;
+            cameraRef.current.updateProjectionMatrix();
+            rendererRef.current.setSize(width, height);
+        };
 
         window.addEventListener("resize", handelResize)
 
         return () =>{
             window.removeEventListener("resize", handelResize)
-            currentRef.removeChild(renderer.domElement)
-            renderer.dispose()
+            if(currentRef && currentRef.contains(rendererRef.current.domElement)){
+                currentRef.removeChild(rendererRef.current.domElement)
+            }
+            if (rendererRef.current) {
+                rendererRef.current.dispose();
+            }
 
-        }
-
-
-        // Scene, Camera, Renderer 설정
-
-        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
-        camera.position.z = 5
-
-        const renderer = new THREE.WebGLRenderer({
-            antialias: true,
-            alpha: true,
-
-        })
-
-        renderer.setSize(width, height)
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-        currentRef.appendChild(renderer.domElement)
-
-        const animate = () =>{
-            requestAnimationFrame(animate)
-            sceneRef.current.rotation.y += 0.0005
-            renderer.render(sceneRef.current, camera)
         }
 
 
@@ -65,7 +75,7 @@ const CanvasScene = () => {
         <>
         <div className="canvas-container" ref={mountRef}></div>
         <Stars scene={sceneRef.current} />
-        <BlueGlow scene={sceneRef.current} />
+        {/*<BlueGlow scene={sceneRef.current} />*/}
         <Galaxies scene={sceneRef.current} />
         </>
     )

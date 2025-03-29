@@ -1,5 +1,13 @@
 import "../../../styles/Content.css"
+import React, { useState } from "react";
+
+
+
+
+
 const Content = ({ onExploreClick }) => {
+    const [isLogin, setIsLogin] = useState(false);
+
     return (
         <div className="space-content">
             <div className="space-title-container">
@@ -7,8 +15,10 @@ const Content = ({ onExploreClick }) => {
                 <p className="space-subtitle">
                     Share your travel memories and connect with explorers around the world
                 </p>
-                <button className="space-cta-button" onClick={onExploreClick}>
-                    Start Exploring
+
+
+                <button className="space-cta-button" onClick={ onExploreClick} >
+                    { isLogin ? "Go to your map" : "Start Explore" }
                 </button>
             </div>
         </div>
