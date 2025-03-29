@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,  } from "react";
+import {Link, Links, useNavigate} from "react-router-dom";
 import {
   ComposableMap,
   Geographies,
@@ -8,9 +9,13 @@ import {
 import { Tooltip } from "react-tooltip";
 import "../styles/WorldMap.css";
 
+
+
 const WorldMap = () => {
   const [selectedContinent, setSelectedContinent] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState("");
+  const Navigate = useNavigate() ;
 
   const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-50m.json";
 
@@ -19,12 +24,18 @@ const WorldMap = () => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
       setUsername(storedUsername);
+        setIsLogin(true);
+    } else{
+        alert("잘못된 접근입니다.");
+        Navigate("/");
     }
   }, []);
 
+
+
   return (
     <div className="world-map-container">
-      {/* 환영 메시지 추가 */}
+
       <div className="welcome-message">
         <h2>환영합니다, {username}님!</h2>
         <p>지도에서 원하는 대륙을 클릭하여 사진을 업로드하세요.</p>

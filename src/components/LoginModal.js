@@ -15,7 +15,7 @@ function LoginModal() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch("http://localhost:8080/api/login", {
         credentials: "include",
         method: "POST",
         headers: {
@@ -27,7 +27,7 @@ function LoginModal() {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token", data.token);
+        // localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         navigate("/map");
       } else {
@@ -42,7 +42,7 @@ function LoginModal() {
   const handleRegister = async () => {
     setError("");
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
+      const response = await fetch("http://localhost:8080/api/auth/register", {
         credentials: "include",
         method: "POST",
         headers: {
