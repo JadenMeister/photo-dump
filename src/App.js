@@ -14,7 +14,7 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowLogin(true), 10000);
+    const timer = setTimeout(() => setShowLogin(true), 1000);
     return () => clearTimeout(timer);
   }, []);
 

@@ -1,23 +1,40 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const session = require("express-session");
 
 const app = express();
+const loginRouter = require("./routes/login");
+const registerRouter = require("./routes/register");
 
 // 미들웨어
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:3000",
     credentials: true,
     optionsSuccessStatus: 200
+  })
+);
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false,
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 // 1시간
+    }
   })
 );
 
 app.use(express.json());
 
 // 라우트
-app.use("/api/auth", require("./routes/auth"));
+app.use("/api/login", loginRouter);
+app.use("/api/register", registerRouter);
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () =>
