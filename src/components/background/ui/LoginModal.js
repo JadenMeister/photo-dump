@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/LoginModal.css";
+import "../../../styles/LoginModal.css";
 
 function LoginModal() {
   const [formData, setFormData] = useState({
@@ -68,6 +68,7 @@ function LoginModal() {
 
   return (
     <div className="modal-overlay">
+      <div className="close">x</div>
       <div className="modal">
         <p>Login</p>
         <form onSubmit={handleSubmit}>

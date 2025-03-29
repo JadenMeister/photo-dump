@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "../styles/Background.css";
-import LoginModal from "./LoginModal";
+import LoginModal from "./background/ui/LoginModal";
 
 const Background = () => {
   const [showLogin, setShowLogin] = useState(false);
