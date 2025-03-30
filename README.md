@@ -1,23 +1,30 @@
 # Personal project 
 
-## for practice React, React hooks 
+## for practice React, express, React hooks 
 
 This project used React@18 
-## using MIT License products, OPEN API
+## using MIT License products, API
 
-background- from NASA's official website 
 
-## with Three.js for globe module
+## with Three.js for globe module, background
 
 
 
 ## todo
  
-- Login function 
-- user database build
+- register function
 - against injection, xss, file upload attacks 
 - fixed file extension
 - transition display - to world map
+
+
+
+## completed
+- session storage for user login
+- Login/out function
+- user database build
+- background with Three.js
+- user login modal 
   
 
 
