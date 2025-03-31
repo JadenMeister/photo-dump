@@ -4,7 +4,7 @@ import CanvasScene from "./Canvas/CanvasScene";
 import Overlay from "./ui/Overlay";
 import Content from "./ui/Content";
 import LoginModal from "./ui/LoginModal";
-import Earth from "../Earth";
+import Earth from "./Canvas/Earth";
 import "../../styles/SpaceBack.css"
 
 

@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/LoginModal.css";
 
-function LoginModal() {
+function LoginModal({ onClose }) {
+
   const [formData, setFormData] = useState({
     username: "",
     password: ""
   });
   const [error, setError] = useState("");
+  const background = useRef(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if(!formData.username || !formData.password){
+      alert("올바른 값을 입력해주세요")
+
+    }
 
     try {
       const response = await fetch("http://localhost:8080/api/login", {
@@ -26,9 +33,9 @@ function LoginModal() {
 
       const data = await response.json();
 
+
       if (response.ok) {
-        // localStorage.setItem("token", data.token);
-        localStorage.setItem("username", data.username);
+        sessionStorage.setItem("username", data.username);
         navigate("/map");
       } else {
         setError(data.msg || "로그인에 실패했습니다.");
@@ -41,8 +48,11 @@ function LoginModal() {
 
   const handleRegister = async () => {
     setError("");
+    if(!formData.username || !formData.password){
+      alert("올바른 값을 입력해주세요")
+    }
     try {
-      const response = await fetch("http://localhost:8080/api/auth/register", {
+      const response = await fetch("http://localhost:8080/api/register", {
         credentials: "include",
         method: "POST",
         headers: {
@@ -52,60 +62,70 @@ function LoginModal() {
       });
 
       const data = await response.json();
-
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("username", formData.username);
-        navigate("/map");
-      } else {
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("username", formData.username);
+        alert("가입돠었습니다.")
+        navigate("/")
+
+      }
+      else {
         setError(data.msg || "회원가입에 실패했습니다.");
       }
+
+
     } catch (error) {
       console.error("Register error:", error);
       setError("서버 연결에 실패했습니다.");
     }
   };
 
+  const backgroundClick = (e) =>{
+    if(e.target.classList.contains("modal-overlay")){
+        onClose(e.target);
+    }
+  }
+
   return (
-    <div className="modal-overlay">
-      <div className="close">x</div>
-      <div className="modal">
-        <p>Login</p>
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label>Username</label>
-            <input
-              type="text"
-              placeholder="Username"
-              value={formData.username}
-              onChange={(e) =>
-                setFormData({ ...formData, username: e.target.value })
-              }
-            />
-          </div>
-          <div className="input-group">
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-            />
-          </div>
-          {error && (
-            <div className="error" style={{ display: "block" }}>
-              {error}
+      <div className="modal-overlay" onClick={backgroundClick}>
+        <div className="close">x</div>
+        <div className="modal">
+          <p>Login</p>
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label>Username</label>
+              <input
+                  type="text"
+                  placeholder="Username"
+                  value={formData.username}
+                  onChange={(e) =>
+                      setFormData({ ...formData, username: e.target.value })
+                  }
+              />
             </div>
-          )}
-          <button type="submit">Login</button>
-          <button type="button" onClick={handleRegister}>
-            Register
-          </button>
-        </form>
+            <div className="input-group">
+              <label>Password</label>
+              <input
+                  type="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                  }
+              />
+            </div>
+            {error && (
+                <div className="error" style={{ display: "block" }}>
+                  {error}
+                </div>
+            )}
+            <button type="submit" onClick={handleSubmit}>Login</button>
+            <button type="button" onClick={handleRegister}>
+              Register
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
   );
 }
 
