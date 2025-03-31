@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import "../../../styles/Canvas.css"
 import Stars from "../particies/Star/Stars";
-import BlueGlow from "../particies/BlueGlow";
 import Galaxies from "../particies/Galaxies";
+import Earth from "./Earth";
 
 
 const CanvasScene = () => {
@@ -38,6 +38,7 @@ const CanvasScene = () => {
         const animate = () =>{
             requestAnimationFrame(animate)
             sceneRef.current.rotation.y += 0.0005
+            // sceneRef.current.rotation.z += 0.0005
             rendererRef.current.render(sceneRef.current, cameraRef.current)
         }
         animate()
@@ -67,15 +68,12 @@ const CanvasScene = () => {
 
     }, []);
 
-    // const handleExploreClick = () => {
-    //     setShowLogin(true)
-    // }
+
 
     return (
         <>
         <div className="canvas-container" ref={mountRef}></div>
         <Stars scene={sceneRef.current} />
-        {/*<BlueGlow scene={sceneRef.current} />*/}
         <Galaxies scene={sceneRef.current} />
         </>
     )

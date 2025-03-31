@@ -10,7 +10,7 @@ const Stars = ({scene}) => {
         const starGeometry = new THREE.BufferGeometry();
         const starMaterial = new THREE.PointsMaterial({
             color: 0xffffff,
-            size: 0.1,
+            size: 0.3,
             transparent: true,
         });
 
@@ -18,7 +18,7 @@ const Stars = ({scene}) => {
         for(let i = 0; i < 15000; i++){
             const x = (Math.random() - 0.5) * 2000;
             const y = (Math.random() - 0.5) * 2000;
-            const z = -Math.random() * 2000;
+            const z = -Math.random() * 2000
             starVertices.push(x, y, z);
         }
 
