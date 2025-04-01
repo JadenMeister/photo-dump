@@ -8,7 +8,7 @@ import {
 
 import LoginModal from "./components/background/ui/LoginModal";
 
-import WorldMap from "./components/WorldMap";
+import WorldMap from "./components/mapUtil/WorldMap";
 import SpaceBackground from "./components/background/SpaceBackground";
 
 function App() {
