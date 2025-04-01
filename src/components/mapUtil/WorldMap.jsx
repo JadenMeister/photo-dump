@@ -7,7 +7,8 @@ import {
   ZoomableGroup,
 } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
-import "../styles/WorldMap.css";
+import "../../styles/WorldMap.css";
+import {UploadTooltip} from "./UploadTooltip";
 
 
 
@@ -31,8 +32,8 @@ const WorldMap = () => {
   const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-50m.json";
 
   useEffect(() => {
-    // localStorage에서 사용자 이름 가져오기
-    const storedUsername = localStorage.getItem("username");
+    // session Storage에서 사용자 이름 가져오기
+    const storedUsername = sessionStorage.getItem("username");
     if (storedUsername) {
       setUsername(storedUsername);
         setIsLogin(true);
@@ -83,6 +84,7 @@ const WorldMap = () => {
                       stroke: "#FFFFFF",
                       strokeWidth: 0.5,
                       outline: "none",
+                        cursor: "pointer"
                     },
                     pressed: {
                       fill: "#383a42",
@@ -98,15 +100,13 @@ const WorldMap = () => {
         </ZoomableGroup>
       </ComposableMap>
 
-      <Tooltip id="continent-tooltip" />
 
+        <Tooltip id="continent-tooltip" />
       {selectedContinent && (
-        <div className="upload-modal">
-            <div className="close" onClick={() => setSelectedContinent(null)}>x</div>
-          <h3>{selectedContinent} 사진 업로드</h3>
-          <input type="file" accept="image/*" />
-          <button>올리기</button>
-        </div>
+          <UploadTooltip
+              selectedContinent={selectedContinent}
+              setSelectedContinent={setSelectedContinent}
+          />
       )}
     </div>
   );
