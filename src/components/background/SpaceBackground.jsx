@@ -17,10 +17,10 @@ const SpaceBackground = () => {
     return(
         <div className="space-container">
             <CanvasScene/>
-            <Earth/>
             <Overlay/>
             <Content onExploreClick={()=> setShowLogin(true)}/>
             {showLogin && <LoginModal onClose={()=>setShowLogin(false)}/>}
+            <Earth/>
         </div>
     )
 }

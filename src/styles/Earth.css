@@ -8,7 +8,7 @@
 }
 
 .earth-container {
-  position: fixed;
+  position: relative;
   width: 100vw;
   height: 100vh;
   background: black;
@@ -17,6 +17,7 @@
   justify-content: center;
   opacity: 0;
   transition: opacity 1s ease-in-out;
+  z-index: 10;
 }
 
 .fade-in {
