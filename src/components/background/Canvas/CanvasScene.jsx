@@ -18,6 +18,7 @@ const CanvasScene = () => {
         const height = window.innerHeight;
 
 
+
         //카메라 초기화
         cameraRef.current = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
         cameraRef.current.position.z = 5;
@@ -37,6 +38,7 @@ const CanvasScene = () => {
         // 애니메이션 추가
         const animate = () =>{
             requestAnimationFrame(animate)
+            sceneRef.current.rotation.x = 0
             sceneRef.current.rotation.y += 0.0005
             // sceneRef.current.rotation.z += 0.0005
             rendererRef.current.render(sceneRef.current, cameraRef.current)
@@ -75,6 +77,7 @@ const CanvasScene = () => {
         <div className="canvas-container" ref={mountRef}></div>
         <Stars scene={sceneRef.current} />
         <Galaxies scene={sceneRef.current} />
+            <Earth scene={sceneRef.current}/>
         </>
     )
 
