@@ -34,7 +34,6 @@ const Earth = ({ scene }) => {
 
 
 
-
     return () => {
       scene.remove(mesh);
       scene.remove(hemiLight);
