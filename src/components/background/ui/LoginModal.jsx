@@ -88,7 +88,7 @@ function LoginModal({ onClose }) {
 
   return (
       <div className="modal-overlay" onClick={backgroundClick}>
-        <div className="close">x</div>
+        <div className="close" onClick={onClose}>x</div>
         <div className="modal">
           <p>Login</p>
           <form onSubmit={handleSubmit}>
