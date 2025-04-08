@@ -13,7 +13,7 @@ import {UploadTooltip} from "./UploadTooltip";
 
 
 const WorldMap = () => {
-  const [selectedContinent, setSelectedContinent] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState("");
   const Navigate = useNavigate() ;
@@ -71,7 +71,13 @@ const WorldMap = () => {
                   geography={geo}
                   data-tooltip-id="continent-tooltip"
                   data-tooltip-content={geo.properties.name}
-                  onClick={() => setSelectedContinent(geo.properties.name)}
+                  onClick={() => {
+                      if(selectedCountry) return;
+                      const countryName = geo.properties.name;
+                      setSelectedCountry(countryName);
+                      console.log("나라 클릭됨:", countryName);
+
+                  }}
                   style={{
                     default: {
                       fill: "#D6D6DA",
@@ -102,10 +108,10 @@ const WorldMap = () => {
 
 
         <Tooltip id="continent-tooltip" />
-      {selectedContinent && (
+      {selectedCountry && (
           <UploadTooltip
-              selectedContinent={selectedContinent}
-              setSelectedContinent={setSelectedContinent}
+              selectedCountry={selectedCountry}
+              setSelectedCountry={setSelectedCountry}
           />
       )}
     </div>

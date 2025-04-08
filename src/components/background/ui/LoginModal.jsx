@@ -33,7 +33,6 @@ function LoginModal({ onClose }) {
 
       const data = await response.json();
 
-
       if (response.ok) {
         sessionStorage.setItem("username", data.username);
         navigate("/map");
@@ -73,7 +72,6 @@ function LoginModal({ onClose }) {
         setError(data.msg || "회원가입에 실패했습니다.");
       }
 
-
     } catch (error) {
       console.error("Register error:", error);
       setError("서버 연결에 실패했습니다.");
@@ -82,7 +80,7 @@ function LoginModal({ onClose }) {
 
   const backgroundClick = (e) =>{
     if(e.target.classList.contains("modal-overlay")){
-        onClose(e.target);
+      onClose(e.target);
     }
   }
 
