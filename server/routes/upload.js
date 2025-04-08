@@ -18,9 +18,6 @@ router.get("/", async(req,res )=>{
         res.status(200).json({msg: "업로드 성공"})
 
 
-
-
-
     }catch(error){
         console.error("에러", error)
         res.status(500).json({msg: "서버 오류"})
