@@ -39,7 +39,7 @@ const CanvasScene = () => {
         const animate = () =>{
             requestAnimationFrame(animate)
             sceneRef.current.rotation.x = 0
-            sceneRef.current.rotation.y += 0.0005
+            sceneRef.current.rotation.y = 0
             // sceneRef.current.rotation.z += 0.0005
             rendererRef.current.render(sceneRef.current, cameraRef.current)
         }
