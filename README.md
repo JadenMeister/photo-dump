@@ -42,20 +42,25 @@ PhotoDump은 사용자가 여행 중 촬영한 사진을 세계 지도 위에 �
 
 ---
 
-## 🧱 데이터베이스 구조 요약 (ERD)
+### users
 
-### users 테이블
-- id (PK): 사용자 ID
-- username: 로그인 ID
-- password: 암호화된 비밀번호
-- role: 'user' 또는 'admin'
+|필드명|	타입 |	설명 |
+|------|------|------|
+|id|	INT (PK)	|사용자 ID|
+|username|	VARCHAR	|아이디|
+|password|	VARCHAR	|암호화 저장|
+|role|	ENUM('user', 'admin')	|권한 구분|
+created_at|	DATETIME	|가입 시간|
 
-### photos 테이블
-- id (PK): 사진 ID
-- user_id (FK): 업로드 유저 ID
-- country_name: 업로드한 국가 이름
-- photo_data: base64 이미지 데이터
-- created_at: 업로드 일시
+### photos
+| 필드명 | 	타입      |	설명 |
+|-----|----------|------|
+|id	|INT (PK)	|사진 ID|
+|user_id|	INT (FK)	|업로더|
+|country_name|	VARCHAR	|나라 이름|
+|photo_data|	LONGTEXT	|base64 데이터|
+|created_at|	DATETIME	|업로드 시간|
+
 
 
 ---
