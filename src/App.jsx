@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import LoginModal from "./components/background/ui/LoginModal";
-
+import Earth from "./components/background/Canvas/Earth";
 import WorldMap from "./components/mapUtil/WorldMap";
 import SpaceBackground from "./components/background/SpaceBackground";
 
@@ -26,7 +26,10 @@ function App() {
           path="/"
           element={
             <div className="app">
+
               <SpaceBackground/>
+                <Earth/>
+
               {showLogin && <LoginModal />}
             </div>
           }
