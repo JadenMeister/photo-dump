@@ -11,14 +11,16 @@ PhotoDump은 사용자가 여행 중 촬영한 사진을 세계 지도 위에 �
 
 ## 🚀 기술 스택
 
-| 파트 | 기술 | 설명 |
-|------|------|------|
-| 프론트엔드 | React + Vite | 빠른 빌드 환경과 컴포넌트 기반 UI |
-| 백엔드 | Node.js + Express | RESTful API 설계 |
-| DB | MySQL + Docker + Workbench | 유저 / 사진 데이터 저장 |
-| 버전관리 | GitHub | 협업 및 버전 관리 |
-| 개발도구 | WebStorm | 생산성 높은 개발환경 |
-| 이미지 포맷 | `.webp` 예정 | 고효율 이미지 압축 포맷 |
+| 파트           | 기술                       | 설명                     |
+|----------------|--------------------------|------------------------|
+| 프론트엔드     | React+Vite, CSS4         | 빠른 빌드 환경과 컴포넌트 기반 UI   |
+| 3D 그래픽      | **three.js**  (학습용)      | 지구, 우주 배경 등 3D 모델링에 사용 |
+| 백엔드         | Node.js, Express         | RESTful API 설계         |
+| 인증           | express-session, bcrypt  | 로그인 인증 + 비밀번호 암호화 처리            |
+| 파일 업로드     | Multer   (예정)            | 이미지 업로드 처리 및 base64 변환           |
+| 데이터베이스   | MySQL, Docker, Workbench | 사용자, 사진 데이터 저장         |
+| 버전관리       | Git, GitHub              | 협업 및 버전 관리             |
+| 개발도구       | WebStorm                 | 생산성 높은 개발환경            |
 
 
 ---
@@ -35,13 +37,17 @@ PhotoDump은 사용자가 여행 중 촬영한 사진을 세계 지도 위에 �
 
 ---
 
-## 🔒 보안 사항
+## 🔒 핵심 보안 사항
 
-- SQL Injection 방지: Prepared Statements
-- 파일 업로드 보안: MIME 검사, 용량 제한, `.webp` 강제 변환
+- SQL Injection 방지: Prepared Statements (인풋 유효성 검증)
+- 파일 업로드 보안: MIME 검사, 용량 제한, 확장자 검사
 - 세션 보안: HttpOnly 쿠키, 인증 미들웨어
 - 관리자 인증 라우트 보호
 - 사용자 입력 XSS 방지
+- 비밀번호 해시 암호화: bcrypt 사용
+- HTTPS 적용 (배포 시)
+- CORS 설정 (배포 시)
+- CSRF 방지 (배포 시)
 
 ---
 
