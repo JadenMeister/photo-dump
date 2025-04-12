@@ -26,6 +26,7 @@ const Galaxies =({scene})=>{
 
             const x = radius * Math.cos(theta) * Math.cos(phi)
             const y = radius * Math.sin(phi)
+
             const z = radius * Math.sin(theta) * Math.cos(phi)
 
             galaxyPositions.push(x, y, z)
