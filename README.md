@@ -42,6 +42,15 @@ PhotoDump은 사용자가 여행 중 촬영한 사진을 세계 지도 위에 �
 
 ---
 
+### admin
+
+| 필드명 |타입 |설명 |
+|------|------|------|
+|id|	INT (PK)	|관리자 ID|
+|username|	VARCHAR	|아이디|
+|password|	VARCHAR	|암호화 저장|
+|role|	ENUM('admin')	|권한 구분|
+
 ### users
 
 |필드명|	타입 |	설명 |
@@ -53,13 +62,25 @@ PhotoDump은 사용자가 여행 중 촬영한 사진을 세계 지도 위에 �
 created_at|	DATETIME	|가입 시간|
 
 ### photos
-| 필드명 | 	타입      |	설명 |
-|-----|----------|------|
+| 필드명 | 	타입  |	설명 |
+|-----|------|------|
 |id	|INT (PK)	|사진 ID|
 |user_id|	INT (FK)	|업로더|
 |country_name|	VARCHAR	|나라 이름|
 |photo_data|	LONGTEXT	|base64 데이터|
+|travel_date|	DATE	|여행 날짜|
 |created_at|	DATETIME	|업로드 시간|
+
+
+### countries
+| 필드명          | 	타입       | 	설명   |
+|--------------|-----------|-------|
+| id	          | INT (PK)	 | 나라 ID |
+| name         | 	VARCHAR	 | 나라 이름 |
+| code         | 	VARCHAR	 | 나라 코드 |
+| region       | 	VARCHAR	 | 대륙 이름 |
+| centroid_lat | 	FLOAT	   | 위도    |
+| centroid_lon | 	FLOAT	   | 경도    |
 
 
 
