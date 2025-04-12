@@ -11,7 +11,9 @@ const Galaxies =({scene})=>{
             color: 0x8888ff,
             size: 0.2,
             transparent: true,
+            depthWrite:true,
             opacity: 0.6,
+
         })
 
         const galaxyPositions = []

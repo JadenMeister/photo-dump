@@ -28,7 +28,7 @@ const Earth = ({ scene }) => {
 
       requestAnimationFrame(animate); // 애니메이션이 부드럽게 보여지도록
       mesh.rotation.x = 0
-      mesh.rotation.y +=  0.003 // 매 프레임마다 y축으로 회전
+      mesh.rotation.y +=  0.003 // 매 프레임마다 y축으로 회전 (지구만)
 
 
     }
