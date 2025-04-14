@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/LoginModal.css";
+import {set} from "express/lib/application";
 
 function LoginModal({ onClose }) {
 
@@ -65,7 +66,9 @@ function LoginModal({ onClose }) {
         sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("username", formData.username);
         alert("가입돠었습니다.")
+        setFormData({ username:"", password: ""});
         navigate("/")
+
 
       }
       else {
