@@ -7,10 +7,10 @@ const BlueGlow = ({scene}) => {
         // 푸른 빛 효과 (간단한 파티클 시스템)
         const blueGlowGeometry = new THREE.BufferGeometry()
         const blueGlowMaterial = new THREE.PointsMaterial({
-            color: 0x0077ff,
+            color: 0o73777,
             size: 0.3,
             transparent: true,
-            opacity: 0.7,
+            opacity: 0.3,
             blending: THREE.AdditiveBlending,
         })
 

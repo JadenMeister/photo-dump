@@ -4,7 +4,6 @@ import CanvasScene from "./Canvas/CanvasScene";
 import Overlay from "./ui/Overlay";
 import Content from "./ui/Content";
 import LoginModal from "./ui/LoginModal";
-import Earth from "./Canvas/Earth";
 import "../../styles/SpaceBack.css"
 
 
@@ -20,7 +19,7 @@ const SpaceBackground = () => {
             <Overlay/>
             <Content onExploreClick={()=> setShowLogin(true)}/>
             {showLogin && <LoginModal onClose={()=>setShowLogin(false)}/>}
-            <Earth/>
+
         </div>
     )
 }

@@ -22,11 +22,13 @@ const Earth = ({ scene }) => {
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
     scene.add(hemiLight);
 
-    const animate = (t = 0) =>{
+    const animate = () =>{
+
+      // y축으로 이동하며 회전하는 이슈 해결  0410
 
       requestAnimationFrame(animate); // 애니메이션이 부드럽게 보여지도록
       mesh.rotation.x = 0
-      mesh.rotation.y = t * 0.0001; // 매 프레임마다 y축으로 회전
+      mesh.rotation.y +=  0.003 // 매 프레임마다 y축으로 회전 (지구만)
 
 
     }
