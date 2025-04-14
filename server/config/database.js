@@ -7,7 +7,7 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD || "root",
   database: process.env.DB_NAME || "photodump",
   waitForConnections: true,
-  port: 3307|| 3306,
+  port: process.env.DB_PORT || 3306,
   connectionLimit: 10,
   queueLimit: 0
 });

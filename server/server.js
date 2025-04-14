@@ -2,12 +2,14 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const session = require("express-session");
+const pool = require("./config/database");
 
 const app = express();
 const loginRouter = require("./routes/login");
 const registerRouter = require("./routes/register");
 const logoutRouter = require("./routes/logout");
 const sessionRouter = require("./routes/session");
+const adminRouter = require("./routes/admin");
 
 // 미들웨어
 
@@ -32,6 +34,12 @@ app.use(
   })
 );
 
+// JSON 파싱 미들웨어
+app.use((req,res, next) => {
+    req.db = pool;
+    next();
+});
+
 app.use(express.json());
 
 // 라우트
@@ -39,6 +47,9 @@ app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
 app.use("/api/logout", logoutRouter);
 app.use("/api/session", sessionRouter);
+app.use("/api/admin", adminRouter);
+
+
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () =>
