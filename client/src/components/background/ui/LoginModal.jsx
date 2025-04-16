@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/LoginModal.css";
-import {set} from "express/lib/application";
 
 function LoginModal({ onClose }) {
+
 
   const [formData, setFormData] = useState({
     username: "",
@@ -33,10 +33,20 @@ function LoginModal({ onClose }) {
       });
 
       const data = await response.json();
+        console.log("로그인 응답", data);
 
       if (response.ok) {
         sessionStorage.setItem("username", data.username);
-        navigate("/map");
+        sessionStorage.setItem("role", data.role);
+
+        console.log("로그인 성공", data.role);
+
+        if(data.role === "admin"){
+          navigate("/admin");
+        } else{
+            navigate("/map");
+        }
+
       } else {
         setError(data.msg || "로그인에 실패했습니다.");
       }
@@ -63,7 +73,6 @@ function LoginModal({ onClose }) {
 
       const data = await response.json();
       if (response.ok) {
-        sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("username", formData.username);
         alert("가입돠었습니다.")
         setFormData({ username:"", password: ""});

@@ -26,8 +26,8 @@ router.post("/", async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const [result] = await pool.execute(
-            "INSERT INTO users (username, password) VALUES (?, ?)",
-            [username, hashedPassword]
+            "INSERT INTO users (username, password) VALUES (?, ?,?)",
+            [username, hashedPassword,"user"]
 
         );
         return res.status(200).json({
