@@ -48,7 +48,7 @@ app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
 app.use("/api/logout", logoutRouter);
 app.use("/api/session", sessionRouter);
-app.use("/api/admin", adminRouter);
+app.use("/api/admin",adminRouter );
 app.use("/api/upload", uploadRouter);
 
 const PORT = process.env.PORT || 5050;
