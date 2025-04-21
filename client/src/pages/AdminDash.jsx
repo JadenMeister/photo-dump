@@ -75,14 +75,6 @@ const adminDash = () => {
 
 
 
-
-
-
-
-
-
-
-
 };
 
 export default adminDash;

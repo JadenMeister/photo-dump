@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="photodump" uuid="3593c2f2-7bd4-49ef-bf86-dec204ddfa2d">
+    <data-source source="LOCAL" name="photodump HS" uuid="679cd11a-8f7e-4bc9-9e44-a73562b87052">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3307/photodump</jdbc-url>
+      <jdbc-url>jdbc:mysql://jaden1337.iptime.org:3306/photodump</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

@@ -12,7 +12,7 @@ const upload = multer({multerStorage})
 
 
 
-router.get("/", upload.single("file"), (req,res )=>{
+router.get("/upload", upload.single("file"), (req,res )=>{
     try{
         if(!req.file){
             return res.status(400).json({msg: "업로드 할 사진이 없습니다."});
