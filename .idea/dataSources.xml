@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="photodump HS" uuid="679cd11a-8f7e-4bc9-9e44-a73562b87052">
+    <data-source source="LOCAL" name="photodump@jaden1337.iptime.org" uuid="d12709c9-8f52-425a-8977-c3f31c3e4d66">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

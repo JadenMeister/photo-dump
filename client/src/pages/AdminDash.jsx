@@ -2,7 +2,7 @@
 import {useState, useEffect} from "react";
 
 const adminDash = () => {
-    const [isSidebarOpen, setSidebarOpen] = React.useState(false)
+    const [isSidebarOpen, setSidebarOpen] = useState(false)
     const [countries, setCountries] = useState([]);
     const [userData, setUserData] = useState([]);
 
@@ -10,8 +10,8 @@ const adminDash = () => {
         const allDataFetch = async ()=>{
             try{
                 const [countryRes, userRes] = await Promise.all([
-                    fetch("/admin/country-uploads"),
-                    fetch("/admin/users")
+                    fetch("http://localhost:8080/admin/country-uploads"),
+                    fetch("http://localhost:8080/admin/users")
                 ]);
 
                 const countryData = await countryRes.json();
@@ -56,7 +56,6 @@ const adminDash = () => {
                             <th>Created At</th>
                         </tr>
                     </thead>
-                    <tbody>{users}</tbody>
                 </table>
             </div>
 
