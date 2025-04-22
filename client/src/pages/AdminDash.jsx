@@ -10,7 +10,7 @@ const adminDash = () => {
         const allDataFetch = async ()=>{
             try{
                 const [countryRes, userRes] = await Promise.all([
-                    fetch("http://localhost:8080/admin/country-uploads"),
+                    fetch("http://localhost:8080/admin/uploads"),
                     fetch("http://localhost:8080/admin/users")
                 ]);
 
@@ -60,7 +60,6 @@ const adminDash = () => {
             </div>
 
             <div className="upload-statistics">
-                <h2>Upload Statistics by Country</h2>
                 {countries.map((country) => (
                     <div key={country.name}>
                         {country.name}: {country.upload_count}

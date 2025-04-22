@@ -36,12 +36,6 @@ router.post("/", async (req, res) => {
         });
 
 
-        const payload = {
-            user: {
-                id: result.insertId
-            }
-        };
-
 
     } catch (err) {
         console.error("Register error:", err);
