@@ -1,4 +1,4 @@
-# 📸 PhotoDump (가제) - README
+# 📸 PhotoDump (가제) 
 
 ## 🧭 프로젝트 개요
 PhotoDump은 사용자가 여행 중 촬영한 사진을 세계 지도 위에 업로드하여 해당 국가를 사진으로 채워나가는 인터랙티브한 플랫폼입니다.
@@ -13,14 +13,15 @@ PhotoDump은 사용자가 여행 중 촬영한 사진을 세계 지도 위에 �
 
 | 파트           | 기술           | 설명                     |
 |----------------|--------------|------------------------|
-| 프론트엔드     | React+Vite, CSS4 | 빠른 빌드 환경과 컴포넌트 기반 UI   |
+| 프론트엔드     | React+Vite, CSS4, tailwindCSS | 빠른 빌드 환경과 컴포넌트 기반 UI   |
 | 3D 그래픽      | **three.js** | 지구, 우주 배경 등 3D 모델링에 사용 |
 | 백엔드         | Node.js, Express | RESTful API 설계         |
 | 인증           | express-session, bcrypt | 로그인 인증 + 비밀번호 암호화 처리            |
 | 파일 업로드     | Multer       | 이미지 업로드 처리 및 base64 변환           |
-| 데이터베이스   | MySQL, Docker, Workbench | 사용자, 사진 데이터 저장         |
+| 데이터베이스   | MySQL, Docker | 사용자, 사진 데이터 저장         |
 | 버전관리       | Git, GitHub  | 협업 및 버전 관리             |
 | 개발도구       | WebStorm     | 생산성 높은 개발환경            |
+| 서버           | aws(예정)    | PaaS 지향 클라우드 서비스 이용 |
 
 
 ---
