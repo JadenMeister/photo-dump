@@ -40,14 +40,14 @@ return(
     <div className="w-full h-screen flex">
         <AdminSide/>
 
-        <div className="w-full bg-gray-300 flex justify-around pt-20 flex-col gap-8">
+        <div className="w-full bg-gray-300 flex justify-around pt-20 rounded-lg flex-col gap-8">
             <div className="flex justify-around">
                 <TotalVisit/>
                 <UserChange/>
                 <UploadStatus/>
             </div>
 
-            <div className="flex justify-around">
+            <div className="h-screen overflow-hidden flex justify-around mb-5">
                 <UploadChart/>
                 <UserManage/>
             </div>
