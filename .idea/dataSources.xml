@@ -8,5 +8,19 @@
       <jdbc-url>jdbc:mysql://jaden1337.iptime.org:3306/photodump</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="RECOVER_YOUR_DATA@jaden1337.iptime.org" uuid="e5f61c7e-998b-459e-adea-2d4c5f954744">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://jaden1337.iptime.org:3306/RECOVER_YOUR_DATA</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="photodump@localhost" uuid="701d369c-0544-4604-9546-9efbfcafd247">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/photodump</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

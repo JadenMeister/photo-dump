@@ -1,78 +1,66 @@
 
 import {useState, useEffect} from "react";
+import AdminSide from "../components/AdminComps/AdminSide.jsx";
+import TotalVisit from "../components/AdminComps/TotalVisit.jsx";
+import UserChange from "../components/AdminComps/UserChange.jsx";
+import UploadStatus from "../components/AdminComps/UploadStatus.jsx";
+import UploadChart from "../components/AdminComps/UploadChart.jsx";
+import UserManage from "../components/AdminComps/UserManage.jsx";
 
-const adminDash = () => {
-    const [isSidebarOpen, setSidebarOpen] = useState(false)
-    const [countries, setCountries] = useState([]);
-    const [userData, setUserData] = useState([]);
+const AdminDash = () => {
 
-    useEffect(() => {
-        const allDataFetch = async ()=>{
-            try{
-                const [countryRes, userRes] = await Promise.all([
-                    fetch("http://localhost:8080/admin/uploads"),
-                    fetch("http://localhost:8080/admin/users")
-                ]);
-
-                const countryData = await countryRes.json();
-                const userData = await userRes.json();
-
-                setCountries(countryData);
-                setUserData(userData);
+const [countries, setCountries] = useState([]);
+const [userData, setUserData] = useState([]);
 
 
-            } catch (err){
-                console.error("모든 데이터 가져오기 실패", err);
-            }
+useEffect(() => {
+    const allDataFetch = async ()=>{
+        try{
+            const [countryRes, userRes] = await Promise.all([
+                fetch("http://localhost:8080/admin/uploads"),
+                fetch("http://localhost:8080/admin/users")
+            ]);
+
+            const countryData = await countryRes.json();
+            const userData = await userRes.json();
+
+            setCountries(countryData);
+            setUserData(userData);
+
+
+        } catch (err){
+            console.error("모든 데이터 가져오기 실패", err);
         }
-    }, []);
+    }
+}, []);
 
 
 
-    return(
-        <div className="adminDash">
-            <h1>Admin Dashboard</h1>
-            <button onClick={() => setSidebarOpen(!isSidebarOpen)}>
-                {isSidebarOpen ? "Close Sidebar" : "Open Sidebar"}
-            </button>
-            {isSidebarOpen && (
-                <div className="sidebar">
-                    <h2>Sidebar</h2>
-                    <ul>
-                        <li>Dashboard</li>
-                        <li>User Management</li>
-                        <li>Upload Statistics</li>
-                    </ul>
-                </div>
-            )}
-            <div className="user-data">
-                <h2>User Data</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Role</th>
-                            <th>Created At</th>
-                        </tr>
-                    </thead>
-                </table>
+return(
+    <div className="w-full h-screen flex">
+        <AdminSide/>
+
+        <div className="w-full bg-gray-300 flex justify-around pt-20 flex-col gap-8">
+            <div className="flex justify-around">
+                <TotalVisit/>
+                <UserChange/>
+                <UploadStatus/>
             </div>
 
-            <div className="upload-statistics">
-                {countries.map((country) => (
-                    <div key={country.name}>
-                        {country.name}: {country.upload_count}
-                    </div>
-                ))}
+            <div className="flex justify-around">
+                <UploadChart/>
+                <UserManage/>
             </div>
-
         </div>
-    )
 
 
+
+
+    </div>
+
+)
 
 
 };
 
-export default adminDash;
+export default AdminDash;
