@@ -1,12 +1,13 @@
+import AdminLogOut from "./AdminLogOut.jsx";
 
 
-function TotalVisit() {
+function AdminSide() {
 
     const menuItems = ["DashBoard", "Users", "Statistics" ]
 
   return (
 
-      <div className="w-full h-full flex">
+
 
           <div className="h-screen w-76.5 text-m font-bold text-white bg-[#0E121E] p-10">
               <div className="text-4xl mb-10">
@@ -21,10 +22,13 @@ function TotalVisit() {
                   ))}
               </ul>
 
+              <div className=" absolute bottom-10 left-10">
+                  <AdminLogOut/>
+              </div>
+
           </div>
 
-      </div>
   );
 }
 
-export default TotalVisit;
+export default AdminSide;
