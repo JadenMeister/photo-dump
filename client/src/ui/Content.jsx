@@ -1,4 +1,4 @@
-import "../../../styles/Content.css"
+import "../styles/Content.css"
 import React, { useState } from "react";
 
 

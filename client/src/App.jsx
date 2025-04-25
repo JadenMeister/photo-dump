@@ -6,7 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import LoginModal from "./components/background/ui/LoginModal";
+import LoginModal from "./ui/LoginModal";
 import Earth from "./components/background/Canvas/Earth";
 import WorldMap from "./components/mapUtil/WorldMap";
 import SpaceBackground from "./components/background/SpaceBackground";

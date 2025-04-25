@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../../styles/LoginModal.css";
+import "../styles/LoginModal.css";
 
 function LoginModal({ onClose }) {
 
