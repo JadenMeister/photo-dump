@@ -11,8 +11,8 @@ const AdminDash = () => {
 
 const [countries, setCountries] = useState([]);
 const [userData, setUserData] = useState([]);
-const [username, setUsername] = useState("");
-const [isLogin, setIsLogin] = useState(false);
+// const [username, setUsername] = useState("");
+// const [isLogin, setIsLogin] = useState(false);
 
 
 useEffect(() => {
