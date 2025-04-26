@@ -25,11 +25,17 @@ router.post("/", async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const [result] = await pool.execute(
-            "INSERT INTO users (username, password) VALUES (?, ?,?)",
-            [username, hashedPassword,"user"]
-
+        const [roleRows] = await pool.execute(
+            "SELECT id FROM roles WHERE name = 'user'"
         );
+        const userRoleId = roleRows[0].id;
+
+        // users 테이블에 저장
+        await pool.execute(
+            "INSERT INTO users (username, password, role_id) VALUES (?, ?, ?)",
+            [username, hashedPassword, userRoleId]
+        );
+
         return res.status(200).json({
             msg: "회원가입 성공",
             username

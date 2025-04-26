@@ -45,11 +45,37 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ msg: "비밀번호가 일치하지 않습니다." });
     }
 
+    // 역할 가져오기
+
+    const [roles] = await pool.execute(
+        `SELECT * FROM roles WHERE id =?`,
+        [user.role.id]
+    )
+    const roleName = roles[0].name;
+
+    // 권한 가져오기
+
+    const [permissionRows] = await pool.execute(
+        `SELECT p.action
+         FROM role_permissions rp
+         JOIN permissions p ON rp.permission_id = p.id
+         WHERE rp.role_id = ?`,
+        [user.role.id]
+    );
+    const permissions = permissionRows.map(row => row.action);
+
+
+
+
+
+
+
     // role을 받아와서 role에 따라 다른 페이지로 이동하게 함
     req.session.user = {
       id: user.id,
       username: user.username,
-      role: user.role,
+      role: roleName,
+      permissions: permissions,
     };
 
     console.log("최종",user.role)
