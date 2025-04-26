@@ -11,6 +11,8 @@ const AdminDash = () => {
 
 const [countries, setCountries] = useState([]);
 const [userData, setUserData] = useState([]);
+const [username, setUsername] = useState("");
+const [isLogin, setIsLogin] = useState(false);
 
 
 useEffect(() => {
@@ -33,6 +35,19 @@ useEffect(() => {
         }
     }
 }, []);
+
+    useEffect(() => {
+        // session Storage에서 사용자 이름 가져오기
+        const storedUsername = sessionStorage.getItem("username");
+        if (storedUsername) {
+            setUsername(storedUsername);
+            setIsLogin(true);
+        } else{
+            alert("잘못된 접근입니다.");
+            Navigate("/");
+        }
+    }, []);
+
 
 
 
