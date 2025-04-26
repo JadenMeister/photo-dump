@@ -20,38 +20,20 @@ const navigate = useNavigate();
 const {isLogin, user} = useAuth();
 
     useEffect(() => {
-        if(!isLogin || user.role !== "admin"){
-            alert("관리자 권한이 없습니다.");
+        if(isLogin === null) return;
+        if (isLogin && user) {
+            if (user.role !== "admin") {
+                alert("관리자 권한이 없습니다.");
+                navigate("/");
+            }
+        } else if (!isLogin) {
+            alert("로그인이 필요합니다.");
             navigate("/");
         }
-
-    }, [isLogin, user, navigate]);
-
+    }, []);
 
 
 
-
-useEffect(() => {
-    const allDataFetch = async ()=>{
-        try{
-            const [countryRes, userRes] = await Promise.all([
-                fetch("http://localhost:8080/admin/uploads"),
-                fetch("http://localhost:8080/admin/users")
-            ]);
-
-            const countryData = await countryRes.json();
-            const userData = await userRes.json();
-
-            setCountries(countryData);
-            setUserData(userData);
-
-
-        } catch (err){
-            console.error("모든 데이터 가져오기 실패", err);
-        }
-    }
-    allDataFetch();
-}, []);
 
 
 

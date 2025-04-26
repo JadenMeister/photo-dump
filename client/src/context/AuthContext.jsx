@@ -1,40 +1,51 @@
-import{useState, useContext, createContext} from "react";
+import { useState, useContext, createContext, useEffect } from "react";
 
-
-
-// 컨텍스트 생성
 const AuthContext = createContext();
 
-// 관리할 상태들 및 컨텍스트 제공자
 export const AuthProvider = ({ children }) => {
-    const [isLogin, setIsLogin] = useState(false);
-    const [user, setUser] = useState({username: "", role: ""});
-    const [role, setRole] = useState("");
+    const [isLogin, setIsLogin] = useState(null);
+    const [user, setUser] = useState({
+        username: "",
+        role: "",
+        permissions: []
+    });
 
-    // 로그인/아웃 시 유저 정보 세팅
     const loginData = (userData) => {
         setUser({
             username: userData.username,
             role: userData.role,
+            permissions: userData.permissions || []
         });
+        sessionStorage.setItem("username", userData.username);
+        sessionStorage.setItem("role", userData.role);
+        sessionStorage.setItem("permissions", JSON.stringify(userData.permissions || []));
         setIsLogin(true);
-    }
+    };
 
     const logout = () => {
-        setUser({
-            username: "",
-            role: "",
-        });
+        setUser({ username: "", role: "", permissions: [] });
+        sessionStorage.clear();
         setIsLogin(false);
-    }
+    };
 
-    return(
-        <AuthContext.Provider value={{ isLogin, user, role, loginData, logout }}>
+    useEffect(() => {
+        const username = sessionStorage.getItem("username");
+        const role = sessionStorage.getItem("role");
+        const permissions = JSON.parse(sessionStorage.getItem("permissions") || "[]");
+
+        if (username && role) {
+            setUser({ username, role, permissions });
+            setIsLogin(true);
+        } else {
+            setIsLogin(false);
+        }
+    }, []);
+
+    return (
+        <AuthContext.Provider value={{ isLogin, user, loginData, logout }}>
             {children}
         </AuthContext.Provider>
-    )
-
-}
-
+    );
+};
 
 export const useAuth = () => useContext(AuthContext);

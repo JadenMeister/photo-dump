@@ -1,5 +1,6 @@
 import React, { useState, useEffect,  } from "react";
 import {Link, Links, useNavigate} from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import {
   ComposableMap,
   Geographies,
@@ -14,8 +15,7 @@ import {UploadTooltip} from "./UploadTooltip";
 
 const WorldMap = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [isLogin, setIsLogin] = useState(false);
-  const [username, setUsername] = useState("");
+    const {user,setUser, isLogin, setIsLogin} = useAuth();
   const Navigate = useNavigate() ;
 
 
@@ -32,13 +32,16 @@ const WorldMap = () => {
   const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-50m.json";
 
   useEffect(() => {
+      const storedUsername = sessionStorage.getItem("username");
+      const storedRole = sessionStorage.getItem("role");
+      const storedPermissions = sessionStorage.getItem("permissions" || "[]");
+
     // session Storage에서 사용자 이름 가져오기
-    const storedUsername = sessionStorage.getItem("username");
     if (storedUsername) {
-      setUsername(storedUsername);
+        setUser({ username: storedUsername, role: storedRole });
         setIsLogin(true);
-    } else{
-        alert("잘못된 접근입니다.");
+    } else {
+        alert("로그인 후 이용해주세요.");
         Navigate("/");
     }
   }, []);
@@ -49,7 +52,7 @@ const WorldMap = () => {
     <div className="world-map-container">
 
       <div className="welcome-message">
-        <h2>환영합니다, {username}님!</h2>
+        <h2>환영합니다, {user.username}님!</h2>
         <p>지도에서 원하는 나라를 클릭하여 사진을 업로드하세요.</p>
 
           <button className="logoutBtn" onClick={() => {logout()} }>Logout</button>

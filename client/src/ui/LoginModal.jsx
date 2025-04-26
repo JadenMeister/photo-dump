@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/LoginModal.css";
+import { useAuth } from "../context/AuthContext";
 
 function LoginModal({ onClose }) {
 
-
+  const {loginData} = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     password: ""
@@ -19,6 +20,7 @@ function LoginModal({ onClose }) {
 
     if(!formData.username || !formData.password){
       alert("올바른 값을 입력해주세요")
+      return;
 
     }
 
@@ -36,12 +38,14 @@ function LoginModal({ onClose }) {
         console.log("로그인 응답", data);
 
       if (response.ok) {
-        sessionStorage.setItem("username", data.username);
-        sessionStorage.setItem("role", data.role);
+        loginData(data.user);
+        sessionStorage.setItem("username", data.user.username);
+        sessionStorage.setItem("role", data.user.role);
+        sessionStorage.setItem("permissions", JSON.stringify(data.user.permissions));
 
-        console.log("로그인 성공", data.role);
 
-        if(data.role === "admin"){
+
+        if(data.user.role === "admin"){
           navigate("/admin");
         } else{
             navigate("/map");

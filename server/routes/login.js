@@ -25,8 +25,9 @@ router.post("/", async (req, res) => {
     }
 
     const user = users[0];
+
     console.log("user 전체:", user);
-    console.log("user.role:", user?.role);
+
 
 
     if (!password || !user || !user.password) {
@@ -47,9 +48,10 @@ router.post("/", async (req, res) => {
 
     const [roles] = await pool.execute(
         `SELECT * FROM roles WHERE id =?`,
-        [user.role.id]
+        [user.role_id]
     )
     const roleName = roles[0].name;
+    console.log("사용자 정보:", roleName); // 디버깅용 로그
 
     // 권한 가져오기
 
@@ -58,7 +60,7 @@ router.post("/", async (req, res) => {
          FROM role_permissions rp
          JOIN permissions p ON rp.permission_id = p.id
          WHERE rp.role_id = ?`,
-        [user.role.id]
+        [user.role_id]
     );
     const permissions = permissionRows.map(row => row.action);
 
@@ -73,13 +75,16 @@ router.post("/", async (req, res) => {
       permissions: permissions,
     };
 
-    console.log("최종",user.role)
+
 
     // role을 받아와서 role에 따라 다른 페이지로 이동하게 함2
     res.status(200).json({
       success: true,
+      user:{
       username: user.username,
-      role: user.role
+      role: roleName,
+      permissions: permissions,
+      }
     });
 
 
