@@ -8,7 +8,7 @@ const AuthContext = createContext();
 // 관리할 상태들 및 컨텍스트 제공자
 export const AuthProvider = ({ children }) => {
     const [isLogin, setIsLogin] = useState(false);
-    const [user, setUser] = useState({username:"", role:""});
+    const [user, setUser] = useState({username: "", role: ""});
     const [role, setRole] = useState("");
 
     // 로그인/아웃 시 유저 정보 세팅
@@ -20,11 +20,21 @@ export const AuthProvider = ({ children }) => {
         setIsLogin(true);
     }
 
-    const logout =()=>{
+    const logout = () => {
         setUser({
             username: "",
             role: "",
         });
         setIsLogin(false);
     }
+
+    return(
+        <AuthContext.Provider value={{ isLogin, user, role, loginData, logout }}>
+            {children}
+        </AuthContext.Provider>
+    )
+
 }
+
+
+export const useAuth = () => useContext(AuthContext);

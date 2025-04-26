@@ -6,13 +6,29 @@ import UserChange from "../components/AdminComps/UserChange.jsx";
 import UploadStatus from "../components/AdminComps/UploadStatus.jsx";
 import UploadChart from "../components/AdminComps/UploadChart.jsx";
 import UserManage from "../components/AdminComps/UserManage.jsx";
+import {useAuth} from "../context/AuthContext.jsx";
+import { useNavigate} from "react-router-dom";
+
+
 
 const AdminDash = () => {
 
 const [countries, setCountries] = useState([]);
 const [userData, setUserData] = useState([]);
-// const [username, setUsername] = useState("");
-// const [isLogin, setIsLogin] = useState(false);
+const navigate = useNavigate();
+
+const {isLogin, user} = useAuth();
+
+    useEffect(() => {
+        if(!isLogin || user.role !== "admin"){
+            alert("관리자 권한이 없습니다.");
+            navigate("/");
+        }
+
+    }, [isLogin, user, navigate]);
+
+
+
 
 
 useEffect(() => {
@@ -34,19 +50,9 @@ useEffect(() => {
             console.error("모든 데이터 가져오기 실패", err);
         }
     }
+    allDataFetch();
 }, []);
 
-    useEffect(() => {
-        // session Storage에서 사용자 이름 가져오기
-        const storedUsername = sessionStorage.getItem("username");
-        if (storedUsername) {
-            setUsername(storedUsername);
-            setIsLogin(true);
-        } else{
-            alert("잘못된 접근입니다.");
-            Navigate("/");
-        }
-    }, []);
 
 
 
