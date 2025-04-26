@@ -25,6 +25,7 @@ router.post("/", async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // roles 테이블에서 "user" role_id 가져오기
         const [roleRows] = await pool.execute(
             "SELECT id FROM roles WHERE name = 'user'"
         );

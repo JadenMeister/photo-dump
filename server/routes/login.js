@@ -24,9 +24,6 @@ router.post("/", async (req, res) => {
         return res.status(400).json({ msg: "사용자를 찾을 수 없습니다." });
     }
 
-
-
-
     const user = users[0];
     console.log("user 전체:", user);
     console.log("user.role:", user?.role);
@@ -37,6 +34,7 @@ router.post("/", async (req, res) => {
       return res.status(500).json({ msg: "서버 내부 오류: 비밀번호 없음" });
     }
 
+    // 비밀번호 비교
     const isMatch = await bcrypt.compare(password, user.password);
 
 
@@ -63,9 +61,6 @@ router.post("/", async (req, res) => {
         [user.role.id]
     );
     const permissions = permissionRows.map(row => row.action);
-
-
-
 
 
 
