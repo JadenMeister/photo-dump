@@ -12,6 +12,7 @@ import WorldMap from "./components/mapUtil/WorldMap";
 import SpaceBackground from "./components/background/SpaceBackground";
 import AdminDash from "./pages/AdminDash";
 import Mypage from "./pages/Mypage";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -22,6 +23,7 @@ function App() {
   }, []);
 
   return (
+      <AuthProvider>
     <Router>
       <Routes>
         <Route
@@ -42,6 +44,7 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
       </Routes>
     </Router>
+      </AuthProvider>
   );
 }
 
