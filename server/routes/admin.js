@@ -16,8 +16,10 @@ router.get("/", (req, res) => {
 router.get("/users", adminAuth ,async  (req, res) => {
 // db 조회 같이 시간이 걸리는 작업에는 비동기작업을 사용하고 try-catch문으로 에러를 잡아준다. 코드 가독성, 에러 헨들링 용이
     try{
-        const [users] = await req.db.execute("SELECT id, username, role, created_at FROM users");
+        const [users] = await req.db.execute("SELECT u.id, u.username, u.email, r.name AS role,  u.created_at FROM users u " +
+            "LEFT JOIN roles r ON u.role_id = r.id");
         res.status(200).json(users);
+        console.log("유저 데이터", users); //디버깅용
         
     } catch(err){
         console.error("유저 데이터 불러오기 실패",err);
