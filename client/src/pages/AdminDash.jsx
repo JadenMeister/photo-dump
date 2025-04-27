@@ -35,10 +35,6 @@ const {isLogin, user} = useAuth();
 
 
 
-
-
-
-
 return(
     <div className="w-full h-screen flex">
         <AdminSide/>

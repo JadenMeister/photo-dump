@@ -5,7 +5,7 @@ const session = require("express-session");
 const pool = require("../config/database");
 router.post("/", async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, password, email } = req.body;
 
         console.log("Register attempt:", { username }); // 디버깅용 로그
 
@@ -33,13 +33,14 @@ router.post("/", async (req, res) => {
 
         // users 테이블에 저장
         await pool.execute(
-            "INSERT INTO users (username, password, role_id) VALUES (?, ?, ?)",
-            [username, hashedPassword, userRoleId]
+            "INSERT INTO users (username, email, password, role_id) VALUES (?, ?, ?, ?)",
+            [username, email,  hashedPassword, userRoleId]
         );
 
         return res.status(200).json({
             msg: "회원가입 성공",
-            username
+            username,
+            email
         });
 
 
