@@ -12,6 +12,8 @@ const sessionRouter = require("./routes/session");
 const adminRouter = require("./routes/admin");
 const uploadRouter = require("./routes/upload");
 
+app.use(express.json());
+
 // 미들웨어
 
 app.use(
@@ -41,7 +43,7 @@ app.use((req,res, next) => {
     next();
 });
 
-app.use(express.json());
+
 
 // 라우트
 app.use("/api/login", loginRouter);
