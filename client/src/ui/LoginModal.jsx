@@ -104,7 +104,7 @@ function LoginModal({ onClose, }) {
                         placeholder="Password"
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                        className="border border-gray-300 rounded-md p-3 w-full"
+                        className="border border-gray-300 rounded-md p-3 w-full text-white"
                     />
                     {error && <div className="text-red-500 text-sm text-center">{error}</div>}
                     <button
