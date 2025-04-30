@@ -8,9 +8,6 @@ import UploadChart from "../components/AdminComps/UploadChart.jsx";
 import UserManage from "../components/AdminComps/UserManage.jsx";
 import {useAuth} from "../context/AuthContext.jsx";
 import { useNavigate} from "react-router-dom";
-
-
-
 const AdminDash = () => {
 
 const [countries, setCountries] = useState([]);
@@ -22,17 +19,15 @@ const {isLogin, user} = useAuth();
     useEffect(() => {
         if(isLogin === null) return;
         if (isLogin && user) {
-            if (user.role !== "admin") {
+            if (user.role !== "admin" || user.role.length === 0) {
                 alert("관리자 권한이 없습니다.");
                 navigate("/");
             }
-        } else if (!isLogin) {
+        } else if (!isLogin || user.role.length === 0) {
             alert("로그인이 필요합니다.");
             navigate("/");
         }
-    }, []);
-
-
+    }, [isLogin, user, navigate]);
 
 
 return(
@@ -51,9 +46,6 @@ return(
                 <UserManage/>
             </div>
         </div>
-
-
-
 
     </div>
 
