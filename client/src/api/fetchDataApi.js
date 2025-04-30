@@ -22,3 +22,17 @@ export const fetchUsers = async () => {
     if (!response.ok) throw new Error("유저 데이터 가져오기 실패");
     return await response.json();
 };
+
+
+export const fetchDeleteUser = async (id) => {
+    const response = await fetch(`http://localhost:8080/api/admin/users/${id}`,{
+        method:"DELETE",
+        headers:{
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    } );
+    if (!response.ok) throw new Error("유저 삭제 실패");
+    return await response.json();
+
+}

@@ -1,10 +1,49 @@
 import {HiDotsHorizontal} from "react-icons/hi";
 import {useState} from "react";
+import {textureLoad} from "three/tsl";
 
 
 export default function UserManageRow({user, openRowId, setOpenRowId}) {
 
+    const [userId, setUserId] = useState(user.id);
+
     const isOpen = openRowId === user.id;
+
+
+    const handleDelete = async () => {
+      try{
+      const response = await fetch(`http://localhost:8080/api/admin/users/delete${userId}`,{
+
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
+
+        if(response.ok) {
+            alert("유저 삭제 성공");
+            window.location.reload();
+        }
+        else if(response.status === 401){
+            alert("삭제 권한이 없습니다.");
+        }
+        else{
+            alert("유저 삭제 실패");
+        }
+
+      } catch (error) {
+        if (user.role === "admin") {
+          alert("어드민 유저는 삭제할 수 없습니다.");
+          console.error("유저 삭제 실패", error);
+          return;
+
+        }
+      }
+
+    }
+
+
 
     const handleToggle = () => {
         if(isOpen){
@@ -31,7 +70,7 @@ export default function UserManageRow({user, openRowId, setOpenRowId}) {
                 <div className="absolute right-10 mt-8 bg-white shadow-lg rounded-md mt-2">
                     <ul className="py-2">
                         <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">수정</li>
-                        <li className="px-4 py-2 hover:bg-red-200 text-red-500 cursor-pointer">삭제</li>
+                        <li onClick={handleDelete} className="px-4 py-2 hover:bg-red-200 text-red-500 cursor-pointer">삭제</li>
                         <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">사진 보기</li>
                     </ul>
                 </div>
