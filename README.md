@@ -4,8 +4,7 @@
 PhotoDump은 사용자가 여행 중 촬영한 사진을 세계 지도 위에 업로드하여 해당 국가를 사진으로 채워나가는 인터랙티브한 플랫폼입니다.
 시각적이고 감성적인 여행 기록 방식으로, 사용자의 세계 여행을 독려하고 공유합니다.
 
----
-![img.png](img.png)
+
 
 ---
 
@@ -101,8 +100,7 @@ cd server
 npm install
 npm run dev
 
-# MySQL (Docker)
-docker compose up -d
+
 ```
 
 ---
