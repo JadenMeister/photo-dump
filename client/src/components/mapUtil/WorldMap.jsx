@@ -1,12 +1,7 @@
 import React, { useState, useEffect,  } from "react";
 import {Link, Links, useNavigate} from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
-} from "react-simple-maps";
+import {MapContainer, TileLayer,  Marker, useMapEvents} from "react-leaflet";
 import { Tooltip } from "react-tooltip";
 import "../../styles/WorldMap.css";
 import {UploadTooltip} from "./UploadTooltip";
@@ -15,7 +10,7 @@ import {UploadTooltip} from "./UploadTooltip";
 
 const WorldMap = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-    const {user,setUser, isLogin, setIsLogin} = useAuth();
+  const {user,setUser, isLogin, setIsLogin} = useAuth();
   const Navigate = useNavigate() ;
 
 

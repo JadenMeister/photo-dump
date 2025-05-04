@@ -28,7 +28,7 @@ export default function UserManage() {
         }
         getUserData()
     }, []);
-
+    const [, set] = useState();
     if(isLoading){
         return(
             <div className="w-245 h-170.25 flex items-center justify-center bg-[#F5F5F5]  shadow-lg">
