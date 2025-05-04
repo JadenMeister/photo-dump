@@ -48,6 +48,7 @@ const WorldMap = () => {
   }, []);
 
   const onEachCountry = (feature, layer) => {
+    const name = feature.properties.name;
 
     layer.bindTooltip(name, {
       sticky: false,
@@ -61,6 +62,7 @@ const WorldMap = () => {
         layer.setStyle({
           fillColor: "#444",
           fillOpacity: 0.3,
+          features: feature.properties,
           weight: 1,
           color: "#666",
         });
@@ -76,6 +78,7 @@ const WorldMap = () => {
       },
       click: () => {
         console.log("나라 클릭됨:", feature.properties.name);
+        setSelectedCountry(name);
       },
     });
   };
@@ -112,7 +115,6 @@ const WorldMap = () => {
         )}
 
       </MapContainer>
-
 
       {selectedCountry && (
           <UploadTooltip
