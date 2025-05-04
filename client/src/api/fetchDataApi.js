@@ -36,3 +36,17 @@ export const fetchDeleteUser = async (id) => {
     return await response.json();
 
 }
+
+export const fetchUploads = async ({file, userId, country_id, travelDate}) => {
+    const formData = new FormData();
+    formData.append("photo", file);
+    formData.append("user_id", userId);
+    formData.append("country_id", country_id);
+    formData.append("travel_date", travelDate);
+
+    return  await fetch("http://localhost:8080/api/upload", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+    })
+}

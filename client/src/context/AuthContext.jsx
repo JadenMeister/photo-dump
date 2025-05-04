@@ -12,10 +12,12 @@ export const AuthProvider = ({ children }) => {
 
     const loginData = (userData) => {
         setUser({
+            id: userData.id,
             username: userData.username,
             role: userData.role,
             permissions: userData.permissions || []
         });
+        sessionStorage.setItem("id", userData.id);
         sessionStorage.setItem("username", userData.username);
         sessionStorage.setItem("role", userData.role);
         sessionStorage.setItem("permissions", JSON.stringify(userData.permissions || []));
@@ -29,12 +31,13 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
+        const id = sessionStorage.getItem("id");
         const username = sessionStorage.getItem("username");
         const role = sessionStorage.getItem("role");
         const permissions = JSON.parse(sessionStorage.getItem("permissions") || "[]");
 
         if (username && role) {
-            setUser({ username, role, permissions });
+            setUser({ id, username, role, permissions });
             setIsLogin(true);
         } else {
             setIsLogin(false);

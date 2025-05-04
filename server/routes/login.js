@@ -82,6 +82,7 @@ router.post("/", async (req, res) => {
     res.status(200).json({
       success: true,
       user:{
+      id: user.id,
       username: user.username,
       role: roleName,
       permissions: permissions,
