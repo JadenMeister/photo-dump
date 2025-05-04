@@ -31,13 +31,13 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const userId = sessionStorage.getItem("id");
+        const id = sessionStorage.getItem("id");
         const username = sessionStorage.getItem("username");
         const role = sessionStorage.getItem("role");
         const permissions = JSON.parse(sessionStorage.getItem("permissions") || "[]");
 
         if (username && role) {
-            setUser({ userId, username, role, permissions });
+            setUser({ id, username, role, permissions });
             setIsLogin(true);
         } else {
             setIsLogin(false);

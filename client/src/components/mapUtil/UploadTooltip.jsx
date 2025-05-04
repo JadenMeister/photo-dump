@@ -15,6 +15,7 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
 
   const handleUpload  = async (e) => {
 
+
     if(!file){
         alert("파일을 업로드해주세요");
         return;
@@ -22,7 +23,7 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
 
 
     fetchUploads({
-        file: e.target.files[0],
+        file,
         userId: user.id,
         country_id: selectedCountry,
         travelDate: travelDate,

@@ -44,7 +44,7 @@ export const fetchUploads = async ({file, userId, country_id, travelDate}) => {
     formData.append("country_id", country_id);
     formData.append("travel_date", travelDate);
 
-    await fetch("http://localhost:8080/api/uploads", {
+    return  await fetch("http://localhost:8080/api/upload", {
         method: "POST",
         body: formData,
         credentials: "include",
