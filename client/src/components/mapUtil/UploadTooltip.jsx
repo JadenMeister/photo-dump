@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import selectedContinent from "./WorldMap.jsx";
 import {fetchUploads} from "@/api/fetchDataApi.js";
 import {useAuth} from "@/context/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -11,10 +12,11 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
   const {user} = useAuth();
   const [file, setFile] = useState(null);
   const [travelDate, setTravelDate] = useState("");
+  const Navigate = useNavigate();
 
 
   const handleUpload  = async (e) => {
-
+    console.log("나라", selectedCountry);
 
     if(!file){
         alert("파일을 업로드해주세요");
@@ -25,14 +27,21 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
     fetchUploads({
         file,
         userId: user.id,
-        country_id: selectedCountry,
+        country_name: selectedCountry,
         travelDate: travelDate,
     })
       .then((res) => {
           if (res.ok) {
               alert("업로드 성공");
+              console.log("업로드 성공나라", selectedCountry);
+              Navigate("/map");
+              setSelectedCountry(null);
+
           } else {
               alert("업로드 실패");
+              console.log(user.id)
+              console.log("업로드 실패", selectedCountry);
+
           }
       })
       .catch((error) => {
@@ -57,7 +66,9 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
 
             <input
                 type="file"
-                accept="image/*"
+                // 사용자 경험을 고려한 힌트 제공
+                accept="image/png, image/jpeg, image/jpg, image/webp, image/gif"
+
                 onChange={(e) => setFile(e.target.files[0])}
                 className="block w-full border border-gray-300 rounded px-3 py-2 mb-4"
             />

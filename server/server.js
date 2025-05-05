@@ -10,9 +10,12 @@ const registerRouter = require("./routes/register");
 const logoutRouter = require("./routes/logout");
 const sessionRouter = require("./routes/session");
 const adminRouter = require("./routes/admin");
+const userRouter = require("./routes/user");
 const uploadRouter = require("./routes/upload");
 
 
+
+app.use(express.urlencoded({ extended: true }));
 
 // 미들웨어
 
@@ -53,6 +56,7 @@ app.use("/api/logout", logoutRouter);
 app.use("/api/session", sessionRouter);
 app.use("/api/admin",adminRouter );
 app.use("/api/upload", uploadRouter);
+app.use("/api/users", userRouter);
 
 
 

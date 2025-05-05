@@ -81,12 +81,7 @@ router.post("/", async (req, res) => {
     // role을 받아와서 role에 따라 다른 페이지로 이동하게 함2
     res.status(200).json({
       success: true,
-      user:{
-      id: user.id,
-      username: user.username,
-      role: roleName,
-      permissions: permissions,
-      }
+      user: req.session.user,
     });
 
 

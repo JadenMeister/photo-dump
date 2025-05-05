@@ -6,6 +6,7 @@ import {UploadTooltip} from "./UploadTooltip";
 
 
 
+
 const WorldMap = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const {user,setUser, isLogin, setIsLogin} = useAuth();
@@ -21,15 +22,20 @@ const WorldMap = () => {
   }, []);
 
 
+  function handelMP(){
+    Navigate("/mypage");
+  }
 
-  function logout() {
-    fetch("http://localhost:8080/api/logout", {
-        method: "POST",
-        credentials: "include",
-    })
-      alert("로그아웃 되었습니다.");
+  const logout = () => {
+    alert(`로그아웃 되었습니다. ${user.username}님`);
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("permissions");
+    sessionStorage.removeItem("id");
+    setIsLogin(false);
     Navigate("/");
   }
+
 
 
   useEffect(() => {
@@ -90,8 +96,11 @@ const WorldMap = () => {
         <h2 className="text-lg font-semibold text-gray-800 mb-2">환영합니다, {user.username}님!</h2>
         <p className="text-sm text-gray-900">지도에서 원하는 나라를 클릭하여 사진을 업로드하세요.</p>
 
-          <button className="mt-4 w-32 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+          <button className="mt-4 w-32 px-4 py-2 bg-red-950 text-white rounded hover:bg-red-700 mr-5"
                   onClick={logout}>Logout</button>
+
+        <button className="mt-4 w-32 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+                onClick={handelMP} > MyPage</button>
       </div>
 
 

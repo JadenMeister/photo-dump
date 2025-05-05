@@ -30,27 +30,50 @@ const upload = multer ({
             cb(null, `uploads/${filename}`);
         },
     }),
+
+    // 파일업로드 취약점 방지 로직
+    limits: {fileSize: 5* 1024 * 1024}, // 5MB
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg", "image/webp"];
+        if(allowedTypes.includes(file.mimetype)){
+            cb(null, true);
+        } else{
+            cb(new Error("허용되지 않는 파일 형식입니다."), false);
+        }
+    }
 })
 
 
 
 
-router.post("/", upload.single("photo"), async (req,res )=>{
+
+router.post("/", upload.single("photo"), async (req,res,next)=>{
+    const user_id = req.session.user?.id;
+    console.log("받은파일", req.file);
+    console.log("받은바디", req.body);
+    if(!user_id){
+        console.log("세선없음", req.session);
+    }
+
     try{
         if(!req.file){
             return res.status(400).json({msg: "업로드 할 사진이 없습니다."});
         }
 
-        const {user_id, country_id, travel_date} = req.body;
+        const {country_name, travel_date} = req.body;
 
         const photoUrl = req.file.location;
 
-        await req.db.execute("INSERT INTO photos (user_id, country_id, travel_date, photo_url) VALUES (?, ?, ?, ?)",
+        await req.db.execute("INSERT INTO photos (user_id, country_name, travel_date, photo_url) VALUES (?, ?, ?, ?)",
 
-            [user_id, country_id, travel_date,  photoUrl]
+            [user_id, country_name, travel_date,  photoUrl]
         );
 
+
         res.status(200).json({ msg: "업로드 성공", photo_url: photoUrl });
+        console.log("사진 업로드 - 세션 userId:", req.session.user?.id);
+        console.log("업로드 성공", { user_id, country_name, travel_date, photoUrl });
+
 
 
     } catch (err){

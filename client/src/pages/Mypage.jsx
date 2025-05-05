@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import UserSide from "../components/UserComps/UserSide.jsx";
+import UserUploadChart from "../components/UserComps/UserUploadChart.jsx";
+import UserAlbum from "../components/UserComps/UserAlbum.jsx";
+import TotalUpload from "../components/UserComps/TotalUpload.jsx";
 
 const Mypage = () => {
 
@@ -21,14 +25,32 @@ const Mypage = () => {
     }, []);
 
     return(
-        <div className="mypage-container">
-            <h2>{username}님의 마이페이지 </h2>
-            <p>업로드한 추억을 확인해보세요</p>
-            <button className="logoutBtn" onClick={() => {
-                sessionStorage.removeItem("username");
-                window.location.href = "/";
-            }}>Logout</button>
-        </div>
+       <div className="w-full h-screen flex">
+         <UserSide/>
+
+         <div className="w-full bg-gray-300 flex justify-around pt-20 rounded-lg flex-col gap-8">
+           <div className= "flex justify-around">
+             <TotalUpload/>
+           </div>
+
+           <div className="h-screen overflow-hidden flex justify-around mb-5">
+             <UserUploadChart/>
+             <UserAlbum/>
+           </div>
+         </div>
+
+       </div>
+
+
+
+
+
+
+
+
+
+
+
     )
 };
 
