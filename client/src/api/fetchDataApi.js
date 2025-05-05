@@ -1,6 +1,8 @@
 
 
 
+// ! for ADMIN
+
 
 // 나라 리스트 요청
 export const fetchCountries = async () => {
@@ -45,6 +47,7 @@ export const fetchDeleteUser = async (id) => {
 
 }
 
+//! FOR USER
 
 // 업로드 요청
 export const fetchUploads = async ({file,country_name, travelDate}) => {
@@ -83,4 +86,18 @@ export const fetchUserUploadCount = async ()=>{
     })
     if (!res.ok) throw new Error("업로드 카운트 가져오기 실패");
     return await res.json();
+}
+
+export const fetchUserUploadsCountry = async ()=>{
+    const res = await fetch("http://localhost:8080/api/users/upload-country",{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    })
+
+    if (!res.ok) throw new Error("업로드 카운트 가져오기 실패");
+    return await res.json();
+
 }

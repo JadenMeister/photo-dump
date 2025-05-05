@@ -48,15 +48,19 @@ const upload = multer ({
 
 
 router.post("/", upload.single("photo"), async (req,res,next)=>{
+    const user_id = req.session.user?.id;
     console.log("받은파일", req.file);
     console.log("받은바디", req.body);
+    if(!user_id){
+        console.log("세선없음", req.session);
+    }
 
     try{
         if(!req.file){
             return res.status(400).json({msg: "업로드 할 사진이 없습니다."});
         }
 
-        const {user_id, country_name, travel_date} = req.body;
+        const {country_name, travel_date} = req.body;
 
         const photoUrl = req.file.location;
 
@@ -65,8 +69,11 @@ router.post("/", upload.single("photo"), async (req,res,next)=>{
             [user_id, country_name, travel_date,  photoUrl]
         );
 
+
         res.status(200).json({ msg: "업로드 성공", photo_url: photoUrl });
+        console.log("사진 업로드 - 세션 userId:", req.session.user?.id);
         console.log("업로드 성공", { user_id, country_name, travel_date, photoUrl });
+
 
 
     } catch (err){
