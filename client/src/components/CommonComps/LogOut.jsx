@@ -1,4 +1,4 @@
-export default function AdminLogOut() {
+export default function LogOut() {
 
   const logout = () => {
 
