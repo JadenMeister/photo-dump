@@ -16,7 +16,7 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
 
 
   const handleUpload  = async (e) => {
-
+    console.log("나라", selectedCountry);
 
     if(!file){
         alert("파일을 업로드해주세요");
@@ -27,18 +27,20 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
     fetchUploads({
         file,
         userId: user.id,
-        country_id: selectedCountry,
+        country_name: selectedCountry,
         travelDate: travelDate,
     })
       .then((res) => {
           if (res.ok) {
               alert("업로드 성공");
-              setSelectedCountry(null);
+              console.log("업로드 성공나라", selectedCountry);
               Navigate("/map");
+              setSelectedCountry(null);
 
           } else {
               alert("업로드 실패");
               console.log(user.id)
+              console.log("업로드 실패", selectedCountry);
 
           }
       })
