@@ -1,3 +1,5 @@
+
+// 나라 리스트 요청
 export const fetchCountries = async () => {
     const response = await fetch("http://localhost:8080/api/admin/uploads",{
         method: "GET",
@@ -11,6 +13,8 @@ export const fetchCountries = async () => {
     return await response.json();
 };
 
+
+// 유저 조회 요청
 export const fetchUsers = async () => {
     const response = await fetch("http://localhost:8080/api/admin/users",{
         method: "GET",
@@ -24,6 +28,7 @@ export const fetchUsers = async () => {
 };
 
 
+// 유저 삭제 요청
 export const fetchDeleteUser = async (id) => {
     const response = await fetch(`http://localhost:8080/api/admin/users/${id}`,{
         method:"DELETE",
@@ -37,11 +42,13 @@ export const fetchDeleteUser = async (id) => {
 
 }
 
-export const fetchUploads = async ({file, userId, country_id, travelDate}) => {
+
+// 업로드 요청
+export const fetchUploads = async ({file, userId, country_name, travelDate}) => {
     const formData = new FormData();
     formData.append("photo", file);
     formData.append("user_id", userId);
-    formData.append("country_id", country_id);
+    formData.append("country_name", country_name);
     formData.append("travel_date", travelDate);
 
     return  await fetch("http://localhost:8080/api/upload", {
@@ -49,4 +56,19 @@ export const fetchUploads = async ({file, userId, country_id, travelDate}) => {
         body: formData,
         credentials: "include",
     })
+}
+
+
+// 유저 업로드 카운트요청
+
+export const fetchUserUploadCount = async ()=>{
+    const res = await fetch("http://localhost:8080/api/admin/uploads/count",{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    })
+    if (!res.ok) throw new Error("업로드 카운트 가져오기 실패");
+    return await res.json();
 }
