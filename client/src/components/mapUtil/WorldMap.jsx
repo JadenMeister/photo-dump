@@ -28,6 +28,12 @@ const WorldMap = () => {
         credentials: "include",
     })
       alert("로그아웃 되었습니다.");
+     sessionStorage.clear();
+      sessionStorage.removeItem("id");
+     sessionStorage.removeItem("username");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("permissions");
+
     Navigate("/");
   }
 
