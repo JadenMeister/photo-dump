@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import { fetchUserUploadsCountry} from "@/api/fetchDataApi.js";
 
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#0088FE", "#de09ec", "#FFBB28", "#FF8042"];
 
 export default function UserUploadChart() {
 
@@ -23,7 +23,7 @@ export default function UserUploadChart() {
         }));
 
         setData(formattedData);
-        console.log("업로드 카운트 데이터:", formattedData );
+
 
 
         if(!data || data.length === 0){
