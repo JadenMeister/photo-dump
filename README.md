@@ -16,18 +16,18 @@ PhotoDump은 사용자가 여행 중 촬영한 사진을 세계 지도 위에 �
 | 3D 그래픽      | **three.js** | 지구, 우주 배경 등 3D 모델링에 사용 |
 | 백엔드         | Node.js, Express | RESTful API 설계         |
 | 인증           | express-session, bcrypt | 로그인 인증 + 비밀번호 암호화 처리            |
-| 파일 업로드     | Multer       | 이미지 업로드 처리 및 base64 변환           |
+| 파일 업로드     | aws S3 storage       | 이미지 업로드 처리           |
 | 데이터베이스   | MySQL, Docker | 사용자, 사진 데이터 저장         |
 | 버전관리       | Git, GitHub  | 협업 및 버전 관리             |
 | 개발도구       | WebStorm     | 생산성 높은 개발환경            |
-| 서버           | aws(예정)    | PaaS 지향 클라우드 서비스 이용 |
+| 서버           | aws(예정)    | 클라우드 서비스 이용 |
 
 
 ---
 
 ## 🌟 핵심 기능
 
-- 🌍 세계 지도 기반 UI (국가별 클릭 및 업로드)
+- 🌍 세계 지도 기반 UI (국가별 클릭 및 업로드) 
 - 🖼 나라별 사진 업로드 및 미리보기 (base64 저장, `.webp` 변환 예정)
 - 🧷 지도 위 사진 마커 (썸네일 마커 + offset 격자 배치)
 - 📊 업로드 수 시각화 (컬러 또는 썸네일 증가)
@@ -84,25 +84,6 @@ created_at|	DATETIME	|가입 시간|
 | centroid_lat | 	FLOAT	   | 위도    |
 | centroid_lon | 	FLOAT	   | 경도    |
 
-
-
----
-
-## 🧪 설치 방법
-
-```bash
-# 프론트엔드
-cd src
-npm install
-npm run dev
-
-# 백엔드
-cd server
-npm install
-npm run dev
-
-
-```
 
 ---
 
