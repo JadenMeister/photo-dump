@@ -1,35 +1,42 @@
 import React, { useState, useEffect,  } from "react";
 import {Link, Links, useNavigate} from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  ZoomableGroup,
-} from "react-simple-maps";
-import { Tooltip } from "react-tooltip";
-import "../../styles/WorldMap.css";
+import {MapContainer, TileLayer,  Marker, useMapEvents, GeoJSON} from "react-leaflet";
 import {UploadTooltip} from "./UploadTooltip";
+
 
 
 
 const WorldMap = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-    const {user,setUser, isLogin, setIsLogin} = useAuth();
+  const {user,setUser, isLogin, setIsLogin} = useAuth();
   const Navigate = useNavigate() ;
+  const [geoData, setGeoData] = useState(null);
+
+  useEffect(() => {
+    fetch(
+        "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson"
+    )
+        .then((res) => res.json())
+        .then(setGeoData);
+  }, []);
 
 
-  function logout() {
-    fetch("http://localhost:8080/api/logout", {
-        method: "POST",
-        credentials: "include",
-    })
-      alert("로그아웃 되었습니다.");
+  function handelMP(){
+    Navigate("/mypage");
+  }
+
+  const logout = () => {
+    alert(`로그아웃 되었습니다. ${user.username}님`);
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("permissions");
+    sessionStorage.removeItem("id");
+    setIsLogin(false);
     Navigate("/");
   }
 
 
-  const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-50m.json";
 
   useEffect(() => {
       const storedUsername = sessionStorage.getItem("username");
@@ -46,71 +53,78 @@ const WorldMap = () => {
     }
   }, []);
 
+  const onEachCountry = (feature, layer) => {
+    const name = feature.properties.name;
 
+    layer.bindTooltip(name, {
+      sticky: false,
+      direction: "top",
+      opacity:0.7,
+      className: "leaflet-tooltip",
+    });
+
+    layer.on({
+      mouseover: () => {
+        layer.setStyle({
+          fillColor: "#444",
+          fillOpacity: 0.3,
+          features: feature.properties,
+          weight: 1,
+          color: "#666",
+        });
+      },
+
+      mouseout: () => {
+        layer.setStyle({
+          fillColor: "#D6D6DA",
+          fillOpacity: 0.5,
+          weight: 0.5,
+          color: "#aaa",
+        });
+      },
+      click: () => {
+        console.log("나라 클릭됨:", feature.properties.name);
+        setSelectedCountry(name);
+      },
+    });
+  };
 
   return (
-    <div className="world-map-container">
+    <div className="relative w-full h-screen bg-gray-100 overflow-hidden">
 
-      <div className="welcome-message">
-        <h2>환영합니다, {user.username}님!</h2>
-        <p>지도에서 원하는 나라를 클릭하여 사진을 업로드하세요.</p>
+      <div className="absolute  top-5 bg-white/90 p-4  mx-15 rounded-lg shadow-md z-10000">
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">환영합니다, {user.username}님!</h2>
+        <p className="text-sm text-gray-900">지도에서 원하는 나라를 클릭하여 사진을 업로드하세요.</p>
 
-          <button className="logoutBtn" onClick={() => {logout()} }>Logout</button>
+          <button className="mt-4 w-32 px-4 py-2 bg-red-950 text-white rounded hover:bg-red-700 mr-5"
+                  onClick={logout}>Logout</button>
+
+        <button className="mt-4 w-32 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+                onClick={handelMP} > MyPage</button>
       </div>
 
-      <ComposableMap
-        projection="geoEquirectangular"
-        projectionConfig={{
-          scale: 200,
-          center: [0, 0],
-        }}
-      >
-        <ZoomableGroup>
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map(geo => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  data-tooltip-id="continent-tooltip"
-                  data-tooltip-content={geo.properties.name}
-                  onClick={() => {
-                      if(selectedCountry) return;
-                      const countryName = geo.properties.name;
-                      setSelectedCountry(countryName);
-                      console.log("나라 클릭됨:", countryName);
 
-                  }}
-                  style={{
-                    default: {
-                      fill: "#D6D6DA",
-                      stroke: "#FFFFFF",
-                      strokeWidth: 0.5,
-                      outline: "none",
-                    },
-                    hover: {
-                      fill: "#383a42",
-                      stroke: "#FFFFFF",
-                      strokeWidth: 0.5,
-                      outline: "none",
-                        cursor: "pointer"
-                    },
-                    pressed: {
-                      fill: "#383a42",
-                      stroke: "#FFFFFF",
-                      strokeWidth: 0.5,
-                      outline: "none",
-                    },
-                  }}
-                />
-              ))
-            }
-          </Geographies>
-        </ZoomableGroup>
-      </ComposableMap>
+      <MapContainer center={[20, 0]} zoom={2} scrollWheelZoom={true} className="w-full h-full">
+        <TileLayer
+            url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
+            attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+        />
 
+        {geoData && (
+            <GeoJSON
+                data={geoData}
+                onEachFeature={onEachCountry}
+                style={{
+                  fillColor: "#D6D6DA",
+                  weight: 0.5,
+                  color: "#aaa",
+                  fillOpacity: 0.5,
+                }}
+            />
+        )}
 
-        <Tooltip id="continent-tooltip" />
+      </MapContainer>
+
       {selectedCountry && (
           <UploadTooltip
               selectedCountry={selectedCountry}

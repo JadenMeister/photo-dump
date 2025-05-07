@@ -1,4 +1,4 @@
-import AdminLogOut from "./AdminLogOut.jsx";
+import LogOut from "../CommonComps/LogOut.jsx";
 
 
 function AdminSide() {
@@ -23,7 +23,7 @@ function AdminSide() {
               </ul>
 
               <div className=" absolute bottom-10 left-10">
-                  <AdminLogOut/>
+                  <LogOut/>
               </div>
 
           </div>

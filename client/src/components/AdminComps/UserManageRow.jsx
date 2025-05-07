@@ -1,6 +1,7 @@
 import {HiDotsHorizontal} from "react-icons/hi";
 import {useState} from "react";
 import {textureLoad} from "three/tsl";
+import {Table} from "@chakra-ui/react"
 
 
 export default function UserManageRow({user, openRowId, setOpenRowId}) {

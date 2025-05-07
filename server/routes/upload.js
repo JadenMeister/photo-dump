@@ -2,25 +2,80 @@ const router = require("express").Router();
 const pool = require("../config/database");
 const express = require("express");
 const multer = require("multer");
+const AWS = require("aws-sdk");
+const multerS3 = require("multer-s3");
+const {S3Client} = require("@aws-sdk/client-s3");
+require("dotenv").config();
 
-// memeoryStorage를 사용하여 메모리에 파일 저장시에는 옵션 없이
-const multerStorage = multer.memoryStorage();
+
+
+// AWS S3 설정 v3로 변경
+const s3 = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    }
+});
 
 //multer 설정
-const upload = multer({multerStorage})
+const upload = multer ({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.AWS_S3_BUCKET,
+        acl: "public-read",
+        contentType: multerS3.AUTO_CONTENT_TYPE,
+        key: function (req, file, cb) {
+            const filename = `${Date.now()}_${file.originalname}`;
+            cb(null, `uploads/${filename}`);
+        },
+    }),
+
+    // 파일업로드 취약점 방지 로직
+    limits: {fileSize: 5* 1024 * 1024}, // 5MB
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg", "image/webp"];
+        if(allowedTypes.includes(file.mimetype)){
+            cb(null, true);
+        } else{
+            cb(new Error("허용되지 않는 파일 형식입니다."), false);
+        }
+    }
+})
 
 
 
 
-router.post("/", upload.single("file"), (req,res )=>{
+
+router.post("/", upload.single("photo"), async (req,res,next)=>{
+    const user_id = req.session.user?.id;
+    console.log("받은파일", req.file);
+    console.log("받은바디", req.body);
+    if(!user_id){
+        console.log("세선없음", req.session);
+    }
+
     try{
         if(!req.file){
             return res.status(400).json({msg: "업로드 할 사진이 없습니다."});
-        } else {
-            const base64 = req.file.buffer.toString("base64");
-            res.status(200).json({msg:"업로드 성공"});
         }
-        
+
+        const {country_name, travel_date} = req.body;
+
+        const photoUrl = req.file.location;
+
+        await req.db.execute("INSERT INTO photos (user_id, country_name, travel_date, photo_url) VALUES (?, ?, ?, ?)",
+
+            [user_id, country_name, travel_date,  photoUrl]
+        );
+
+
+        res.status(200).json({ msg: "업로드 성공", photo_url: photoUrl });
+        console.log("사진 업로드 - 세션 userId:", req.session.user?.id);
+        console.log("업로드 성공", { user_id, country_name, travel_date, photoUrl });
+
+
+
     } catch (err){
         console.error("파일 업로드 실패", err);
         res.status(500).json({ msg: "파일 업로드 실패" });

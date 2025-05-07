@@ -1,12 +1,15 @@
-export default function AdminLogOut() {
+export default function LogOut() {
 
   const logout = () => {
+
+    alert("로그아웃 되었습니다.");
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("role");
     sessionStorage.removeItem("permissions");
+    sessionStorage.removeItem("id");
+    sessionStorage.removeItem("userId");
     sessionStorage.clear();
     window.location.href = '/';
-    alert("로그아웃 되었습니다.");
   }
 
 
