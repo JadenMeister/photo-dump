@@ -1,9 +1,9 @@
 import LogOut from "../CommonComps/LogOut.jsx";
-
+import {Link} from "react-router-dom";
 
 function UserSide() {
 
-  const menuItems = ["DashBoard", "Albums" ]
+  const menuItems = ["DashBoard", "Albums", "Map" ]
 
   return (
 
@@ -18,7 +18,9 @@ function UserSide() {
         <ul className=" flex flex-col gap-5 mt-10">
           {menuItems.map((item, index) => (
               <li key={index} className="text-xl cursor-pointer hover:text-[#FF7F50]">
-                {item}
+                {item === "Map" ? (
+                    <Link to="/map" className="cursor-pointer">Map</Link>
+                ) : item}
               </li>
           ))}
         </ul>
