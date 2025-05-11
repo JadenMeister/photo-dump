@@ -5,7 +5,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
 import LoginModal from "./ui/LoginModal";
 import Earth from "./components/background/Canvas/Earth";
 import WorldMap from "./components/mapUtil/WorldMap";
@@ -49,7 +48,7 @@ function App() {
       </Routes>
     </Router>
       </AuthProvider>
-      </ChakraProvider>
+        </ChakraProvider>
   );
 }
 
