@@ -1,21 +1,8 @@
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const pool = require("../config/database");
+export const checkLoginStatus = (req, res, next) => {
+  if(req.session.user) {
+    next(); // 로그인 상태인 경우 다음 미들웨어로 이동
+  } else{
+    res.status(401).json({ msg: "로그인 필요" }); // 로그인 필요
 
-// 토큰 검증
-const verifyToken = (req, res, next) => {
-  const token = req.header("x-auth-token");
-  if (!token) return res.status(401).send("인증 토큰이 필요합니다.");
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.user;
-    next();
-  } catch (err) {
-    res.status(400).send("토큰이 유효하지 않습니다.");
   }
-};
-
-module.exports = verifyToken;
+}

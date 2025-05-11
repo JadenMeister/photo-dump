@@ -1,51 +1,44 @@
 import { useState, useContext, createContext, useEffect } from "react";
 
+
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [isLogin, setIsLogin] = useState(null);
-    const [user, setUser] = useState({
-        username: "",
-        role: "",
-        permissions: []
-    });
+    const [isLogin, setIsLogin] = useState(false);
+    const [user, setUser] = useState(null);
 
-    const loginData = (userData) => {
-        setUser({
-            id: userData.id,
-            username: userData.username,
-            role: userData.role,
-            permissions: userData.permissions || []
-        });
-        sessionStorage.setItem("id", userData.id);
-        sessionStorage.setItem("username", userData.username);
-        sessionStorage.setItem("role", userData.role);
-        sessionStorage.setItem("permissions", JSON.stringify(userData.permissions || []));
-        setIsLogin(true);
-    };
 
-    const logout = () => {
-        setUser({ username: "", role: "", permissions: [] });
-        sessionStorage.clear();
-        setIsLogin(false);
-    };
 
     useEffect(() => {
-        const id = sessionStorage.getItem("id");
-        const username = sessionStorage.getItem("username");
-        const role = sessionStorage.getItem("role");
-        const permissions = JSON.parse(sessionStorage.getItem("permissions") || "[]");
-
-        if (username && role) {
-            setUser({ id, username, role, permissions });
+        const stored = sessionStorage.getItem("user");
+        console.log("session user:", stored);
+        if (stored) {
+            const sessionData = JSON.parse(stored);
+            setUser(sessionData);
             setIsLogin(true);
-        } else {
-            setIsLogin(false);
         }
     }, []);
 
+    const handleLogin = (userData) => {
+        setUser(userData);
+        setIsLogin(true);
+        sessionStorage.setItem("user", JSON.stringify(userData));
+
+    }
+
+    const handleLogout = () => {
+
+        setUser(null);
+        setIsLogin(false);
+        sessionStorage.clear();
+    }
+
+
+
+
     return (
-        <AuthContext.Provider value={{ isLogin, user, loginData, logout, setUser, setIsLogin }}>
+        <AuthContext.Provider value={{ isLogin, setIsLogin, handleLogin, handleLogout, user, setUser }}>
             {children}
         </AuthContext.Provider>
     );

@@ -9,7 +9,7 @@ import {UploadTooltip} from "./UploadTooltip";
 
 const WorldMap = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const {user,setUser, isLogin, setIsLogin} = useAuth();
+  const {user,isLogin, setIsLogin, handleLogout, setUser,} = useAuth();
   const Navigate = useNavigate() ;
   const [geoData, setGeoData] = useState(null);
 
@@ -28,11 +28,7 @@ const WorldMap = () => {
 
   const logout = () => {
     alert(`로그아웃 되었습니다. ${user.username}님`);
-    sessionStorage.removeItem("username");
-    sessionStorage.removeItem("role");
-    sessionStorage.removeItem("permissions");
-    sessionStorage.removeItem("id");
-    setIsLogin(false);
+    handleLogout();
     Navigate("/");
   }
 
@@ -93,7 +89,7 @@ const WorldMap = () => {
     <div className="relative w-full h-screen bg-gray-100 overflow-hidden">
 
       <div className="absolute  top-5 bg-white/90 p-4  mx-15 rounded-lg shadow-md z-10000">
-        <h2 className="text-lg font-semibold text-gray-800 mb-2">환영합니다, {user.username}님!</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-2">환영합니다, {user?.username}님!</h2>
         <p className="text-sm text-gray-900">지도에서 원하는 나라를 클릭하여 사진을 업로드하세요.</p>
 
           <button className="mt-4 w-32 px-4 py-2 bg-red-950 text-white rounded hover:bg-red-700 mr-5"

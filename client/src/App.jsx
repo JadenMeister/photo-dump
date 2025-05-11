@@ -13,6 +13,9 @@ import SpaceBackground from "./components/background/SpaceBackground";
 import AdminDash from "./pages/AdminDash";
 import Mypage from "./pages/Mypage";
 import { AuthProvider } from "./context/AuthContext";
+import { ChakraProvider } from "@chakra-ui/react";
+import { system } from "./components/ui/theme.js";
+
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -23,6 +26,7 @@ function App() {
   }, []);
 
   return (
+      <ChakraProvider value={system} >
       <AuthProvider>
     <Router>
       <Routes>
@@ -45,6 +49,7 @@ function App() {
       </Routes>
     </Router>
       </AuthProvider>
+      </ChakraProvider>
   );
 }
 

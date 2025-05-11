@@ -101,3 +101,19 @@ export const fetchUserUploadsCountry = async ()=>{
     return await res.json();
 
 }
+
+
+export const fetchUserPhotos = async ()=>{
+    const res = await fetch("http://localhost:8080/api/users/upload-photos",{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    })
+    if (!res.ok) throw new Error("사진 가져오기 실패");
+    return await res.json();
+
+
+
+}
