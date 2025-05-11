@@ -18,23 +18,27 @@ export default function UserUploadChart() {
         const res = await fetchUserUploadsCountry();
 
         const formattedData = res.map((item) => ({
-          country: item.country_name,
+
+          country: item.country_name === undefined || item.country_name === "undefined"
+              ? "알 수 없음"
+              : item.country_name,
           count: item.upload_count,
+
         }));
 
         setData(formattedData);
 
 
-
-        if(!data || data.length === 0){
-          return res.status(404).json({msg: "업로드 카운트 데이터 없음"});
+        if(!formattedData || formattedData.length === 0){
+          setData([
+            { country: "업로드 없음", count: 0 },
+          ]);
         }
-        res.status(200).json(data);
 
 
       }catch(err){
         console.error("업로드 카운트 조회 오류:", err);
-        return res.status(500).json({ msg: "서버 오류" });
+
       }
 
     }
@@ -42,10 +46,10 @@ export default function UserUploadChart() {
   }, []);
 
   return (
-      <div className="w-full h-96 p-4 bg-white rounded-xl shadow-md">
+      <div className="w-108 h-170.25 flex flex-col items-center justify-center bg-[#F5F5F5] hover:scale-102 transition-all duration-300 shadow-lg">
         <h2 className="text-xl font-semibold mb-4 text-center">업로드 비율</h2>
 
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="60%" height="60%">
           <PieChart>
             <Pie
                 data={data}
