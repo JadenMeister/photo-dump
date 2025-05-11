@@ -12,6 +12,7 @@ const sessionRouter = require("./routes/session");
 const adminRouter = require("./routes/admin");
 const userRouter = require("./routes/user");
 const uploadRouter = require("./routes/upload");
+const authCheckRouter = require("./routes/authCheck");
 
 
 
@@ -57,6 +58,7 @@ app.use("/api/session", sessionRouter);
 app.use("/api/admin",adminRouter );
 app.use("/api/upload", uploadRouter);
 app.use("/api/users", userRouter);
+app.use("/api/authCheck", authCheckRouter);
 
 
 
