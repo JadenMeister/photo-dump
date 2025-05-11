@@ -1,14 +1,12 @@
 import { useState, useContext, createContext, useEffect } from "react";
 
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [isLogin, setIsLogin] = useState(null);
-    const [user, setUser] = useState({
-        username: "",
-        role: "",
-        permissions: []
-    });
+    const [isLogin, setIsLogin] = useState(false);
+    const [user, setUser] = useState(null);
+
 
     const loginData = (userData) => {
         setUser({
@@ -24,28 +22,45 @@ export const AuthProvider = ({ children }) => {
         setIsLogin(true);
     };
 
-    const logout = () => {
-        setUser({ username: "", role: "", permissions: [] });
-        sessionStorage.clear();
+
+
+    useEffect(()=>{
+        fetch('http://localhost:8080/api/authCheck/',{
+
+            method: 'GET',
+            credentials: 'include',
+        })
+            .then(res => {
+                if(res.ok){
+                    return res.json();
+                } else{
+                    throw new Error("로그인 필요");
+                }
+            })
+            .then((data =>{
+                if(data?.user){
+                    setIsLogin(true);
+                    setUser(data.user);
+                }
+            })
+            )
+
+    },[])
+
+    const handleLogin = () => {
+        setIsLogin(true);
+    }
+
+    const handleLogout = () => {
         setIsLogin(false);
-    };
+        sessionStorage.clear();
+    }
 
-    useEffect(() => {
-        const id = sessionStorage.getItem("id");
-        const username = sessionStorage.getItem("username");
-        const role = sessionStorage.getItem("role");
-        const permissions = JSON.parse(sessionStorage.getItem("permissions") || "[]");
 
-        if (username && role) {
-            setUser({ id, username, role, permissions });
-            setIsLogin(true);
-        } else {
-            setIsLogin(false);
-        }
-    }, []);
+
 
     return (
-        <AuthContext.Provider value={{ isLogin, user, loginData, logout, setUser, setIsLogin }}>
+        <AuthContext.Provider value={{ isLogin, setIsLogin, handleLogin, handleLogout, loginData, user, setUser }}>
             {children}
         </AuthContext.Provider>
     );
