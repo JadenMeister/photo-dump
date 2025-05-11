@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { fetchUserPhotos } from "../../api/fetchDataApi.js"
-import {ChakraProvider} from "@chakra-ui/react";
-import {system} from "@/components/ui/theme.js";
-
-
+// Charkra ui v3부턴 modal이 아닌 Dialog로 바뀜
+import { CloseButton, Dialog, Portal} from "@chakra-ui/react";
 
 
 export default function UserAlbum() {
 
 
   const [photos, setPhotos] = useState([]);
+
+
+
 
 
   useEffect(() => {
@@ -45,13 +46,38 @@ export default function UserAlbum() {
             {photos
                 .filter(photo => photo && photo.photo_url)
                 .map((photo, index) => (
-              <div key={index} className="w-full h-full flex items-center justify-center">
+              <Dialog.Root key={index} className="w-full h-full flex items-center justify-center">
+                <Dialog.Trigger asChild>
+                  <CloseButton size="sm"/>
+                {/*table안에 있는 s3 사진 경로 */}
                 <img
                   src={photo.photo_url}
                   alt={`Photo ${index + 1}`}
                   className="w-full h-full object-cover rounded-lg hover:scale-105 transition-all duration-300 cursor-pointer"
                 />
-              </div>
+                </Dialog.Trigger>
+
+                {/*//다이얼로그 세팅 */}
+
+                <Dialog.Positioner>
+                  <Dialog.Content maxW="90vw" maxH="90vh">
+                    <Dialog.Header display="flex" justifyContent="space-between" alignItems="center">
+                      사진 둘러보기
+                      <Dialog.CloseTrigger asChild>
+                      <CloseButton size="sm" />
+                      </Dialog.CloseTrigger>
+                    </Dialog.Header>
+                    <Dialog.Body>
+                      <img
+                        src={photo.photo_url}
+                        alt="자세히 볼 사진"
+                        className="w-full h-full object-contain rounded-lg"
+                      />
+                    </Dialog.Body>
+                  </Dialog.Content>
+                </Dialog.Positioner>
+
+              </Dialog.Root>
             ))}
           </div>
         ) : (
