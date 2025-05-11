@@ -37,7 +37,7 @@ export default function UserAlbum() {
 
   return (
 
-      <div className="w-108 h-170.25 flex flex-col items-center justify-center bg-[#F5F5F5] hover:scale-102 transition-all duration-300 shadow-lg">
+      <div className="w-108 h-170.25 flex flex-col items-center justify-center bg-[#F5F5F5]  transition-all duration-300 shadow-lg">
         <h2 className="text-xl font-semibold mb-4 text-center">Gallery</h2>
 
         {photos.length > 0 ?(
@@ -46,27 +46,30 @@ export default function UserAlbum() {
             {photos
                 .filter(photo => photo && photo.photo_url)
                 .map((photo, index) => (
-              <Dialog.Root key={index} className="w-full h-full flex items-center justify-center">
+              <Dialog.Root key={index}>
                 <Dialog.Trigger asChild>
-                  <CloseButton size="sm"/>
                 {/*table안에 있는 s3 사진 경로 */}
                 <img
                   src={photo.photo_url}
                   alt={`Photo ${index + 1}`}
-                  className="w-full h-full object-cover rounded-lg hover:scale-105 transition-all duration-300 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg hover:scale-105 transition-all duration-300 cursor-pointer pointer-events-auto"
                 />
                 </Dialog.Trigger>
 
                 {/*//다이얼로그 세팅 */}
 
+                <Portal>
+                  <Dialog.Backdrop/>
                 <Dialog.Positioner>
-                  <Dialog.Content maxW="90vw" maxH="90vh">
-                    <Dialog.Header display="flex" justifyContent="space-between" alignItems="center">
-                      사진 둘러보기
-                      <Dialog.CloseTrigger asChild>
+                  <Dialog.Content >
+                    <Dialog.CloseTrigger asChild>
                       <CloseButton size="sm" />
-                      </Dialog.CloseTrigger>
+                    </Dialog.CloseTrigger>
+                    <Dialog.Header display="flex" justifyContent="space-between" alignItems="center" width="100vw">
+                      둘러보기
                     </Dialog.Header>
+
+                    {/*모달 바디*/}
                     <Dialog.Body>
                       <img
                         src={photo.photo_url}
@@ -76,7 +79,7 @@ export default function UserAlbum() {
                     </Dialog.Body>
                   </Dialog.Content>
                 </Dialog.Positioner>
-
+                </Portal>
               </Dialog.Root>
             ))}
           </div>

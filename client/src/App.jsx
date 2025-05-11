@@ -26,7 +26,7 @@ function App() {
   }, []);
 
   return (
-      <ChakraProvider value={system} resetCSS={false}>
+      <ChakraProvider value={system} >
       <AuthProvider>
     <Router>
       <Routes>
