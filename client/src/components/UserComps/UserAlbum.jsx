@@ -61,7 +61,7 @@ export default function UserAlbum() {
                 <Portal>
                   <Dialog.Backdrop/>
                 <Dialog.Positioner>
-                  <Dialog.Content>
+                  <Dialog.Content >
                     <Dialog.CloseTrigger asChild>
                       <CloseButton size="lg" />
                     </Dialog.CloseTrigger>
