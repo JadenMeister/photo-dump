@@ -12,12 +12,12 @@ const customConfig = defineConfig({
         baseStyle: {
           positioner: {
             w: "100vw",
-            h: "80vh",
+            h: "100vh",
           },
           content: {
-            bg: "gray.100",
-            w: "90vw",
-            h: "60vh",
+            bg: "gray.900",
+            w: "100vw",
+            h: "100vh",
             borderRadius: "20px",
           },
         },
