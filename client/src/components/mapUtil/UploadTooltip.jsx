@@ -33,14 +33,13 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
       .then((res) => {
           if (res.ok) {
               alert("업로드 성공");
-              console.log("업로드 성공나라", selectedCountry);
               Navigate("/map");
               setSelectedCountry(null);
 
           } else {
               alert("업로드 실패");
-              console.log(user.id)
-              console.log("업로드 실패", selectedCountry);
+
+
 
           }
       })

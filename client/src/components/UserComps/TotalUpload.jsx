@@ -23,7 +23,7 @@ export default function TotalUpload() {
   }, [])
 
 return (
-    <div className="w-26% h-1/2 bg-[#F5F5F5] rounded-lg shadow-lg flex flex-col items-center justify-center">
+    <div className="w-108.5 h-30.25 flex flex-col items-center justify-center bg-[#F5F5F5] hover:scale-102 transition-all duration-300 shadow-lg">
       <h2 className="text-2xl font-bold">업로드 수</h2>
       <p className="text-2xl font-bold">{count}</p>
     </div>

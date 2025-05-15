@@ -1,13 +1,10 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import defaultTheme from '@chakra-ui/theme'
+import { system } from "./theme.js";   // 또는 import { defaultSystem } from "@chakra-ui/react";
+
 
 export function Provider({ children, resetCSS = true, ...rest }) {
     return (
-        <ChakraProvider
-            theme={defaultTheme}
-            resetCSS={resetCSS}
-            {...rest}
-        >
+        <ChakraProvider value={system}>
             {children}
         </ChakraProvider>
     )

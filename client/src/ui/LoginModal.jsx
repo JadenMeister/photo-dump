@@ -5,7 +5,7 @@ import {SignupForm} from "./SignupForm.jsx";
 
 function LoginModal({ onClose, }) {
 
-  const {loginData} = useAuth();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -40,7 +40,6 @@ function LoginModal({ onClose, }) {
         console.log("로그인 응답", data);
 
       if (response.ok) {
-        loginData(data.user);
         sessionStorage.setItem("username", data.user.username);
         sessionStorage.setItem("role", data.user.role);
         sessionStorage.setItem("permissions", JSON.stringify(data.user.permissions));
