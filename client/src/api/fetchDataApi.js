@@ -6,7 +6,7 @@
 
 // 나라 리스트 요청
 export const fetchCountries = async () => {
-    const response = await fetch("http://localhost:8080/api/admin/uploads",{
+    const response = await fetch("http://localhost:8080/api/admin/country-uploads",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",

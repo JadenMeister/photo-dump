@@ -52,8 +52,9 @@ router.delete("/users/:id", adminAuth, async (req, res) => {
 router.get("/country-uploads", adminAuth, async (req, res) => {
     try{
         // db에서 가져온 업로드 통계 데이터
-        const [uploads] = await req.db.execute("SELECT name, COUNT(*) as upload_count FROM photos GROUP BY name");
+        const [uploads] = await req.db.execute("SELECT country_name, COUNT(*) as upload_count FROM photos GROUP BY country_name");
         res.status(200).json(uploads);
+        console.log("업로드 통계", uploads); //디버깅용
 
     } catch(err){
         console.error("업로드 통계 조회 실패", err);
