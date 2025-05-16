@@ -63,5 +63,18 @@ router.get("/country-uploads", adminAuth, async (req, res) => {
 
 });
 
+// 총업로드 카운트
+
+router.get("/total-uploads", adminAuth, async (req, res) => {
+    try{
+        const [count] = await req.db.execute("SELECT COUNT(*) as upload_count FROM photos");
+        res.status(200).json(count[0]);
+
+    }catch(err){
+        console.error("업로드 카운트 조회 실패", err);
+        res.status(500).json({msg: "업로드 카운트 조회 실패"});
+    }
+})
+
 module.exports = router;
 
