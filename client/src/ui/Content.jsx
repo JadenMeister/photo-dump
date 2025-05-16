@@ -1,12 +1,21 @@
 import "../styles/Content.css"
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {useAuth} from "../context/AuthContext.jsx";
 
 
 
 
 
 const Content = ({ onExploreClick }) => {
-    const [isLogin, setIsLogin] = useState(false);
+    const navigate = useNavigate();
+    const { isLogin } = useAuth();
+
+    const handleToMap = () => {
+
+            navigate("/map");
+
+    };
 
     return (
         <div className="space-content">
@@ -17,9 +26,10 @@ const Content = ({ onExploreClick }) => {
                 </p>
 
 
-                <button className="space-cta-button" onClick={ onExploreClick} >
+                <button className="space-cta-button" onClick={ isLogin ? handleToMap : onExploreClick} >
                     { isLogin ? "Go to your map" : "Start Explore" }
                 </button>
+
             </div>
         </div>
     );
