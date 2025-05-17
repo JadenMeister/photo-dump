@@ -19,15 +19,10 @@ export default function UserAlbum() {
 
   const handleDeletePhoto = async (id) => {
     try {
-      const res = await fetchUserPhotoDelete(id)
-      if (res.ok) {
+      const res = await fetchUserPhotoDelete(id);
         alert("사진 삭제 성공");
         setPhotos(photos.filter(photo => photo.id !== id));
-      } else {
-        alert("사진 삭제 실패");
-      }
-
-    } catch (err) {
+      } catch (err) {
       console.error("사진 삭제 실패", err);
     }
   }
@@ -56,8 +51,8 @@ export default function UserAlbum() {
 
   return (
 
-      <div className="w-108 h-170.25 flex flex-col justify-center bg-[#F5F5F5] transition-all duration-300 shadow-lg">
-        <h2 className="text-xl font-semibold mb-4 text-center postion-sticky ">Gallery</h2>
+      <div className="w-108 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg">
+        <h2 className="text-xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
 
         {photos.length > 0 ? (
             <div className="grid w-full grid-cols-3 px-5 gap-3">
@@ -118,7 +113,7 @@ export default function UserAlbum() {
                   ))}
             </div>
         ) : (
-            <p>업로드된 사진이 없습니다.</p>
+            <p className="flex justify-center items-center">업로드된 사진이 없습니다.</p>
         )}
 
 

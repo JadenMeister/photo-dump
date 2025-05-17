@@ -104,8 +104,15 @@ router.delete("/delete-photos", async (req,res,next)=>{
     }
 
     try{
+
+        const [[photo]] = await req.db.execute("SELECT photo_url FROM photos WHERE id = ? AND user_id = ?", [photoId, user_id]);
+
+        if(!photo || !photo.photo_url){
+            return res.status(404).json({msg: "사진을 찾을 수 없습니다."});
+        }
+
         //버킷에서 삭제
-        const key = photo_url.split(".amazonaws.com/")[1];
+        const key = photo.photo_url.split(".amazonaws.com/")[1];
         const s3Delete= new DeleteObjectCommand({
             Bucket: process.env.AWS_S3_BUCKET,
             Key: key
