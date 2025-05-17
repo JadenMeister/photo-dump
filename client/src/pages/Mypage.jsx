@@ -9,6 +9,8 @@ const Mypage = () => {
 
     const [isLogin, setIsLogin] = useState(false);
     const [username, setUsername] = useState("");
+    const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [openRowId, setOpenRowId] = useState(null);
     const Navigate = useNavigate() ;
 
     useEffect(() => {
@@ -35,7 +37,12 @@ const Mypage = () => {
 
            <div className="h-screen overflow-hidden flex justify-around mb-5">
              <UserUploadChart/>
-             <UserAlbum/>
+             <UserAlbum
+                photoId={selectedPhoto}
+                openRowId={openRowId}
+                setOpenRowId={setOpenRowId}
+
+             />
            </div>
          </div>
 

@@ -73,26 +73,6 @@ router.get ("/upload-photos", async (req, res)=>{
   }
 })
 
-//업로드 사진 삭제하기
-router.delete("/upload-photos/:id", async (req, res)=>{
-  const userId = req.session?.user?.id;
-  if(!userId){
-    return res.status(401).json({msg: "로그인 필요"});
-  }
-  try{
-    await req.db.execute(
-        `select * from photos where id = ?`,
-
-    );
-    res.status(200).json({msg: "사진 삭제 성공"});
-
-  } catch(err){
-    console.error("사진 삭제 오류:", err);
-    return res.status(500).json({ msg: "서버 오류" });
-  }
-
-})
-
 
 
 module.exports = router;
