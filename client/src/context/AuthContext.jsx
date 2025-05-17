@@ -5,7 +5,8 @@ import { useState, useContext, createContext, useEffect } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [isLogin, setIsLogin] = useState(false);
+    // 로그인 상태를 boolean이 아닌 null로 초기화
+    const [isLogin, setIsLogin] = useState(null);
     const [user, setUser] = useState(null);
 
 

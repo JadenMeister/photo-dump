@@ -14,7 +14,7 @@ const SpaceBackground = () => {
     const [showLogin, setShowLogin] = useState(false)
 
     return(
-        <div className="space-container">
+        <div className="absolute h-screen overflow-hidden w-full bg-gradient-to-b from-black to-[#050520]">
             <CanvasScene/>
             <Overlay/>
             <Content onExploreClick={()=> setShowLogin(true)}/>

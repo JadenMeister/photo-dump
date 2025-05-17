@@ -5,7 +5,6 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
 import LoginModal from "./ui/LoginModal";
 import Earth from "./components/background/Canvas/Earth";
 import WorldMap from "./components/mapUtil/WorldMap";
@@ -15,6 +14,7 @@ import Mypage from "./pages/Mypage";
 import { AuthProvider } from "./context/AuthContext";
 import { ChakraProvider } from "@chakra-ui/react";
 import { system } from "./components/ui/theme.js";
+import CameraWithEarth from "../3DModules/Camera.jsx";
 
 
 function App() {
@@ -36,7 +36,9 @@ function App() {
             <div className="app">
 
               <SpaceBackground/>
-                <Earth/>
+                {/*<Earth/>*/}
+              {/*<CameraWithEarth/>*/}
+
 
               {showLogin && <LoginModal />}
             </div>
@@ -49,7 +51,7 @@ function App() {
       </Routes>
     </Router>
       </AuthProvider>
-      </ChakraProvider>
+        </ChakraProvider>
   );
 }
 
