@@ -4,6 +4,7 @@ import "../../../styles/Canvas.css"
 import Stars from "../particies/Star/Stars";
 import Galaxies from "../particies/Galaxies";
 import Earth from "./Earth";
+import CameraWithEarth from "../../../../3DModules/Camera.jsx";
 
 
 const CanvasScene = () => {
@@ -84,6 +85,7 @@ const CanvasScene = () => {
         <Stars scene={backgroundSection.current} />
         <Galaxies scene={backgroundSection.current} />
             <Earth scene={earthSection.current} />
+            {/*<CameraWithEarth parent={earthSection.current} />*/}
 
         </>
     )

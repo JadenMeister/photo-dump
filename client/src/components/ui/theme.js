@@ -18,7 +18,7 @@ const customConfig = defineConfig({
             bg: "gray.900",
             w: "100vw",
             h: "100vh",
-            borderRadius: "20px",
+            borderRadius: "50px",
           },
         },
       },

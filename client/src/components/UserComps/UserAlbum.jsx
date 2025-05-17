@@ -60,17 +60,17 @@ export default function UserAlbum() {
 
                 <Portal>
                   <Dialog.Backdrop/>
-                <Dialog.Positioner>
-                  <Dialog.Content >
+                <Dialog.Positioner >
+                  <Dialog.Content  >
                     <Dialog.CloseTrigger asChild>
                       <CloseButton size="lg" />
                     </Dialog.CloseTrigger>
-                    <Dialog.Header display="flex" justifyContent="center" alignItems="center"  width="auto">
+                    <Dialog.Header display="flex" justifyContent="center" alignItems="center"  width="auto" mt="2">
                       자세히 보기
                     </Dialog.Header>
 
                     {/*모달 바디*/}
-                    <Dialog.Body >
+                    <Dialog.Body width="30vw">
                       <img
                         src={photo.photo_url}
                         alt="자세히 볼 사진"

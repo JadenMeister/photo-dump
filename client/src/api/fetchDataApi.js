@@ -6,46 +6,58 @@
 
 // 나라 리스트 요청
 export const fetchCountries = async () => {
-    const response = await fetch("http://localhost:8080/api/admin/uploads",{
+    const res = await fetch("http://localhost:8080/api/admin/country-uploads",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
     });
-    if (!response.ok) throw new Error("국가 데이터 가져오기 실패");
+    if (!res.ok) throw new Error("국가 데이터 가져오기 실패");
 
-    return await response.json();
+    return await res.json();
 };
 
 
 // 유저 조회 요청
 export const fetchUsers = async () => {
-    const response = await fetch("http://localhost:8080/api/admin/users",{
+    const res = await fetch("http://localhost:8080/api/admin/users",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
     });
-    if (!response.ok) throw new Error("유저 데이터 가져오기 실패");
-    return await response.json();
+    if (!res.ok) throw new Error("유저 데이터 가져오기 실패");
+    return await res.json();
 };
 
 
 // 유저 삭제 요청
 export const fetchDeleteUser = async (id) => {
-    const response = await fetch(`http://localhost:8080/api/admin/users/${id}`,{
+    const res = await fetch(`http://localhost:8080/api/admin/users/${id}`,{
         method:"DELETE",
         headers:{
             "Content-Type": "application/json",
         },
         credentials: "include",
     } );
-    if (!response.ok) throw new Error("유저 삭제 실패");
-    return await response.json();
-
+    if (!res.ok) throw new Error("유저 삭제 실패");
+    return await res.json();
 }
+
+// 총 업로드 통계 요청
+export const fetchTotalCount = async () => {
+    const res = await fetch("http://localhost:8080/api/admin/total-uploads",{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    });
+    return await res.json();
+}
+
 
 //! FOR USER
 
