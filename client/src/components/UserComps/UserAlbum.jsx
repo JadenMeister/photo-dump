@@ -93,9 +93,11 @@ export default function UserAlbum() {
                               <Dialog.CloseTrigger asChild>
                                 <CloseButton size="lg"/>
                               </Dialog.CloseTrigger>
-                              <Dialog.Header display="flex" justifyContent="center" alignItems="center" width="auto"
-                                             mt="2">
-                                자세히 보기
+                              <Dialog.Header display="flex" flex-direction="col"  justifyContent="center" alignItems="center" width="auto" mt="2">
+                                <div className="flex flex-col items-center">
+                                <h2 className="text-xl font-bold mb-4 text-center">{photo.country_name}</h2>
+                                <h2 className="text-sm font-semibold mb-4 text-center">{new Date(photo.travel_date).toLocaleDateString()}</h2>
+                                </div>
                               </Dialog.Header>
 
                               {/*모달 바디*/}
