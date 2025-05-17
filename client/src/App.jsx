@@ -14,6 +14,7 @@ import Mypage from "./pages/Mypage";
 import { AuthProvider } from "./context/AuthContext";
 import { ChakraProvider } from "@chakra-ui/react";
 import { system } from "./components/ui/theme.js";
+import CameraWithEarth from "../3DModules/Camera.jsx";
 
 
 function App() {
@@ -35,7 +36,9 @@ function App() {
             <div className="app">
 
               <SpaceBackground/>
-                <Earth/>
+                {/*<Earth/>*/}
+              {/*<CameraWithEarth/>*/}
+
 
               {showLogin && <LoginModal />}
             </div>
