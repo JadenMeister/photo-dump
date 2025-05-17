@@ -25,6 +25,7 @@ const CanvasScene = () => {
 
 
         //카메라 초기화 및 별 생성 ( 카메라가 보는 세로 시야각, 종횡비, 근거리 클리핑, 원거리 클리핑 순서)
+        const isMobile = window.innerWidth < 768;
         cameraRef.current = new THREE.PerspectiveCamera(75, width / height, 1, 1000);
         cameraRef.current.position.z = 5;
 
@@ -79,12 +80,12 @@ const CanvasScene = () => {
 
     return (
         <>
-        <div className="canvas-container" ref={mountRef}></div>
+        <div ref={mountRef}></div>
 
             {/*그룹화 작업 적용 테스트}*/}
         <Stars scene={backgroundSection.current} />
         <Galaxies scene={backgroundSection.current} />
-            <Earth scene={earthSection.current} />
+            <Earth  scene={earthSection.current} />
             {/*<CameraWithEarth parent={earthSection.current} />*/}
 
         </>

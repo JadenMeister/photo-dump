@@ -6,8 +6,8 @@ import { useEffect } from "react";
 const Earth = ({ scene }) => {
   useEffect(() => {
     if (!scene) return;
-    const geo = new THREE.SphereGeometry(1, 64, 64);
-    const textureLoader = new THREE.TextureLoader();
+    const isMobile = window.innerWidth < 768;
+    const geo = new THREE.SphereGeometry(isMobile ? 0.6 : 1, 64, 64);    const textureLoader = new THREE.TextureLoader();
     const earthTexture = textureLoader.load("/images/earthTexture.jpg");
 
     const mat = new THREE.MeshStandardMaterial({
@@ -16,7 +16,7 @@ const Earth = ({ scene }) => {
 
     const mesh = new THREE.Mesh(geo, mat);
 
-    mesh.position.set(2, 0, 1); // 위치 조정 가능
+    mesh.position.set(isMobile ? 0 : 2, 0, isMobile ? 0 : 1);
     scene.add(mesh);
 
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
