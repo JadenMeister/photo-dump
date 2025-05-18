@@ -5,6 +5,7 @@ const multer = require("multer");
 const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
 const {S3Client} = require("@aws-sdk/client-s3");
+const {DeleteObjectCommand} = require("@aws-sdk/client-s3");
 require("dotenv").config();
 
 
@@ -31,6 +32,9 @@ const upload = multer ({
         },
     }),
 
+
+
+
     // 파일업로드 취약점 방지 로직
     limits: {fileSize: 5* 1024 * 1024}, // 5MB
     fileFilter: (req, file, cb) => {
@@ -46,6 +50,7 @@ const upload = multer ({
 
 
 
+//업로드
 
 router.post("/", upload.single("photo"), async (req,res,next)=>{
     const user_id = req.session.user?.id;
@@ -82,4 +87,45 @@ router.post("/", upload.single("photo"), async (req,res,next)=>{
     }
 })
 
+
+
+// 삭제
+
+router.delete("/delete-photos", async (req,res,next)=>{
+    const user_id = req.session.user?.id;
+    const photoId = req.body.id;
+
+    if(!user_id){
+        return res.status(401).json({msg: "로그인 필요"});
+    }
+
+    if(!photoId){
+        return res.status(400).json({msg: "삭제할 사진 ID가 필요합니다."});
+    }
+
+    try{
+
+        const [[photo]] = await req.db.execute("SELECT photo_url FROM photos WHERE id = ? AND user_id = ?", [photoId, user_id]);
+
+        if(!photo || !photo.photo_url){
+            return res.status(404).json({msg: "사진을 찾을 수 없습니다."});
+        }
+
+        //버킷에서 삭제
+        const key = photo.photo_url.split(".amazonaws.com/")[1];
+        const s3Delete= new DeleteObjectCommand({
+            Bucket: process.env.AWS_S3_BUCKET,
+            Key: key
+        })
+
+        await s3.send(s3Delete);
+
+        await req.db.execute("DELETE FROM photos WHERE id = ? AND user_id = ?", [photoId, user_id]);
+        res.status(200).json({msg: "사진 삭제 성공"});
+    }catch(err){
+        console.error("사진 삭제 실패", err);
+        res.status(500).json({msg: "사진 삭제 실패"});
+    }
+
+})
 module.exports = router;

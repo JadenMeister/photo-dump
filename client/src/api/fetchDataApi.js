@@ -125,7 +125,17 @@ export const fetchUserPhotos = async ()=>{
     })
     if (!res.ok) throw new Error("사진 가져오기 실패");
     return await res.json();
+}
 
-
-
+export const fetchUserPhotoDelete = async (id) => {
+    const res = await fetch("http://localhost:8080/api/upload/delete-photos",{
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id}),
+        credentials: "include",
+    })
+    if (!res.ok) throw new Error("사진 삭제 실패");
+    return await res.json();
 }
