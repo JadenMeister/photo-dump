@@ -58,7 +58,7 @@ export default function UserAlbum() {
 
       <div className="w-200 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg">
         <h2 className="text-xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
-          <Select.Root value={selectedCountry} onChange={setSelectedCountry} >
+          <Select.Root value={selectedCountry} onValueChange={setSelectedCountry} >
             <Select.HiddenSelect />
           <Select.Control>
             <Select.Trigger>
