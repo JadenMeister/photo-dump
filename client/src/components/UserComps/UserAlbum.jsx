@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {fetchUserPhotoDelete, fetchUserPhotos} from "../../api/fetchDataApi.js"
 // Charkra ui v3부턴 modal이 아닌 Dialog로 바뀜
-import {CloseButton, Dialog, Portal} from "@chakra-ui/react";
+import {CloseButton, Dialog, Portal, Select, Stack} from "@chakra-ui/react";
 import {HiDotsHorizontal} from "react-icons/hi";
 
 
@@ -9,7 +9,8 @@ export default function UserAlbum() {
 
 
   const [photos, setPhotos] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCountryOpen, setIsCountryOpen] = useState(false);
 
 
   const handleToggle = (photo) => {
@@ -48,11 +49,30 @@ export default function UserAlbum() {
 
   }, []);
 
+  const countryList = [...new Set(photos.map(photo => photo.country_name))];
+const [selectedCountry, setSelectedCountry] = useState(null);
+
+
+
+
+
 
   return (
 
-      <div className="w-108 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg">
+      <div className="w-200 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg">
         <h2 className="text-xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
+          <Select.Root >
+            <Select.HiddenSelect />
+          <Select.Control>
+            <Select.Trigger>
+              <Select.ValueText placeholder="SelectCountry"/>
+            </Select.Trigger>
+          </Select.Control>
+          <Select.Content>
+            {countryList}
+          </Select.Content>
+          </Select.Root>
+
 
         {photos.length > 0 ? (
             <div className="grid w-full grid-cols-3 px-5 gap-3">
@@ -66,7 +86,7 @@ export default function UserAlbum() {
                           <img
                               src={photo.photo_url}
                               alt={`Photo ${index + 1}`}
-                              className="w-full h-full object-cover rounded-lg hover:scale-105 transition-all duration-300 cursor-pointer pointer-events-auto "
+                              className="w-full h-1/2 object-cover rounded-lg hover:scale-105 transition-all duration-300 cursor-pointer pointer-events-auto "
                           />
                         </Dialog.Trigger>
 
@@ -76,16 +96,16 @@ export default function UserAlbum() {
                           <Dialog.Backdrop/>
                           <Dialog.Positioner>
 
-                            <Dialog.Content>
+                            <Dialog.Content className=" bg-black rounded-lg shadow-lg flex flex-col  justify-center">
                               <button onClick={()=>{handleToggle(photo.id)}} className="text-black px-2 py-1rounded">
 
                                 <HiDotsHorizontal className="text-sm cursor-pointer mt-5"/>
                               </button>
 
-                              {isOpen === photo.id && (
-                                  <div className="absolute left-6 mt-8 bg-white shadow-lg rounded-md mt-2">
+                              {isMenuOpen === photo.id && (
+                                  <div className="absolute top-0 left-2 mt-8 bg-white shadow-lg rounded-md mt-2">
                                     <ul className="py-2">
-                                      <li onClick={()=>{handleDeletePhoto(photo.id)}} className=" px-4 py-2 hover:bg-red-200 text-red-500 cursor-pointer">삭제</li>
+                                      <li onClick={()=>{handleDeletePhoto(photo.id)}} className=" px-4  hover:bg-red-200 text-red-500 cursor-pointer">삭제</li>
                                     </ul>
                                   </div>
                               )}
@@ -101,11 +121,11 @@ export default function UserAlbum() {
                               </Dialog.Header>
 
                               {/*모달 바디*/}
-                              <Dialog.Body width="30vw">
+                              <Dialog.Body className="flex justify-center items-center">
                                 <img
                                     src={photo.photo_url}
                                     alt="자세히 볼 사진"
-                                    className="w-auto h-auto object-contain rounded-lg"
+                                    className="w-auto h-auto object-contain rounded-lg flex "
                                 />
                               </Dialog.Body>
                             </Dialog.Content>
