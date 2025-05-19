@@ -49,11 +49,8 @@ export default function UserAlbum() {
 
   }, []);
 
-const [selectedCountry, setSelectedCountry] = useState(null);
-  const countryList = [...new Set(photos.map(photo => photo.country_name))].filter(Boolean);
-
-
-
+  const countryList = [...new Set(photos.map(photo => photo.country_name))]
+  const [selectedCountry, setSelectedCountry] = useState(countryList[0]);
 
 
 
@@ -61,7 +58,7 @@ const [selectedCountry, setSelectedCountry] = useState(null);
 
       <div className="w-200 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg">
         <h2 className="text-xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
-          <Select.Root value={selectedCountry} onValueChange={setSelectedCountry}>
+          <Select.Root value={selectedCountry} onChange={setSelectedCountry} >
             <Select.HiddenSelect />
           <Select.Control>
             <Select.Trigger>
@@ -74,7 +71,8 @@ const [selectedCountry, setSelectedCountry] = useState(null);
                   <Select.ItemText>{country}</Select.ItemText>
                 </Select.Item>
             ))}
-          </Select.Content>
+
+            </Select.Content>
           </Select.Root>
 
 
