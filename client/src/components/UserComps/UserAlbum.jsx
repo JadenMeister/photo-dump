@@ -14,7 +14,7 @@ export default function UserAlbum() {
 
 
   const handleToggle = (photo) => {
-    setIsOpen(isOpen === photo ? null : photo);
+    setIsMenuOpen(isMenuOpen === photo ? null : photo);
 
   }
 
@@ -49,7 +49,7 @@ export default function UserAlbum() {
 
   }, []);
 
-  const countryList = [...new Set(photos.map(photo => photo.country_name))]
+  const countryList = [...new Set(photos.map(photo => photo.country_name))].filter(Boolean)
   const [selectedCountry, setSelectedCountry] = useState(countryList[0]);
 
 
