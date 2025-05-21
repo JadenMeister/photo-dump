@@ -50,7 +50,7 @@ export default function UserAlbum() {
   }, []);
 
   const countryList = [...new Set(photos.map(photo => photo.country_name))].filter(Boolean)
-  const [selectedCountry, setSelectedCountry] = useState(countryList[0]);
+  const [selectedCountry, setSelectedCountry] = useState("");
 
 
 
