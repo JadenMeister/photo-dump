@@ -63,7 +63,6 @@ export default function UserAlbum() {
       <div className="w-200 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg">
         <h2 className="text-xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
           <Select.Root value={selectedCountry} onValueChange={handleCountryChange} >
-            <Select.HiddenSelect />
           <Select.Control>
             <Select.Trigger>
               <Select.ValueText placeholder="SelectCountry"/>
@@ -90,6 +89,7 @@ export default function UserAlbum() {
 
               {photos
                   .filter(photo => photo && photo.photo_url)
+                  .filter(photo => selectedCountry === "" || photo.country_name === selectedCountry) // 이 줄 추가
                   .map((photo, index) => (
                       <Dialog.Root key={index}>
                         <Dialog.Trigger asChild>
