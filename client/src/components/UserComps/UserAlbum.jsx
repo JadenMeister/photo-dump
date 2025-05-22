@@ -11,6 +11,7 @@ export default function UserAlbum() {
   const [photos, setPhotos] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCountryOpen, setIsCountryOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("");
 
 
   const handleToggle = (photo) => {
@@ -34,6 +35,7 @@ export default function UserAlbum() {
     const photoData = async () => {
       try {
         const res = await fetchUserPhotos();
+        console.log("사진 데이터", res); //디버깅용
 
 
         setPhotos(res);
@@ -43,36 +45,43 @@ export default function UserAlbum() {
         console.error("사진 데이터 가져오기 실패", err);
       }
     }
-    console.log("photo", photos);
+
     photoData();
 
 
   }, []);
 
-  const countryList = [...new Set(photos.map(photo => photo.country_name))].filter(Boolean)
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const countryList = [...new Set(photos.map(photo => photo.country_name).filter(name => typeof name === "string" && name.trim() !== ""))];
 
-
+  const handleCountryChange = (value) => {
+    console.log("선택된 국가:", value); // 디버깅용
+    setSelectedCountry(value);
+  };
 
   return (
 
       <div className="w-200 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg">
         <h2 className="text-xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
-          <Select.Root value={selectedCountry} onValueChange={setSelectedCountry} >
+          <Select.Root value={selectedCountry} onValueChange={handleCountryChange} >
             <Select.HiddenSelect />
           <Select.Control>
             <Select.Trigger>
               <Select.ValueText placeholder="SelectCountry"/>
             </Select.Trigger>
           </Select.Control>
+            <Select.Positioner>
           <Select.Content>
-            {countryList.map((country, index) => (
+            <Select.Item value="">
+              <Select.ItemText>전체</Select.ItemText>
+            </Select.Item>
+            {countryList && countryList.length > 0 && countryList.map((country, index) => (
                 <Select.Item key={index} value={country}>
                   <Select.ItemText>{country}</Select.ItemText>
                 </Select.Item>
             ))}
 
             </Select.Content>
+            </Select.Positioner>
           </Select.Root>
 
 
