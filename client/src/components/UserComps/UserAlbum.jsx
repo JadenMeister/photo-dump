@@ -1,8 +1,9 @@
 import {useState, useEffect} from "react";
 import {fetchUserPhotoDelete, fetchUserPhotos} from "../../api/fetchDataApi.js"
 // Charkra ui v3부턴 modal이 아닌 Dialog로 바뀜
-import {CloseButton, Dialog, Portal, Select, Stack} from "@chakra-ui/react";
+import {CloseButton, Dialog, Portal, Stack} from "@chakra-ui/react";
 import {HiDotsHorizontal} from "react-icons/hi";
+import Select from "react-select";
 
 
 export default function UserAlbum() {
@@ -11,9 +12,13 @@ export default function UserAlbum() {
   const [photos, setPhotos] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("ALL");
 
-  const countryList = [...new Set(photos.map(photo => photo.country_name))]
+  const countryList = [...new Set(photos.map(photo => photo.country_name).filter(Boolean))]
+  const selectOptions = [
+    { label: "전체", value: "ALL" },
+    ...countryList.map(country => ({ label: country, value: country }))
+  ]
 
   const handleToggle = (photo) => {
     setIsMenuOpen(isMenuOpen === photo ? null : photo);
@@ -48,69 +53,51 @@ export default function UserAlbum() {
       setIsLoading(false);
 
     }
-
     photoData();
-
 
   }, []);
 
-  useEffect(() => {
-    if (countryList.length > 0) {
-      // 선택된 값이 없거나, 현재 countryList에 없는 값이면 첫번째로 셋팅
-      if (!selectedCountry || !countryList.includes(selectedCountry)) {
-        setSelectedCountry(countryList[0]);
-      }
-    }
-  }, [countryList, selectedCountry]);
+
 
   if (isLoading) return <div>로딩중...</div>;
-
-
-
-
+  if(!photos || photos.length === 0) return <div>업로드된 사진이 없습니다.</div>;
   if (countryList.length === 0) return <div>국가 데이터 없음</div>;
 
 
   return (
 
-      <div className="w-200 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg">
-        <h2 className="text-xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
-        {countryList.length > 0 && selectedCountry && (
-          <Select.Root value={selectedCountry} onValueChange={setSelectedCountry} >
-            <Select.HiddenSelect />
-          <Select.Control>
-            <Select.Trigger>
-              <Select.ValueText placeholder="SelectCountry"/>
-            </Select.Trigger>
-          </Select.Control>
-            <Select.Positioner>
-              <Select.Content>
-                {countryList.map((country, index) => (
-                    <Select.Item key={index} value={country}>
-                      <Select.ItemText>{country}</Select.ItemText>
-                    </Select.Item>
-                ))}
+      <div className="w-200 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg overflow-y-scroll">
+        <h2 className="text-3xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
+        <div className="mb-6 w-full justify-center items-center px-10 ">
+          <div className="mb-15">
+          <Select
+              options={selectOptions}
+              value={selectOptions.find(option => option.value === selectedCountry)}
+              onChange={option => setSelectedCountry(option.value)}
+              placeholder="국가를 선택하세요"
+              isSearchable
+          />
+          </div>
+        </div>
 
-              </Select.Content>
-            </Select.Positioner>
-          </Select.Root>
-        )}
 
 
         {photos.length > 0 ? (
             <div className="grid w-full grid-cols-3 px-5 gap-3">
 
               {photos
-                  .filter(photo => photo && photo.photo_url)
+                  .filter(photo => selectedCountry === "ALL" ? true : photo.country_name === selectedCountry)
                   .map((photo, index) => (
                       <Dialog.Root key={index}>
                         <Dialog.Trigger asChild>
                           {/*table안에 있는 s3 사진 경로 */}
+                          <div className="w-full h-1/2 flex justify-center items-center">
                           <img
                               src={photo.photo_url}
                               alt={`Photo ${index + 1}`}
-                              className="w-full h-1/2 object-cover rounded-lg hover:scale-105 transition-all duration-300 cursor-pointer pointer-events-auto "
+                              className="aspect-square bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center"
                           />
+                          </div>
                         </Dialog.Trigger>
 
                         {/*//다이얼로그 세팅 */}
