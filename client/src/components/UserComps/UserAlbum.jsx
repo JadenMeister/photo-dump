@@ -11,8 +11,10 @@ export default function UserAlbum() {
   const [photos, setPhotos] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCountryOpen, setIsCountryOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState("");
 
+  const countryList = [...new Set(photos.map(photo => photo.country_name))]
 
   const handleToggle = (photo) => {
     setIsMenuOpen(isMenuOpen === photo ? null : photo);
@@ -35,7 +37,7 @@ export default function UserAlbum() {
     const photoData = async () => {
       try {
         const res = await fetchUserPhotos();
-        console.log("사진 데이터", res); //디버깅용
+        console.log("API 리턴값", res);
 
 
         setPhotos(res);
@@ -44,6 +46,8 @@ export default function UserAlbum() {
       } catch (err) {
         console.error("사진 데이터 가져오기 실패", err);
       }
+      setIsLoading(false);
+
     }
 
     photoData();
@@ -51,37 +55,47 @@ export default function UserAlbum() {
 
   }, []);
 
-  const countryList = [...new Set(photos.map(photo => photo.country_name).filter(name => typeof name === "string" && name.trim() !== ""))];
+  useEffect(() => {
+    if (countryList.length > 0) {
+      // 선택된 값이 없거나, 현재 countryList에 없는 값이면 첫번째로 셋팅
+      if (!selectedCountry || !countryList.includes(selectedCountry)) {
+        setSelectedCountry(countryList[0]);
+      }
+    }
+  }, [countryList, selectedCountry]);
 
-  const handleCountryChange = (value) => {
-    console.log("선택된 국가:", value); // 디버깅용
-    setSelectedCountry(value);
-  };
+  if (isLoading) return <div>로딩중...</div>;
+
+
+
+
+  if (countryList.length === 0) return <div>국가 데이터 없음</div>;
+
 
   return (
 
       <div className="w-200 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg">
         <h2 className="text-xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
-          <Select.Root value={selectedCountry} onValueChange={handleCountryChange} >
+        {countryList.length > 0 && selectedCountry && (
+          <Select.Root value={selectedCountry} onValueChange={setSelectedCountry} >
+            <Select.HiddenSelect />
           <Select.Control>
             <Select.Trigger>
               <Select.ValueText placeholder="SelectCountry"/>
             </Select.Trigger>
           </Select.Control>
             <Select.Positioner>
-          <Select.Content>
-            <Select.Item value="">
-              <Select.ItemText>전체</Select.ItemText>
-            </Select.Item>
-            {countryList && countryList.length > 0 && countryList.map((country, index) => (
-                <Select.Item key={index} value={country}>
-                  <Select.ItemText>{country}</Select.ItemText>
-                </Select.Item>
-            ))}
+              <Select.Content>
+                {countryList.map((country, index) => (
+                    <Select.Item key={index} value={country}>
+                      <Select.ItemText>{country}</Select.ItemText>
+                    </Select.Item>
+                ))}
 
-            </Select.Content>
+              </Select.Content>
             </Select.Positioner>
           </Select.Root>
+        )}
 
 
         {photos.length > 0 ? (
@@ -89,7 +103,6 @@ export default function UserAlbum() {
 
               {photos
                   .filter(photo => photo && photo.photo_url)
-                  .filter(photo => selectedCountry === "" || photo.country_name === selectedCountry) // 이 줄 추가
                   .map((photo, index) => (
                       <Dialog.Root key={index}>
                         <Dialog.Trigger asChild>
