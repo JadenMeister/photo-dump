@@ -10,7 +10,6 @@ export default function UserAlbum() {
 
   const [photos, setPhotos] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState("");
 
