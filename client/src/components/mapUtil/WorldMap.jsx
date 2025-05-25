@@ -3,6 +3,8 @@ import {Link, Links, useNavigate} from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import {MapContainer, TileLayer,  Marker, useMapEvents, GeoJSON} from "react-leaflet";
 import {UploadTooltip} from "./UploadTooltip";
+import {fetchUserPhotos} from "@/api/fetchDataApi.js";
+import {countryCoordinates} from "./CountryCordinates.jsx"
 
 
 
@@ -12,6 +14,9 @@ const WorldMap = () => {
   const {user,isLogin, setIsLogin, handleLogout, setUser,} = useAuth();
   const Navigate = useNavigate() ;
   const [geoData, setGeoData] = useState(null);
+  const [photos, setPhotos] = useState([]);
+
+
 
   useEffect(() => {
     fetch(
@@ -20,6 +25,21 @@ const WorldMap = () => {
         .then((res) => res.json())
         .then(setGeoData);
   }, []);
+
+  useEffect(() => {
+    const getUserPhotos = async () => {
+      try{
+      const data = await fetchUserPhotos();
+      setPhotos(data);
+      } catch (err){
+        console.error("사진 가져오기 실패:", err);
+
+      }
+    };
+    getUserPhotos();
+  }, []);
+
+
 
 
   function handelMP(){
@@ -105,6 +125,26 @@ const WorldMap = () => {
             url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         />
+
+        {photos.map((photo, idx) => {
+          const coords = countryCoordinates[photo.country_name];
+          if (!coords) return null; // 좌표가 없는 경우 무시
+          return(
+            <Marker
+                key={idx}
+                position={coords}
+                eventHandlers={{
+                  click: () => {
+                    setSelectedCountry(photo.country_name);
+                  },
+                }}
+            >
+              <div className="custom-marker">
+                <img src={photo.photo_url} alt={photo.country_name} className="w-8 h-8 rounded-full" />
+              </div>
+            </Marker>
+          )
+        })}
 
         {geoData && (
             <GeoJSON
