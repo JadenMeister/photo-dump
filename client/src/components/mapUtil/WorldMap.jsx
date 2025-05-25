@@ -100,7 +100,7 @@ const WorldMap = () => {
       </div>
 
 
-      <MapContainer center={[20, 0]} zoom={2} scrollWheelZoom={true} className="w-full h-full">
+      <MapContainer center={[20, 0]} zoom={2} scrollWheelZoom={true} minZoom={3} maxBounds={[[-90, -180], [90, 180]]}  worldCopyJump={false} maxBoundsViscosity={1.0} className="w-full h-full">
         <TileLayer
             url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://carto.com/">CARTO</a>'
