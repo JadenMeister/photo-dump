@@ -68,6 +68,8 @@ router.get ("/upload-photos", async (req, res)=>{
 
     res.status(200).json(rows);
 
+    console.log("업로드 사진", rows); // 디버깅용
+
   }catch(err){
     res.status(500).json({msg: "서버 오류"});
   }
