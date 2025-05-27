@@ -6,6 +6,9 @@ import {UploadTooltip} from "./UploadTooltip";
 import {fetchUserPhotos} from "@/api/fetchDataApi.js";
 import {countryCoordinates} from "./CountryCordinates.jsx"
 import PhotoThumbnails from "./PhotoTumbnails.jsx";
+import CountryPhotoGrid from "@/components/mapUtil/CountryPhotoGrid.jsx";
+import {getCountryPolygon} from "../mapUtil/getCountryPolygon.js";
+import {useGroupedPhotos} from "../mapUtil/useGroupPhotos.js";
 
 
 
@@ -109,54 +112,76 @@ const WorldMap = () => {
     });
   };
 
-  return (
-    <div className="relative w-full h-screen bg-gray-100 overflow-hidden">
-
-      <div className="absolute  top-5 bg-white/90 p-4  mx-15 rounded-lg shadow-md z-10000">
-        <h2 className="text-lg font-semibold text-gray-800 mb-2">환영합니다, {user?.username}님!</h2>
-        <p className="text-sm text-gray-900">지도에서 원하는 나라를 클릭하여 사진을 업로드하세요.</p>
-
-          <button className="mt-4 w-32 px-4 py-2 bg-red-950 text-white rounded hover:bg-red-700 mr-5"
-                  onClick={logout}>Logout</button>
-
-        <button className="mt-4 w-32 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
-                onClick={handelMP} > MyPage</button>
-      </div>
-
-
-      <MapContainer center={[20, 0]} zoom={2} scrollWheelZoom={true} minZoom={3} maxBounds={[[-90, -180], [90, 180]]}  worldCopyJump={false} maxBoundsViscosity={1.0} className="w-full h-full">
-        <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
-            attribution='&copy; <a href="https://carto.com/">CARTO</a>'
-        />
-        <PhotoThumbnails photos={photos} setSelectedCountry={setSelectedCountry} />
 
 
 
-        {geoData && (
-            <GeoJSON
-                data={geoData}
-                onEachFeature={onEachCountry}
-                style={{
-                  fillColor: "#D6D6DA",
-                  weight: 0.5,
-                  color: "#aaa",
-                  fillOpacity: 0.5,
-                }}
+    return (
+        <div className="relative w-full h-screen bg-gray-100 overflow-hidden">
+
+          <div className="absolute  top-5 bg-white/90 p-4  mx-15 rounded-lg shadow-md z-10000">
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">환영합니다, {user?.username}님!</h2>
+            <p className="text-sm text-gray-900">지도에서 원하는 나라를 클릭하여 사진을 업로드하세요.</p>
+
+            <button className="mt-4 w-32 px-4 py-2 bg-red-950 text-white rounded hover:bg-red-700 mr-5"
+                    onClick={logout}>Logout
+            </button>
+
+            <button className="mt-4 w-32 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+                    onClick={handelMP}> MyPage
+            </button>
+          </div>
+
+
+          <MapContainer center={[20, 0]} zoom={2} scrollWheelZoom={true} minZoom={3}
+                        maxBounds={[[-90, -180], [90, 180]]} worldCopyJump={false} maxBoundsViscosity={1.0}
+                        className="w-full h-full">
+            <TileLayer
+                url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
+                attribution='&copy; <a href="https://carto.com/">CARTO</a>'
             />
-        )}
-
-      </MapContainer>
 
 
-      {selectedCountry && (
-          <UploadTooltip
-              selectedCountry={selectedCountry}
-              setSelectedCountry={setSelectedCountry}
-          />
-      )}
-    </div>
-  );
+
+
+            {geoData && Object.entries(useGroupedPhotos(photos)).map(([country, countryPhotos]) => {
+              const polygon = getCountryPolygon(geoData, country);
+              if (!polygon) return null; // 폴리곤이 없으면 렌더링하지 않음
+              return (
+                  <CountryPhotoGrid
+                      key={country}
+                      polygon={polygon}
+                      photos={countryPhotos}
+                      onSelect={setSelectedCountry}
+                  />
+              );
+            }
+            )}
+
+            {geoData && (
+                <GeoJSON
+                    data={geoData}
+                    onEachFeature={onEachCountry}
+                    style={{
+                      fillColor: "#D6D6DA",
+                      weight: 0.5,
+                      color: "#aaa",
+                      fillOpacity: 0.5,
+                    }}
+                />
+            )}
+
+          </MapContainer>
+
+
+          {selectedCountry && (
+              <UploadTooltip
+                  selectedCountry={selectedCountry}
+                  setSelectedCountry={setSelectedCountry}
+              />
+          )}
+        </div>
+    );
+
 };
 
 export default WorldMap;
