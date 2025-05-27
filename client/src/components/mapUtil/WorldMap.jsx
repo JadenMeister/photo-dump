@@ -1,10 +1,12 @@
 import React, { useState, useEffect,  } from "react";
 import {Link, Links, useNavigate} from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import {MapContainer, TileLayer,  Marker, useMapEvents, GeoJSON} from "react-leaflet";
+import {MapContainer, TileLayer,  Marker, useMapEvents, GeoJSON,useMap} from "react-leaflet";
 import {UploadTooltip} from "./UploadTooltip";
 import {fetchUserPhotos} from "@/api/fetchDataApi.js";
 import {countryCoordinates} from "./CountryCordinates.jsx"
+import PhotoThumbnails from "./PhotoTumbnails.jsx";
+
 
 
 
@@ -15,6 +17,8 @@ const WorldMap = () => {
   const Navigate = useNavigate() ;
   const [geoData, setGeoData] = useState(null);
   const [photos, setPhotos] = useState([]);
+
+
 
 
 
@@ -125,25 +129,38 @@ const WorldMap = () => {
             url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         />
+        <PhotoThumbnails photos={photos} setSelectedCountry={setSelectedCountry} />
+
+
 
         {photos.map((photo, idx) => {
           const coords = countryCoordinates[photo.country_name];
           if (!coords) return null; // 좌표가 없는 경우 무시
-          return(
-            <Marker
+
+
+          return (
+            coords && (
+              <div
                 key={idx}
-                position={coords}
-                eventHandlers={{
-                  click: () => {
-                    setSelectedCountry(photo.country_name);
-                  },
+                className="absolute z-[400] cursor-pointer"
+                style={{
+                  // left: pixel.x, top: pixel.y,
+                  transform: `translate(-50%, -50%)`,
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "9999px",
+                  overflow: "hidden",
                 }}
-            >
-              <div className="custom-marker">
-                <img src={photo.photo_url} alt={photo.country_name} className="w-8 h-8 rounded-full" />
+                onClick={() => setSelectedCountry(photo.country_name)}
+              >
+                <img
+                  src={photo.photo_url}
+                  alt={photo.country_name}
+                  className="w-full h-full object-cover"
+                />
               </div>
-            </Marker>
-          )
+            )
+          );
         })}
 
         {geoData && (
@@ -160,6 +177,7 @@ const WorldMap = () => {
         )}
 
       </MapContainer>
+
 
       {selectedCountry && (
           <UploadTooltip
