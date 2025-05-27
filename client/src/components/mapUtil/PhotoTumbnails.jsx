@@ -9,7 +9,7 @@ const PhotoThumbnails = ({ photos, setSelectedCountry, mapRef}) => {
   const updatePosition = () => {
     const newPositions = photos.map((photo) => {
       const coords = countryCoordinates[photo.country_name];
-      if (!coords) return null;
+      if (!coords || !map) return null;
 
       const point = map.latLngToContainerPoint(coords);
       return{
@@ -42,8 +42,8 @@ const PhotoThumbnails = ({ photos, setSelectedCountry, mapRef}) => {
                     left: `${photo.x}px`,
                     top: `${photo.y}px`,
                     transform: "translate(-50%, -50%)",
-                    width: "40px",
-                    height: "40px",
+                    width: "60px",
+                    height: "60px",
                     borderRadius: "9999px",
                     overflow: "hidden",
                     position: "absolute",
