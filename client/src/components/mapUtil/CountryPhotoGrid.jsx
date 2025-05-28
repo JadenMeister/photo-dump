@@ -32,6 +32,8 @@ const CountryPhotoGrid = ({ polygon, photos, onSelect }) => {
         ...photo,
         x: topLeft.x + col * cellWidth + cellWidth / 2,
         y: topLeft.y + row * cellHeight + cellHeight / 2,
+        cellWidth,
+        cellHeight
       };
     });
 
@@ -48,8 +50,8 @@ const CountryPhotoGrid = ({ polygon, photos, onSelect }) => {
                   left: `${photo.x}px`,
                   top: `${photo.y}px`,
                   transform: "translate(-50%, -50%)",
-                  width: "40px",
-                  height: "40px",
+                  width: `${photo.cellWidth}px`,
+                  height: `${photo.cellHeight}px`,
                   borderRadius: "9999px",
                   overflow: "hidden",
                   position: "absolute",
