@@ -52,7 +52,6 @@ const CountryPhotoGrid = ({ polygon, photos, onSelect }) => {
                   transform: "translate(-50%, -50%)",
                   width: `${photo.cellWidth}px`,
                   height: `${photo.cellHeight}px`,
-                  borderRadius: "9999px",
                   overflow: "hidden",
                   position: "absolute",
                 }}
