@@ -166,7 +166,7 @@ const WorldMap = () => {
                       weight: 0.5,
                       color: "#aaa",
                       fillOpacity: 0.5,
-                      background: `${countryPhotos}`,
+
                     }}
                 />
             )}
