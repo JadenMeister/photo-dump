@@ -67,7 +67,7 @@ export default function UserAlbum() {
   return (
 
       <div className="w-200 h-170.25 flex flex-col pt-10 bg-[#F5F5F5] transition-all duration-300 shadow-lg overflow-y-scroll">
-        <h2 className="text-3xl font-bold mb-4 text-center top-0 justify-center items-center ">Gallery</h2>
+
         <div className="mb-6 w-full justify-center items-center px-10 ">
           <div className="mb-15">
           <Select
