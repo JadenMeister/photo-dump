@@ -139,3 +139,15 @@ export const fetchUserPhotoDelete = async (id) => {
     if (!res.ok) throw new Error("사진 삭제 실패");
     return await res.json();
 }
+
+export const fetchCountryCount = async () =>{
+    const res = await fetch("http://localhost:8080/api/users/country-count",{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    })
+    if(!res.ok) throw new Error("국가 업로드 카운트 가져오기 실패");
+    return await res.json();
+}
