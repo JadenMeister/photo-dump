@@ -6,9 +6,7 @@ import {UploadTooltip} from "./UploadTooltip";
 import {fetchUserPhotos} from "@/api/fetchDataApi.js";
 import {countryCoordinates} from "./CountryCordinates.jsx"
 import PhotoThumbnails from "./PhotoTumbnails.jsx";
-import CountryPhotoGrid from "@/components/mapUtil/CountryPhotoGrid.jsx";
-import {getCountryPolygon} from "../mapUtil/getCountryPolygon.js";
-import {useGroupedPhotos} from "../mapUtil/useGroupPhotos.js";
+
 
 
 
@@ -142,20 +140,10 @@ const WorldMap = () => {
 
 
 
-
-            {geoData && Object.entries(useGroupedPhotos(photos)).map(([country, countryPhotos]) => {
-              const polygon = getCountryPolygon(geoData, country);
-              if (!polygon) return null; // 폴리곤이 없으면 렌더링하지 않음
-              return (
-                  <CountryPhotoGrid
-                      key={country}
-                      polygon={polygon}
-                      photos={countryPhotos}
-                      onSelect={setSelectedCountry}
-                  />
-              );
-            }
-            )}
+            <PhotoThumbnails
+                photos={photos}
+                setSelectedCountry={setSelectedCountry}
+            />
 
             {geoData && (
                 <GeoJSON
