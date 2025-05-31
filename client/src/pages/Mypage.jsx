@@ -4,6 +4,7 @@ import UserSide from "../components/UserComps/UserSide.jsx";
 import UserUploadChart from "../components/UserComps/UserUploadChart.jsx";
 import UserAlbum from "../components/UserComps/UserAlbum.jsx";
 import TotalUpload from "../components/UserComps/TotalUpload.jsx";
+import TotalCountry from "@/components/UserComps/TotalCountry.jsx";
 
 const Mypage = () => {
 
@@ -33,6 +34,7 @@ const Mypage = () => {
          <div className="w-full bg-gray-300 flex justify-around pt-20 rounded-lg flex-col gap-8">
            <div className= "flex justify-around">
              <TotalUpload/>
+             <TotalCountry/>
            </div>
 
            <div className="h-screen overflow-hidden flex justify-around mb-5">
