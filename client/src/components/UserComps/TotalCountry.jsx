@@ -10,7 +10,7 @@ export default function TotalCountry() {
     const fetchCount = async () => {
       try {
         const res = await fetchCountryCount();
-        setCountryCount(res.country_name);
+        setCountryCount(res.length);
       } catch (err) {
         console.error("업로드 수 가져오기 실패", err);
       }
