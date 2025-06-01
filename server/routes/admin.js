@@ -65,7 +65,7 @@ router.get("/country-uploads", adminAuth, async (req, res) => {
 
 // 총업로드 카운트
 
-router.get("/total-uploads", adminAuth, async (req, res) => {
+router.get("/total-uploads/:id", adminAuth, async (req, res) => {
     try{
         const [count] = await req.db.execute("SELECT COUNT(*) as upload_count FROM photos");
         res.status(200).json(count[0]);
@@ -75,6 +75,19 @@ router.get("/total-uploads", adminAuth, async (req, res) => {
         res.status(500).json({msg: "업로드 카운트 조회 실패"});
     }
 })
+
+router.get("/eachUser-photo", adminAuth, async (req, res) => {
+    const userId = req.params.id;
+    try{
+        const [photos] = await req.db.execute("SELECT p.id, p.country_name, p.travel_date, p.photo_url, u.username FROM photos p JOIN users u ON p.user_id = u.id WHERE p.user_id = ?", [userId]);
+
+    }catch(err){
+        console.error("유저 사진 조회 실패", err);
+        res.status(500).json({msg: "유저 사진 조회 실패"});
+    }
+
+})
+
 
 module.exports = router;
 
