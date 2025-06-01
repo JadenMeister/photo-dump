@@ -80,6 +80,7 @@ router.get("/each-user-photo/:id", adminAuth, async (req, res) => {
     const userId = req.params.id;
     try{
         const [photos] = await req.db.execute("SELECT p.id, p.country_name, p.travel_date, p.photo_url, u.username FROM photos p JOIN users u ON p.user_id = u.id WHERE p.user_id = ?", [userId]);
+        res.json(photos);
 
     }catch(err){
         console.error("유저 사진 조회 실패", err);
