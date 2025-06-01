@@ -1,7 +1,38 @@
-
-
-
 // ! for ADMIN
+
+// 총 나라 수 카운트 요청
+export const fetchCountryCount = async () =>{
+    const res = await fetch("http://localhost:8080/api/users/country-count",{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    })
+    if(!res.ok) throw new Error("국가 업로드 카운트 가져오기 실패");
+    return await res.json();
+}
+
+
+// 유저별 사진 가져오기
+
+export const fetchUserEachPhoto = async (userId) => {
+    const res = await fetch(`http://localhost:8080/api/admin/each-user-photo/${userId}`,{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    });
+
+    if (!res.ok) {
+        console.error("유저 사진 가져오기 실패", res);
+        throw new Error("유저 사진 가져오기 실패");
+
+    }
+
+    return await res.json();
+}
 
 
 // 나라 리스트 요청
@@ -141,30 +172,5 @@ export const fetchUserPhotoDelete = async (id) => {
     return await res.json();
 }
 
-// 총 나라 수 카운트 요청
-export const fetchCountryCount = async () =>{
-    const res = await fetch("http://localhost:8080/api/users/country-count",{
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        credentials: "include",
-    })
-    if(!res.ok) throw new Error("국가 업로드 카운트 가져오기 실패");
-    return await res.json();
-}
 
 
-// 유저별 사진 가져오기
-
-export const fetchUserEachPhoto = async (userId) => {
-    const res = await fetch(`http://localhost:8080/api/admin/each-user-photo/${userId}`,{
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        credentials: "include",
-    });
-    if (!res.ok) throw new Error("유저 사진 가져오기 실패");
-    return await res.json();
-}
