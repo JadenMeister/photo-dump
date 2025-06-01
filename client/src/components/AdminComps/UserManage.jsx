@@ -1,7 +1,9 @@
 import {useState,useEffect} from "react";
 
-import {fetchUsers} from "../../api/fetchDataApi.js";
+import {fetchUserEachPhoto, fetchUsers} from "../../api/fetchDataApi.js";
 import UserMangeRow from "./UserManageRow.jsx";
+import PhotoModal from "@/components/AdminComps/PhotoModal.jsx";
+
 
 
 
@@ -11,6 +13,26 @@ export default function UserManage() {
     const [isLoading, setIsLoading] = useState(true);
 
     const [openRowId, setOpenRowId] = useState(null);
+
+
+    const [modalPhotoOpen, setModalPhotoOpen] = useState(false);
+    const [modalPhotos, setModalPhotos] = useState([]);
+
+
+    const handleOpenModalPhoto = async (userId) => {
+        console.log("유저 아이디", userId);
+        try {
+            console.log("시작")
+            const res = await fetchUserEachPhoto(userId);
+
+            console.log("유저별",res);
+            setModalPhotos(res);
+            setModalPhotoOpen(true);
+        } catch (error) {
+            console.error("유저 사진 가져오기 실패", error);
+        }
+    }
+
 
 
     useEffect(() => {
@@ -41,14 +63,11 @@ export default function UserManage() {
 
     return(
 
-
-
         <div className="w-245 h-170.25 flex flex-col justify-start  bg-[#F5F5F5]  shadow-lg">
             <div className="mb-5 mt-5 text-center text-2xl font-bold text-gray-700">
                 회원관리
             </div>
             <table className="w-full  overflow-scroll">
-
                 <thead className="bg-gray-300 ">
                 <tr>
                     {tableHeader.map((header, index) => (
@@ -60,11 +79,20 @@ export default function UserManage() {
                 </thead>
                 <tbody>
                     {userData.map((user) => (
-                        <UserMangeRow key={user.id} user={user} openRowId={openRowId} setOpenRowId={setOpenRowId}/>
+                        <UserMangeRow key={user.id} user={user} openRowId={openRowId} setOpenRowId={setOpenRowId} onOpenModal={handleOpenModalPhoto}/>
 
                     ))}
+
                 </tbody>
             </table>
+            {modalPhotoOpen && (
+                <PhotoModal
+                    isOpen={modalPhotoOpen}
+                    onClose={() => setModalPhotoOpen(false)}
+                    photos={modalPhotos}
+
+                />
+            )}
         </div>
     )
 }
