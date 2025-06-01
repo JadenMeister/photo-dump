@@ -1,12 +1,15 @@
 import {HiDotsHorizontal} from "react-icons/hi";
 import {useState} from "react";
-import {textureLoad} from "three/tsl";
-import {Table} from "@chakra-ui/react"
+import {CloseButton, Dialog, Portal, Stack} from "@chakra-ui/react";
+import {fetchUserEachPhoto} from "@/api/fetchDataApi.js";
+
 
 
 export default function UserManageRow({user, openRowId, setOpenRowId}) {
 
     const [userId, setUserId] = useState(user.id);
+    const [modalPhoto, setModalPhoto] = useState([]);
+    const [modalPhotoOpen, setModalPhotoOpen] = useState(false);
 
     const isOpen = openRowId === user.id;
 
@@ -44,6 +47,16 @@ export default function UserManageRow({user, openRowId, setOpenRowId}) {
 
     }
 
+    const handleOpenModalPhoto = async () => {
+        try {
+            const res = await fetchUserEachPhoto(userId);
+            setModalPhoto(res);
+            setModalPhotoOpen(true);
+        } catch (error) {
+            console.error("유저 사진 가져오기 실패", error);
+        }
+    }
+
 
 
     const handleToggle = () => {
@@ -72,10 +85,31 @@ export default function UserManageRow({user, openRowId, setOpenRowId}) {
                     <ul className="py-2">
                         <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">수정</li>
                         <li onClick={handleDelete} className="px-4 py-2 hover:bg-red-200 text-red-500 cursor-pointer">삭제</li>
-                        <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">사진 보기</li>
+                        <li onClick={handleOpenModalPhoto} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">사진 보기</li>
                     </ul>
                 </div>
             )}
+          { modalPhotoOpen && (
+            <Dialog.Root isOpen={modalPhotoOpen} onClose={() => setModalPhotoOpen(false)}>
+                <Portal>
+                    <Dialog.Backdrop />
+                    <Dialog.Positioner>
+                        <Dialog.Content className="bg-white rounded-lg shadow-lg p-4">
+                            <Stack spacing={4}>
+                                {modalPhoto.map(photo => (
+                                    <div key={photo.id} className="flex flex-col items-center">
+                                        <img src={photo.photo_url} alt={photo.country_name} className="w-full h-auto rounded-lg mb-2" />
+                                        <h3 className="text-lg font-semibold">{photo.country_name}</h3>
+                                        <p className="text-sm text-gray-500">{new Date(photo.travel_date).toLocaleDateString()}</p>
+                                    </div>
+                                ))}
+                            </Stack>
+                            <CloseButton onClick={() => setModalPhotoOpen(false)} />
+                        </Dialog.Content>
+                    </Dialog.Positioner>
+                </Portal>
+            </Dialog.Root>
+          )}
 
 
         </tr>
