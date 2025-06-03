@@ -17,7 +17,7 @@ export default function UserManageRow({user, openRowId, setOpenRowId,onOpenModal
 
     const handleDelete = async () => {
       try{
-      const response = await fetch(`http://localhost:8080/api/admin/users/delete${userId}`,{
+      const response = await fetch(`${process.env.API_BASE_URL}/api/admin/users/delete${userId}`,{
 
         method: "DELETE",
         headers: {
