@@ -4,8 +4,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "build": "vite build",
-    "preview": "vite preview"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
