@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin:process.env.CLIENT_BASE_URL,
     credentials: true,
     optionsSuccessStatus: 200
   })
