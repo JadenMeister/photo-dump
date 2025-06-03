@@ -16,7 +16,7 @@ const authCheckRouter = require("./routes/authCheck");
 
 
 
-app.use(express.urlencoded({ extended: true }));
+
 
 // 미들웨어
 
@@ -27,6 +27,9 @@ app.use(
     optionsSuccessStatus: 200
   })
 );
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(
   session({
@@ -48,7 +51,7 @@ app.use((req,res, next) => {
 });
 
 
-app.use(express.json());
+
 
 // 라우트
 app.use("/api/login", loginRouter);
