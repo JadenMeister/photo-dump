@@ -2,7 +2,7 @@
 
 // 총 나라 수 카운트 요청
 export const fetchCountryCount = async () =>{
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/country-count`,{
+    const res = await fetch("http://localhost:8080/api/users/country-count",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export const fetchCountryCount = async () =>{
 // 유저별 사진 가져오기
 
 export const fetchUserEachPhoto = async (userId) => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/each-user-photo/${userId}`,{
+    const res = await fetch(`http://localhost:8080/api/admin/each-user-photo/${userId}`,{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export const fetchUserEachPhoto = async (userId) => {
 
 // 나라 리스트 요청
 export const fetchCountries = async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/country-uploads`,{
+    const res = await fetch("http://localhost:8080/api/admin/country-uploads",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const fetchCountries = async () => {
 
 // 유저 조회 요청
 export const fetchUsers = async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users`,{
+    const res = await fetch("http://localhost:8080/api/admin/users",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export const fetchUsers = async () => {
 
 // 유저 삭제 요청
 export const fetchDeleteUser = async (id) => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/users/${id}`,{
+    const res = await fetch(`http://localhost:8080/api/admin/users/${id}`,{
         method:"DELETE",
         headers:{
             "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export const fetchDeleteUser = async (id) => {
 
 // 총 업로드 통계 요청
 export const fetchTotalCount = async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/total-uploads`,{
+    const res = await fetch("http://localhost:8080/api/admin/total-uploads",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -109,7 +109,7 @@ export const fetchUploads = async ({file,country_name, travelDate}) => {
         console.log(`${pair[0]}: ${pair[1]}`);
     }
 
-    return  await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/upload`, {
+    return  await fetch("http://localhost:8080/api/upload", {
         method: "POST",
         body: formData,
         credentials: "include",
@@ -120,7 +120,7 @@ export const fetchUploads = async ({file,country_name, travelDate}) => {
 // 유저 업로드 카운트요청
 
 export const fetchUserUploadCount = async ()=>{
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/upload-count`,{
+    const res = await fetch("http://localhost:8080/api/users/upload-count",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -133,7 +133,7 @@ export const fetchUserUploadCount = async ()=>{
 
 // 유저 업로드 국가 카운트 요청
 export const fetchUserUploadsCountry = async ()=>{
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/upload-country`,{
+    const res = await fetch("http://localhost:8080/api/users/upload-country",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -148,7 +148,7 @@ export const fetchUserUploadsCountry = async ()=>{
 
 // 유저 업로드 사진 가져오기 요청
 export const fetchUserPhotos = async ()=>{
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/upload-photos`,{
+    const res = await fetch("http://localhost:8080/api/users/upload-photos",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -160,7 +160,7 @@ export const fetchUserPhotos = async ()=>{
 }
 
 export const fetchUserPhotoDelete = async (id) => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/upload/delete-photos`,{
+    const res = await fetch("http://localhost:8080/api/upload/delete-photos",{
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

@@ -16,20 +16,17 @@ const authCheckRouter = require("./routes/authCheck");
 
 
 
-
+app.use(express.urlencoded({ extended: true }));
 
 // 미들웨어
 
 app.use(
   cors({
-    origin:process.env.CLIENT_BASE_URL,
+    origin: "http://localhost:3000",
     credentials: true,
     optionsSuccessStatus: 200
   })
 );
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 app.use(
   session({
@@ -37,7 +34,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true,
+      secure: false,
       httpOnly: true,
       maxAge: 1000 * 60 * 60 // 1시간
     }
@@ -51,7 +48,7 @@ app.use((req,res, next) => {
 });
 
 
-
+app.use(express.json());
 
 // 라우트
 app.use("/api/login", loginRouter);
@@ -67,5 +64,5 @@ app.use("/api/authCheck", authCheckRouter);
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () =>
-  console.log(`Server running on ${process.env.API_BASE_URL || `http://localhost:${PORT}`}`)
+  console.log(`Server running on http://localhost:${PORT}`)
 );

@@ -25,7 +25,7 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
             alert("올바른 값을 입력해주세요")
         }
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/register`, {
+            const response = await fetch("http://localhost:8080/api/register", {
                 credentials: "include",
                 method: "POST",
                 headers: {

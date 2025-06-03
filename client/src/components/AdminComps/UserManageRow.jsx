@@ -17,7 +17,7 @@ export default function UserManageRow({user, openRowId, setOpenRowId,onOpenModal
 
     const handleDelete = async () => {
       try{
-      const response = await fetch(`${process.env.API_BASE_URL}/api/admin/users/delete${userId}`,{
+      const response = await fetch(`http://localhost:8080/api/admin/users/delete${userId}`,{
 
         method: "DELETE",
         headers: {
@@ -82,7 +82,7 @@ export default function UserManageRow({user, openRowId, setOpenRowId,onOpenModal
                 <ul className="py-2">
                   <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">수정</li>
                   <li onClick={handleDelete} className="px-4 py-2 hover:bg-red-200 text-red-500 cursor-pointer">삭제</li>
-                  <li onClick={()=>{console.log("사진보기 클릭"); onOpenModal(user.id)}} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">사진 보기</li>
+                  <li onClick={()=>{ onOpenModal(user.id)}} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">사진 보기</li>
                 </ul>
               </div>
               </td>
