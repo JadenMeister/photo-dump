@@ -5,6 +5,7 @@ const session = require("express-session");
 const pool = require("./config/database");
 
 const app = express();
+app.set("trust proxy", 1);
 const loginRouter = require("./routes/login");
 const registerRouter = require("./routes/register");
 const logoutRouter = require("./routes/logout");
