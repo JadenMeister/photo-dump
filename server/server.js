@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 const session = require("express-session");
 const pool = require("./config/database");
+const MySQLStore = require("express-mysql-session")(session);
 
 const app = express();
 app.set("trust proxy", 1);
@@ -17,7 +18,12 @@ const authCheckRouter = require("./routes/authCheck");
 
 
 
-
+const sessionStore = new MySQLStore({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
 
 // 미들웨어
 
@@ -37,6 +43,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: sessionStore,
     cookie: {
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Strict절대 타 사이트에서는 쿠키 안 보냄 (로그인 유지 안 됨) Lax기본값. GET 요청 등 안전한 요청에는 쿠키 허용None완전 허용. 모든 cross-site 요청에 쿠키 보냄 (이 경우 secure: true 필수)
