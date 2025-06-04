@@ -67,7 +67,7 @@ app.use("/api/authCheck", authCheckRouter);
 
 
 const PORT = process.env.PORT || 5050;
-app.listen(PORT, () =>
+app.listen(PORT, '0.0.0.0', () =>
   console.log(`Server running on ${process.env.API_BASE_URL || `http://localhost:${PORT}`}`)
 );
 console.log("CLIENT_BASE_URL:", process.env.CLIENT_BASE_URL);
