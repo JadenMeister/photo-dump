@@ -72,3 +72,5 @@ app.listen(PORT, '0.0.0.0', () =>
   console.log(`Server running on ${process.env.API_BASE_URL || `http://localhost:${PORT}`}`)
 );
 console.log("CLIENT_BASE_URL:", process.env.CLIENT_BASE_URL);
+console.log("✅ NODE_ENV:", process.env.NODE_ENV);
+console.log("✅ SESSION_SECRET:", process.env.SESSION_SECRET ? "OK" : " MISSING");
