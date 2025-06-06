@@ -1,19 +1,25 @@
+import {useAuth} from "@/context/AuthContext.jsx";
 
 export default  function LogOut() {
+
+  const { setIsLogin, setUser } = useAuth();
 
   const logout  =  async () => {
 
     try{
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/logout`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    })
+      const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/logout`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
       if(res.ok){
         alert("로그아웃 되었습니다.");
-      window.location.href = '/';
+        sessionStorage.clear();
+        setIsLogin(false);
+        setUser(null);
+        window.location.href = '/';
       }
 
     } catch(err){
