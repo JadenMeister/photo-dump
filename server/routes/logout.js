@@ -11,8 +11,9 @@ router.get("/", (req, res) => {
     } else{
             res.clearCookie('connect.sid', {
                 path: '/',
-                secure: true,
-                sameSite: 'none',
+                secure: false,
+              sameSite: 'lax',
+
             });
 
             res.json({msg: "로그아웃성공"})
