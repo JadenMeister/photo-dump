@@ -3,7 +3,7 @@ import LogOut from "../CommonComps/LogOut.jsx";
 
 function AdminSide() {
 
-    const menuItems = ["DashBoard", "Users", "Statistics" ]
+    const menuItems = ["DashBoard" ]
 
   return (
 
