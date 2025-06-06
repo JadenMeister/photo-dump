@@ -78,7 +78,7 @@ export default function UserManageRow({user, openRowId, setOpenRowId,onOpenModal
             <tr>
               <td colSpan="5" className="relative">
 
-              <div className="absolute right-10 mt-8 bg-white shadow-lg rounded-md">
+              <div className="absolute right-10 bg-white shadow-lg rounded-md">
                 <ul className="py-2">
                   <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">수정</li>
                   <li onClick={handleDelete} className="px-4 py-2 hover:bg-red-200 text-red-500 cursor-pointer">삭제</li>
