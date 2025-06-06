@@ -17,16 +17,26 @@ const navigate = useNavigate();
 const {isLogin, user} = useAuth();
 
     useEffect(() => {
-        if(isLogin === null) return;
-        if (isLogin && user) {
-            if (user.role !== "admin" || user.role.length === 0) {
-                alert("관리자 권한이 없습니다.");
+        const adminCheck = async () => {
+            try{
+                const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/session`, {
+                    credentials: "include",
+                });
+
+                const data = await res.json();
+
+                if(data.role !== "admin") {
+                    alert("관리자 권한이 없습니다.");
+                    navigate("/");
+                }
+
+            } catch (err) {
+                alert("관리자 권한 확인 중 오류가 발생했습니다.");
                 navigate("/");
             }
-        } else if (!isLogin || user.role.length === 0) {
-            alert("로그인이 필요합니다.");
-            navigate("/");
         }
+        adminCheck()
+
     }, [isLogin, user, navigate]);
 
 
