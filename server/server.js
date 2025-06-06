@@ -28,36 +28,36 @@ const sessionStore = new MySQLStore({
 // 미들웨어
 
 app.use(
-  cors({
-    origin:process.env.CLIENT_BASE_URL,
-    credentials: true,
-    optionsSuccessStatus: 200
-  })
+    cors({
+      origin: process.env.TEST_CLIENT_BASE_URL,
+      credentials: true,
+      optionsSuccessStatus: 200
+    })
 );
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore,
-    cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Strict절대 타 사이트에서는 쿠키 안 보냄 (로그인 유지 안 됨) Lax기본값. GET 요청 등 안전한 요청에는 쿠키 허용None완전 허용. 모든 cross-site 요청에 쿠키 보냄 (이 경우 secure: true 필수)
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      store: sessionStore,
+      cookie: {
+        secure: process.env.NODE_ENV === 'development',
+        sameSite: process.env.NODE_ENV === 'development' ? 'none' : 'lax', // Strict절대 타 사이트에서는 쿠키 안 보냄 (로그인 유지 안 됨) Lax기본값. GET 요청 등 안전한 요청에는 쿠키 허용None완전 허용. 모든 cross-site 요청에 쿠키 보냄 (이 경우 secure: true 필수)
 
-httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7 // 7일 동안 쿠키 유지
-    }
-  })
+        httpOnly: false,
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 7일 동안 쿠키 유지
+      }
+    })
 );
 
 // JSON 파싱 미들웨어
 app.use((req,res, next) => {
-    req.db = pool;
-    next();
+  req.db = pool;
+  next();
 });
 
 
@@ -77,8 +77,6 @@ app.use("/api/authCheck", authCheckRouter);
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, '0.0.0.0', () =>
-  console.log(`Server running on ${process.env.API_BASE_URL || `http://localhost:${PORT}`}`)
+    console.log(`Server running on: (http://localhost:${PORT}`)
 );
-console.log("CLIENT_BASE_URL:", process.env.CLIENT_BASE_URL);
-console.log("✅ NODE_ENV:", process.env.NODE_ENV);
-console.log("✅ SESSION_SECRET:", process.env.SESSION_SECRET ? "OK" : " MISSING");
+
