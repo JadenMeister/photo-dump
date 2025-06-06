@@ -9,16 +9,37 @@ export const AuthProvider = ({ children }) => {
     const [isLogin, setIsLogin] = useState(null);
     const [user, setUser] = useState(null);
 
+    const handleLogout = () => {
+
+        setUser(null);
+        setIsLogin(false);
+        sessionStorage.clear();
+    }
+
 
 
     useEffect(() => {
-        const stored = sessionStorage.getItem("user");
-        console.log("session user:", stored);
-        if (stored) {
-            const sessionData = JSON.parse(stored);
-            setUser(sessionData);
-            setIsLogin(true);
-        }
+        const checkSession = async () => {
+            try {
+                const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/session`, {
+                    credentials: "include"
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    setUser(data.user);
+                    setIsLogin(true);
+                    sessionStorage.setItem("user", JSON.stringify(data.user));
+                } else {
+                    // 세션이 없으면 로그아웃 처리
+                    handleLogout();
+                }
+            } catch (err) {
+                console.error("세션 확인 실패:", err);
+                handleLogout();
+            }
+        };
+
+        checkSession();
     }, []);
 
     const handleLogin = (userData) => {
@@ -26,13 +47,6 @@ export const AuthProvider = ({ children }) => {
         setIsLogin(true);
         sessionStorage.setItem("user", JSON.stringify(userData));
 
-    }
-
-    const handleLogout = () => {
-
-        setUser(null);
-        setIsLogin(false);
-        sessionStorage.clear();
     }
 
 
