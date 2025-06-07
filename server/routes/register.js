@@ -10,6 +10,16 @@ const nodemailer = require("nodemailer");
 
 router.post("/send-verfiyCode", async (req, res) => {
     const {email} = req.body;
+    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ msg: "올바른 이메일 형식이 아닙니다." });
+    }
+
+    if( email === "" || email.trim()=== "") {
+        return res.status(400).json({ msg: "이메일을 입력해주세요" });
+    }
+
+
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     req.session.emailVerification = {
         email,
@@ -36,6 +46,7 @@ router.post("/send-verfiyCode", async (req, res) => {
         await transporter.sendMail(mailOptions);
         console.log("전송된 이메일:", email);
         res.status(200).json({ msg: "코드전송", code });
+
 
     } catch (err){
         console.error("Email sending error:", err);
