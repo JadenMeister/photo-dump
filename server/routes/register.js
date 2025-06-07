@@ -18,6 +18,18 @@ router.post("/", async (req, res) => {
             return res.status(400).json({ msg: "이미 존재하는 사용자입니다." });
         }
 
+        const [emails] = await pool.execute(
+            "SELECT * FROM users WHERE email = ?",
+            [emails]
+        )
+
+        if (email.length > 0) {
+            return res.status(400).json({ msg: "이미 존재하는 이메일입니다." });
+        }
+
+
+
+
         if (!username || !password) {
             return res.status(400).json({msg:"올바른 값을 입력해주세요"});
         }
