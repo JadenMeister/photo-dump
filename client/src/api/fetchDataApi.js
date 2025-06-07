@@ -95,7 +95,7 @@ export const fetchTotalCount = async () => {
 
 // 이메일 인증 코드 전송
 export const sendVerificationEmail = async (email) => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/register/send-verification-email`, {
+    const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/register/send-verfiyCode`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -107,7 +107,7 @@ export const sendVerificationEmail = async (email) => {
 
 // 인증 코드 검증
 export const verifyEmailCode = async (email, code) => {
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/register/verify-code`, {
+    const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/register/verify-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code }),
