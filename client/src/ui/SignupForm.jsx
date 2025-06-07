@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
+import { sendVerificationEmail, verifyEmailCode } from "../api/fetchDataApi.js";
 
 
 import { useAuth } from "../context/AuthContext.jsx";
@@ -8,16 +9,22 @@ import { useAuth } from "../context/AuthContext.jsx";
 export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const [passwordCheck, setPasswordCheck] = useState("");
+    const [verificationSent, setVerificationSent] = useState(false);
+    const [verificationCode, setVerificationCode] = useState("");
+    const [emailVerified, setEmailVerified] = useState(false);
 
     const passwordCheckHandler = (e) => {
-        setPasswordCheck(e.target.value);
+      const value = e.target.value;
+        setFormData({...formData, passwordCheck: value});
         if (e.target.value !== formData.password) {
             setError("비밀번호가 일치하지 않습니다.");
+            return;
         } else {
             setError("");
         }
     }
+
+
 
     const handleRegister = async () => {
         setError("");
@@ -61,12 +68,16 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
                    onChange={(e) => setFormData({...formData, username: e.target.value})}
                    className="border border-gray-300 text-white rounded-md p-2"/>
 
+            <div className="flex items-center justify-between w-full">
             <input type="text" placeholder="your email" value={(formData.email)}
                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                   className="border border-gray-300 text-white rounded-md p-2"/>
+                   className="border border-gray-300 text-white rounded-md p-2 w-3/4"/>
+              <button className="border-2 p-1 rounded-lg  text-red-300 hover:text-red-200 hover:cursor-pointer" onClick="button">verify</button>
+            </div>
+
 
             <input type="password" placeholder="your password" value={(formData.password)}
-                   onChange={(e) => setFormData({...formData, password: e.target.value})}
+                   onChange={passwordCheckHandler}
                    className="border border-gray-300 text-white rounded-md p-2"/>
 
             <input type="password" placeholder="password Check" value={(formData.passwordCheck)}
