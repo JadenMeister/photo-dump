@@ -92,6 +92,35 @@ export const fetchTotalCount = async () => {
 
 //! FOR USER
 
+
+// 이메일 인증 코드 전송
+export const sendVerificationEmail = async (email) => {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/register/send-verification-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+        credentials: "include",
+    });
+
+    return await res.json(); // 에러 메시지 파싱도 위해
+};
+
+// 인증 코드 검증
+export const verifyEmailCode = async (email, code) => {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/register/verify-code`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, code }),
+        credentials: "include",
+    });
+
+    return await res.json();
+};
+
+
+
+
+
 // 업로드 요청
 export const fetchUploads = async ({file,country_name, travelDate}) => {
 
