@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { sendVerificationEmail, verifyEmailCode } from "../api/fetchDataApi.js";
 
@@ -13,6 +13,28 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
     const [verificationCode, setVerificationCode] = useState("");
     const [emailVerified, setEmailVerified] = useState(false);
 
+    const [timer, setTimer] = useState(0);
+    const [cooldown, setCooldown] = useState(false);
+
+
+  useEffect(() => {
+    if (!cooldown) return;
+
+    const countdown = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 1) {
+          clearInterval(countdown);
+          setCooldown(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, [cooldown]);
+
+
     const passwordCheckHandler = (e) => {
       const value = e.target.value;
         setFormData({...formData, passwordCheck: value});
@@ -24,15 +46,44 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
         }
     }
 
+//인증코드 전송
+  const handleSendVerification = async () => {
+    const result = await sendVerificationEmail(formData.email);
+    if (result.msg === "인증 코드가 이메일로 전송되었습니다.") {
+      alert(result.msg);
+      setCooldown(true);
+      setTimer(300); // 5분 타이머 설정
+      setVerificationSent(true);
+    } else {
+      alert(result.msg || "전송 실패");
+    }
+  };
 
+// 인증코드 확인
+  const handleVerifyCode = async () => {
+    const result = await verifyEmailCode(formData.email, verificationCode);
+    if (result.msg === "이메일 인증 성공") {
+      setEmailVerified(true);
+      alert(result.msg);
+    } else {
+      alert(result.msg || "인증 실패");
+    }
+  };
 
     const handleRegister = async () => {
         setError("");
-        if(!formData.username || !formData.password){
+        if(!formData.username || !formData.password || !formData.email || !formData.passwordCheck){
             alert("올바른 값을 입력해주세요")
+            return;
         }
+
+        if(!emailVerified){
+            alert("이메일 인증을 완료해주세요.");
+            return;
+        }
+
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/register`, {
+            const response = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/register`, {
                 credentials: "include",
                 method: "POST",
                 headers: {
@@ -71,9 +122,35 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
             <div className="flex items-center justify-between w-full">
             <input type="text" placeholder="your email" value={(formData.email)}
                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                   className="border border-gray-300 text-white rounded-md p-2 w-3/4"/>
-              <button className="border-2 p-1 rounded-lg  text-red-300 hover:text-red-200 hover:cursor-pointer" onClick="button">verify</button>
+                   className="border border-gray-300 text-white rounded-md p-2 w-3/4"
+                   disabled={emailVerified}
+
+            />
+              <button
+                  type="button"
+                  onClick={handleSendVerification} className={`border p-1 rounded-lg ${cooldown ? 'text-gray-400 cursor-not-allowed' : 'text-red-300 hover:text-red-200'}`} disabled={cooldown}>
+                {cooldown ? `재전송 (${Math.floor(timer / 60)}:${timer % 60 < 10 ? '0' : ''}${timer % 60})` : "인증코드 전송"}
+                  </button>
             </div>
+
+          {verificationSent && (
+              <div className="flex items-center gap-2 mt-2">
+                <input
+                    type="text"
+                    placeholder="인증 코드 입력"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value)}
+                    className="border border-gray-300 text-white rounded-md p-2 w-full"
+                />
+                <button
+                    type="button"
+                    onClick={handleVerifyCode}
+                    className="border p-1 rounded-lg text-green-300 hover:text-green-200"
+                >
+                  확인
+                </button>
+              </div>
+          )}
 
 
             <input type="password" placeholder="your password" value={(formData.password)}
