@@ -24,16 +24,8 @@ function LoginModal({ onClose, }) {
     e.preventDefault();
     setError("");
 
-    if(!isValidEmail(formData.email)) {
-      alert("올바른 이메일 형식을 입력해주세요");
-      return;
-    }
     if(!isValidUsername(formData.username)) {
-      alert("아이디는 3~20자, 영문/숫자만 가능합니다.");
-      return;
-    }
-    if(!isValidPassword(formData.password)) {
-      alert("비밀번호는 최소 8자 이상, 특수문자를 포함해야 합니다.");
+      alert("올바른 사용자 이름 형식을 입력해주세요");
       return;
     }
 
