@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {SignupForm} from "./SignupForm.jsx";
+import SafeInput from"../components/CommonComps/SafeInput.jsx"
+import { isValidEmail, isValidUsername, isValidPassword } from "../functions/validation.js"; // Assuming you have a utility function for email validation
 
 function LoginModal({ onClose, }) {
 
@@ -21,6 +23,19 @@ function LoginModal({ onClose, }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if(!isValidEmail(formData.email)) {
+      alert("올바른 이메일 형식을 입력해주세요");
+      return;
+    }
+    if(!isValidUsername(formData.username)) {
+      alert("아이디는 3~20자, 영문/숫자만 가능합니다.");
+      return;
+    }
+    if(!isValidPassword(formData.password)) {
+      alert("비밀번호는 최소 8자 이상, 특수문자를 포함해야 합니다.");
+      return;
+    }
 
     if(!formData.username || !formData.password){
       alert("올바른 값을 입력해주세요")
@@ -93,14 +108,14 @@ function LoginModal({ onClose, }) {
                 <>
                   <h2 className="text-2xl font-semibold text-white mb-6 ">Login</h2>
                   <form onSubmit={handleSubmit} className="w-full max-w-sm flex flex-col gap-4">
-                    <input
+                    <SafeInput
                         type="text"
                         placeholder="Username"
                         value={formData.username}
                         onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                         className="border border-gray-300 rounded-md p-3 w-full text-white"
                     />
-                    <input
+                    <SafeInput
                         type="password"
                         placeholder="Password"
                         value={formData.password}

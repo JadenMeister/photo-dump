@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { sendVerificationEmail, verifyEmailCode } from "../api/fetchDataApi.js";
+import SafeInput from "@/components/CommonComps/SafeInput.jsx";
+import { isValidEmail, isValidUsername, isValidPassword } from "../functions/validation.js"; // Assuming you have a utility function for email validation
 
 
 import { useAuth } from "../context/AuthContext.jsx";
 
 
 export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
+    // Handler for email input changes
+    const handleEmailChange = (e) => {
+      setFormData({ ...formData, email: e.target.value });
+      setVerificationSent(false);
+    };
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const [verificationSent, setVerificationSent] = useState(false);
@@ -126,22 +133,24 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
       <div className="w-full max-w-sm backdrop-blur-xs backdrop-brightness-90 p-6 rounded-xl flex flex-col gap-6">
         <h2 className="text-2xl font-semibold text-center text-white">Join to your space!</h2>
 
-        <input
+        <SafeInput
             type="text"
             placeholder="your username"
             value={formData.username}
             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
             className="border border-gray-300 text-white rounded-md p-2"
+            validate={isValidUsername}
         />
 
         <div className="flex items-center justify-between w-full">
-          <input
+          <SafeInput
               type="text"
               placeholder="your email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={handleEmailChange}
               className="border border-gray-300 text-white rounded-md p-2 w-3/4"
               disabled={formData.emailVerified}
+              validate={isValidEmail}
           />
 
           {!formData.emailVerified && (
@@ -162,7 +171,7 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
 
         {verificationSent && !formData.emailVerified && formData.email?.trim() && (
             <div className="flex items-center gap-2 mt-2">
-              <input
+              <SafeInput
                   type="text"
                   placeholder="인증 코드 입력"
                   value={verificationCode}
@@ -179,15 +188,16 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
             </div>
         )}
 
-        <input
+        <SafeInput
             type="password"
             placeholder="your password"
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             className="border border-gray-300 text-white rounded-md p-2"
+            validate={isValidPassword}
         />
 
-        <input
+        <SafeInput
             type="password"
             placeholder="password Check"
             value={formData.passwordCheck}

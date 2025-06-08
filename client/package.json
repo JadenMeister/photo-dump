@@ -11,6 +11,7 @@
     "@tailwindcss/vite": "^4.1.4",
     "@vitejs/plugin-react-swc": "^3.9.0",
     "cors": "^2.8.5",
+    "dompurify": "^3.2.6",
     "framer-motion": "^12.12.1",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
