@@ -8,7 +8,7 @@ export default  function LogOut() {
 
     try{
       const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/logout`, {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
