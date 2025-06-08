@@ -20,7 +20,7 @@ const {isLogin, user} = useAuth();
     useEffect(() => {
         const adminCheck = async () => {
             try {
-                const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/session`, { credentials: "include" });
+                const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URLSafeInput}/api/session`, { credentials: "include" });
                 if (!res.ok) throw new Error("권한 없음");
                 const data = await res.json();
                 if (!data.user || data.user.role !== "admin") throw new Error("권한 없음");

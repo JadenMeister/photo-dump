@@ -29,7 +29,7 @@ const sessionStore = new MySQLStore({
 
 app.use(
     cors({
-      origin: process.env.CLIENT_BASE_URL,
+      origin: process.env.TEST_CLIENT_BASE_URL,
       credentials: true,
       optionsSuccessStatus: 200
     })

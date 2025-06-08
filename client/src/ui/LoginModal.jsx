@@ -36,7 +36,7 @@ function LoginModal({ onClose, }) {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/login`, {
+      const response = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URLSafeInput}/api/login`, {
         credentials: "include",
         method: "POST",
         headers: {
