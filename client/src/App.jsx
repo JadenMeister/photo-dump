@@ -15,6 +15,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ChakraProvider } from "@chakra-ui/react";
 import { system } from "./components/ui/theme.js";
 import CameraWithEarth from "../3DModules/Camera.jsx";
+import ImageComparison from "@/components/ImageComparison.jsx";
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/admin" element={<AdminDash/>} />
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/test" element={<ImageComparison/>} />
       </Routes>
     </Router>
       </AuthProvider>

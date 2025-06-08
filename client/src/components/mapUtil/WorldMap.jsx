@@ -61,7 +61,7 @@ const WorldMap = () => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/session`, {
+        const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/session`, {
           credentials: "include"
         });
 

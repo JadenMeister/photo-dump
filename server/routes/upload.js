@@ -55,7 +55,7 @@ router.post("/", upload.single("photo"), async (req,res,next)=>{
     try{
 
 
-        const webpBuffer = await sharp(req.file.buffer).webp({ quality: 80 }).toBuffer();
+        const webpBuffer = await sharp(req.file.buffer).rotate().webp({ quality: 80 }).toBuffer();
         const baseName = req.file.originalname.split('.').slice(0, -1).join('.');
         fileName = `${baseName}_${Date.now()}.webp`; // 파일 이름에 타임스탬프 추가
 

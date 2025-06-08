@@ -90,7 +90,7 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
 
     try {
       const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/api/register`,
+          `${import.meta.env.VITE_TEST_API_BASE_URL}/api/register`,
           {
             credentials: "include",
             method: "POST",
