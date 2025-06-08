@@ -45,10 +45,10 @@ app.use(
       saveUninitialized: false,
       store: sessionStore,
       cookie: {
-        secure: process.env.NODE_ENV === 'development',
-        sameSite: process.env.NODE_ENV === 'development' ? 'none' : 'lax', // Strict절대 타 사이트에서는 쿠키 안 보냄 (로그인 유지 안 됨) Lax기본값. GET 요청 등 안전한 요청에는 쿠키 허용None완전 허용. 모든 cross-site 요청에 쿠키 보냄 (이 경우 secure: true 필수)
+        secure: process.env.NODE_ENV === 'production', // 프로덕션 환경에서는 true로 설정해야 함
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Strict절대 타 사이트에서는 쿠키 안 보냄 (로그인 유지 안 됨) Lax기본값. GET 요청 등 안전한 요청에는 쿠키 허용None완전 허용. 모든 cross-site 요청에 쿠키 보냄 (이 경우 secure: true 필수)
 
-        httpOnly: false,
+        httpOnly: true,
         maxAge: 1000 * 60 * 60      }
     })
 );
