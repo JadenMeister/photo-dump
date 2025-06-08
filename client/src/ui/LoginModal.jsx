@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import {SignupForm} from "./SignupForm.jsx";
 import SafeInput from"../components/CommonComps/SafeInput.jsx"
 import { isValidEmail, isValidUsername, isValidPassword } from "../functions/validation.js"; // Assuming you have a utility function for email validation
+import { KakaoBtn, GoogleBtn, NaverBtn, GithubBtn } from 'oauth-btn';
 
 function LoginModal({ onClose, }) {
 
@@ -129,6 +130,16 @@ function LoginModal({ onClose, }) {
                       Join us
                     </button>
                   </form>
+                  <div className="flex mt-10">
+
+                    <KakaoBtn
+                        clientId={import.meta.env.VITE_KAKAO_CLIENT_ID}
+                        redirectUri={import.meta.env.VITE_KAKAO_REDIRECT_URI}
+                        shape="circle"
+                    />
+                  <GoogleBtn shape="circle" />
+                  <NaverBtn shape="circle" />
+                  </div>
                 </>
             ) : (
                 <SignupForm

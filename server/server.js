@@ -15,7 +15,20 @@ const adminRouter = require("./routes/admin");
 const userRouter = require("./routes/user");
 const uploadRouter = require("./routes/upload");
 const authCheckRouter = require("./routes/authCheck");
+const helmet = require("helmet");
 
+
+app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "https://trusted.cdn.com"],
+    objectSrc: ["'none'"],
+  },
+}));
+app.use(helmet.frameguard({ action: "deny" }));
+app.use(helmet.noSniff());
+app.use(helmet.xssFilter());
 
 
 const sessionStore = new MySQLStore({
@@ -37,7 +50,6 @@ app.use(
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(
     session({
       secret: process.env.SESSION_SECRET,
@@ -45,17 +57,24 @@ app.use(
       saveUninitialized: false,
       store: sessionStore,
       cookie: {
-        secure: process.env.NODE_ENV === 'production', // 프로덕션 환경에서는 true로 설정해야 함
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Strict절대 타 사이트에서는 쿠키 안 보냄 (로그인 유지 안 됨) Lax기본값. GET 요청 등 안전한 요청에는 쿠키 허용None완전 허용. 모든 cross-site 요청에 쿠키 보냄 (이 경우 secure: true 필수)
+        secure: process.env.NODE_ENV === 'development', // 프로덕션 환경에서는 true로 설정해야 함
+        sameSite: process.env.NODE_ENV === 'development' ? 'none' : 'lax', // Strict절대 타 사이트에서는 쿠키 안 보냄 (로그인 유지 안 됨) Lax기본값. GET 요청 등 안전한 요청에는 쿠키 허용None완전 허용. 모든 cross-site 요청에 쿠키 보냄 (이 경우 secure: true 필수)
 
-        httpOnly: true,
+        httpOnly: false,
         maxAge: 1000 * 60 * 60      }
     })
 );
 
+app.use((req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  next();
+});
+
 // JSON 파싱 미들웨어
 app.use((req,res, next) => {
   req.db = pool;
+
   next();
 });
 
