@@ -65,13 +65,13 @@ router.post("/", upload.single("photo"), async (req,res,next)=>{
             return res.status(400).json({msg: "업로드 할 사진이 없습니다."});
         }
 
-        const {country_name, travel_date} = req.body;
+        const {country_name, travel_date, photo_spot} = req.body;
 
         const photoUrl = req.file.location;
 
-        await req.db.execute("INSERT INTO photos (user_id, country_name, travel_date, photo_url) VALUES (?, ?, ?, ?)",
+        await req.db.execute("INSERT INTO photos (user_id, country_name, travel_date, photo_spot, photo_url) VALUES (?, ?, ?, ?,?)",
 
-            [user_id, country_name, travel_date,  photoUrl]
+            [user_id, country_name, travel_date, photo_spot, photoUrl]
         );
 
 

@@ -1,6 +1,8 @@
 // ! for ADMIN
 
 // 총 나라 수 카운트 요청
+import photoTumbnails from "@/components/mapUtil/PhotoTumbnails.jsx";
+
 export const fetchCountryCount = async () =>{
     const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/country-count`,{
         method: "GET",
@@ -122,7 +124,7 @@ export const verifyEmailCode = async (email, code) => {
 
 
 // 업로드 요청
-export const fetchUploads = async ({file,country_name, travelDate}) => {
+export const fetchUploads = async ({file,country_name, travelDate, photo_spot}) => {
 
     console.log("업로드 요청", {file, country_name, travelDate});
 
@@ -130,6 +132,7 @@ export const fetchUploads = async ({file,country_name, travelDate}) => {
     formData.append("photo", file);
     formData.append("country_name", country_name);
     formData.append("travel_date", travelDate);
+    formData.append("photo_spot", photo_spot);
 
     // 디버깅을 위한 콘솔 로그
 
