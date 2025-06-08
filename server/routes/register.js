@@ -10,7 +10,7 @@ const nodemailer = require("nodemailer");
 
 router.post("/send-verfiyCode", async (req, res) => {
     const {email} = req.body;
-    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
     if (!emailRegex.test(email)) {
         return res.status(400).json({ msg: "올바른 이메일 형식이 아닙니다." });
     }
@@ -45,7 +45,7 @@ router.post("/send-verfiyCode", async (req, res) => {
     try{
         await transporter.sendMail(mailOptions);
         console.log("전송된 이메일:", email);
-        res.status(200).json({ msg: "코드전송", code });
+        res.status(200).json({ msg: "인증코드전송", code });
 
 
     } catch (err){
@@ -71,8 +71,7 @@ router.post("/verify-code", async (req, res) => {
         return res.status(400).json({ msg: "인증 코드가 일치하지 않습니다." });
     }
 
-    req.session.emailVerification = true; // 인증 성공 시 세션에 true 저장
-    delete req.session.emailVerification;
+    req.session.emailVerification = { verified: true, email };
     return res.status(200).json({ msg: "인증 성공" });
 })
 
@@ -103,9 +102,9 @@ router.post("/", async (req, res) => {
 
         const [emails] = await pool.execute(
             "SELECT * FROM users WHERE email = ?",
-            [emails]
+            [email]
         )
-        if (email.length > 0) {
+        if (emails.length > 0) {
             return res.status(400).json({ msg: "이미 존재하는 이메일입니다." });
         }
 
