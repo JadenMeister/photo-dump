@@ -46,10 +46,11 @@ export default function UserUploadChart() {
   }, []);
 
   return (
-      <div className="w-108 h-170.25 flex flex-col items-center justify-center bg-[#F5F5F5] hover:scale-102 transition-all duration-300 shadow-lg">
-        <h2 className="text-xl font-semibold mb-4 text-center">업로드 비율</h2>
+      <div className="w-[800px] lg:w-108 h-170.25 flex flex-col items-center justify-center bg-[#F5F5F5] hover:scale-102 transition-all duration-300 shadow-lg">
 
-        <ResponsiveContainer width="60%" height="60%">
+      <h2 className="text-xl font-semibold mb-4 text-center">업로드 비율</h2>
+
+        <ResponsiveContainer width="100%" height="60%">
           <PieChart>
             <Pie
                 data={data}

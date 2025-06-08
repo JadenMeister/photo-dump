@@ -9,7 +9,9 @@ function LoginModal({ onClose, }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    email: ""
+    email: "",
+    passwordCheck: "",
+    emailVerified: false,
   });
   const [error, setError] = useState("");
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
@@ -27,7 +29,7 @@ function LoginModal({ onClose, }) {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/login`, {
+      const response = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/login`, {
         credentials: "include",
         method: "POST",
         headers: {
@@ -123,6 +125,7 @@ function LoginModal({ onClose, }) {
                 </>
             ) : (
                 <SignupForm
+
                     formData={formData}
                     setFormData={setFormData}
                     setIsSignupModalOpen={setIsSignupModalOpen}

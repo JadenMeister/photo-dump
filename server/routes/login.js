@@ -51,7 +51,6 @@ router.post("/", async (req, res) => {
         [user.role_id]
     )
     const roleName = roles[0].name;
-    console.log("사용자 정보:", roleName); // 디버깅용 로그
 
     // 권한 가져오기
 
@@ -74,7 +73,7 @@ router.post("/", async (req, res) => {
       role: roleName,
       permissions: permissions,
     };
-    console.log("세션에 저장된 사용자 정보:", req.session.user); // 디버깅용 로그
+
 
 
 

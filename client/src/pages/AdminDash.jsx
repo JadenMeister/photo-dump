@@ -12,25 +12,28 @@ const AdminDash = () => {
 
 const [countries, setCountries] = useState([]);
 const [userData, setUserData] = useState([]);
+const [loading, setLoading] = useState(true);
 const navigate = useNavigate();
 
 const {isLogin, user} = useAuth();
 
     useEffect(() => {
-        if(isLogin === null) return;
-        if (isLogin && user) {
-            if (user.role !== "admin" || user.role.length === 0) {
+        const adminCheck = async () => {
+            try {
+                const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/session`, { credentials: "include" });
+                if (!res.ok) throw new Error("권한 없음");
+                const data = await res.json();
+                if (!data.user || data.user.role !== "admin") throw new Error("권한 없음");
+            } catch {
                 alert("관리자 권한이 없습니다.");
-                navigate("/");
+                navigate("/", { replace: true });
             }
-        } else if (!isLogin || user.role.length === 0) {
-            alert("로그인이 필요합니다.");
-            navigate("/");
-        }
-    }, [isLogin, user, navigate]);
+        };
+        adminCheck();
+    }, [navigate]);
 
 
-return(
+    return(
     <div className="w-full h-screen flex">
         <AdminSide/>
 

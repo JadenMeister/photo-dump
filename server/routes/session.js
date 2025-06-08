@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
     if (req.session.user) {
-        res.json({
+        res.status(200).json({
             loggedIn: true,
-            user: req.session.user.username
+            user: req.session.user
         });
     } else{
         res.status(401).json({

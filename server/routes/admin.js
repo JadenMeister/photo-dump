@@ -19,7 +19,7 @@ router.get("/users", adminAuth ,async  (req, res) => {
         const [users] = await req.db.execute("SELECT u.id, u.username, u.email, r.name AS role,  u.created_at FROM users u " +
             "LEFT JOIN roles r ON u.role_id = r.id");
         res.status(200).json(users);
-        console.log("유저 데이터", users); //디버깅용
+
         
     } catch(err){
         console.error("유저 데이터 불러오기 실패",err);
