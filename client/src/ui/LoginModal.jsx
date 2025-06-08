@@ -37,7 +37,7 @@ function LoginModal({ onClose, }) {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URLSafeInput}/api/login`, {
+      const response = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/login`, {
         credentials: "include",
         method: "POST",
         headers: {
@@ -135,7 +135,7 @@ function LoginModal({ onClose, }) {
                     <KakaoBtn
                         clientId={import.meta.env.VITE_KAKAO_CLIENT_ID}
                         redirectUri={import.meta.env.VITE_KAKAO_REDIRECT_URI}
-                        shape="circle"
+                         shape="circle"
                     />
                   <GoogleBtn shape="circle" />
                   <NaverBtn shape="circle" />
