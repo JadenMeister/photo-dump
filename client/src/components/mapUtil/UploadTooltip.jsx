@@ -30,7 +30,7 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
         userId: user.id,
         country_name: selectedCountry,
         travelDate: travelDate,
-        photoSpot: photoSpot
+        photo_spot: photoSpot
     })
       .then((res) => {
           if (res.ok) {

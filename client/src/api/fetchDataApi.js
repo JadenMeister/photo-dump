@@ -1,7 +1,6 @@
 // ! for ADMIN
 
 // 총 나라 수 카운트 요청
-import photoTumbnails from "@/components/mapUtil/PhotoTumbnails.jsx";
 
 export const fetchCountryCount = async () =>{
     const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/users/country-count`,{
