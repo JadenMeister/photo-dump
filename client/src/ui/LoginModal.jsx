@@ -9,7 +9,9 @@ function LoginModal({ onClose, }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    email: ""
+    email: "",
+    passwordCheck: "",
+    emailVerified: false,
   });
   const [error, setError] = useState("");
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
@@ -123,6 +125,7 @@ function LoginModal({ onClose, }) {
                 </>
             ) : (
                 <SignupForm
+
                     formData={formData}
                     setFormData={setFormData}
                     setIsSignupModalOpen={setIsSignupModalOpen}
