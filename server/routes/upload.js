@@ -4,8 +4,9 @@ const express = require("express");
 const multer = require("multer");
 const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
-const {S3Client} = require("@aws-sdk/client-s3");
-const {DeleteObjectCommand} = require("@aws-sdk/client-s3");
+const {S3Client, PutObjectCommand, DeleteObjectCommand} = require("@aws-sdk/client-s3");
+
+const sharp = require("sharp");
 require("dotenv").config();
 
 
@@ -19,33 +20,22 @@ const s3 = new S3Client({
     }
 });
 
-//multer 설정
-const upload = multer ({
-    storage: multerS3({
-        s3: s3,
-        bucket: process.env.AWS_S3_BUCKET,
-        acl: "public-read",
-        contentType: multerS3.AUTO_CONTENT_TYPE,
-        key: function (req, file, cb) {
-            const filename = `${Date.now()}_${file.originalname}`;
-            cb(null, `uploads/${filename}`);
-        },
-    }),
+const ALLOWED_MIMETYPES = ["image/jpeg", "image/png", "image/gif", "image/jpg", "image/webp"];
 
+const upload = multer({
 
-
-
-    // 파일업로드 취약점 방지 로직
-    limits: {fileSize: 5* 1024 * 1024}, // 5MB
+    // 파일업로드 취약점 방지
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB 제한
     fileFilter: (req, file, cb) => {
-        const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg", "image/webp"];
-        if(allowedTypes.includes(file.mimetype)){
+
+        if (ALLOWED_MIMETYPES.includes(file.mimetype)) {
             cb(null, true);
-        } else{
+        } else {
             cb(new Error("허용되지 않는 파일 형식입니다."), false);
         }
-    }
-})
+    },
+});
 
 
 
@@ -54,20 +44,35 @@ const upload = multer ({
 
 router.post("/", upload.single("photo"), async (req,res,next)=>{
     const user_id = req.session.user?.id;
-    console.log("받은파일", req.file);
-    console.log("받은바디", req.body);
+    let fileName =""
     if(!user_id){
         console.log("세선없음", req.session);
     }
 
+    if (!user_id) return res.status(401).json({ msg: "로그인 필요" });
+    if (!req.file) return res.status(400).json({ msg: "업로드할 사진이 없습니다." });
+
     try{
-        if(!req.file){
-            return res.status(400).json({msg: "업로드 할 사진이 없습니다."});
+
+
+        const webpBuffer = await sharp(req.file.buffer).webp({ quality: 80 }).toBuffer();
+        const baseName = req.file.originalname.split('.').slice(0, -1).join('.');
+        fileName = `${baseName}_${Date.now()}.webp`; // 파일 이름에 타임스탬프 추가
+
+        const uploadParams = {
+            Bucket: process.env.AWS_S3_BUCKET,
+            Key: `uploads/${fileName}`,
+            Body: webpBuffer,
+            ContentType: "image/webp",
+            ACL: "public-read"
         }
+        await s3.send(new PutObjectCommand(uploadParams));
+
+        const photoUrl = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/uploads/${fileName}`;
+
 
         const {country_name, travel_date, photo_spot} = req.body;
 
-        const photoUrl = req.file.location;
 
         await req.db.execute("INSERT INTO photos (user_id, country_name, travel_date, photo_spot, photo_url) VALUES (?, ?, ?, ?,?)",
 
@@ -82,9 +87,21 @@ router.post("/", upload.single("photo"), async (req,res,next)=>{
 
 
     } catch (err){
-        console.error("파일 업로드 실패", err);
-        res.status(500).json({ msg: "파일 업로드 실패" });
+        console.error("사진 업로드 실패", err);
+        if (fileName) {
+            try {
+                await s3.send(new DeleteObjectCommand({
+                    Bucket: process.env.AWS_S3_BUCKET,
+                    Key: `uploads/${fileName}`
+                }));
+            } catch (s3Err) {
+                console.error("S3 삭제 실패:", s3Err);
+            }
+        }
+
+        return res.status(500).json({ msg: "파일 업로드 실패" }); // ✅ 한 번만 응답
     }
+
 })
 
 
