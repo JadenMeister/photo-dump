@@ -13,7 +13,7 @@ const Content = ({ onExploreClick }) => {
 
     const handleToMap = async () => {
         try {
-            const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URLSafeInput}/api/session`, {
+            const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/session`, {
                 method: "GET",
                 credentials: "include"
             });
