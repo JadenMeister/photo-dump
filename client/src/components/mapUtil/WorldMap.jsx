@@ -58,31 +58,6 @@ const WorldMap = () => {
   }
 
 
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URLSafeInput}/api/session`, {
-          credentials: "include"
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user);
-          setIsLogin(true);
-        } else {
-          alert("로그인이 필요합니다.");
-          handleLogout(); // AuthContext의 함수 사용
-          Navigate("/");
-        }
-      } catch (err) {
-        console.error("세션 확인 실패:", err);
-        handleLogout();
-        Navigate("/");
-      }
-    };
-
-    checkSession();
-  }, []);
 
   const onEachCountry = (feature, layer) => {
     const name = feature.properties.name;
