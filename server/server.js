@@ -15,6 +15,7 @@ const adminRouter = require("./routes/admin");
 const userRouter = require("./routes/user");
 const uploadRouter = require("./routes/upload");
 const authCheckRouter = require("./routes/authCheck");
+const oauthRouter = require("./routes/oauth");
 const helmet = require("helmet");
 
 
@@ -24,6 +25,7 @@ app.use(helmet.contentSecurityPolicy({
     defaultSrc: ["'self'"],
     scriptSrc: ["'self'", "https://trusted.cdn.com"],
     objectSrc: ["'none'"],
+    styleSrc: ["'unsafe-inline'", "'self'"],
   },
 }));
 app.use(helmet.frameguard({ action: "deny" }));
@@ -80,7 +82,6 @@ app.use((req,res, next) => {
 
 
 
-
 // 라우트
 app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
@@ -90,6 +91,7 @@ app.use("/api/admin",adminRouter );
 app.use("/api/upload", uploadRouter);
 app.use("/api/users", userRouter);
 app.use("/api/authCheck", authCheckRouter);
+app.use("/api/oauth", oauthRouter);
 
 
 
