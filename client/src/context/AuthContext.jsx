@@ -6,6 +6,14 @@ export const AuthProvider = ({ children }) => {
     const [isLogin, setIsLogin] = useState(null); // null: 초기 로딩 중
     const [user, setUser] = useState(null);
 
+    useEffect(() => {
+        if (user) {
+            sessionStorage.setItem("username", user.username);
+            sessionStorage.setItem("role", user.role);
+            sessionStorage.setItem("permissions", JSON.stringify(user.permissions));
+        }
+    }, [user]);
+
     const handleLogout = async () => {
         try {
             await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/logout`, {
