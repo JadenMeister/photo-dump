@@ -1,13 +1,9 @@
-import "../styles/Content.css"
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import {useAuth} from "../context/AuthContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
+import "../styles/Content.css";
 
-
-
-
-
-const Content = ({ onExploreClick }) => {
+const Content = ({ onExploreClick, animationComplete }) => {
     const navigate = useNavigate();
     const { isLogin } = useAuth();
 
@@ -21,35 +17,42 @@ const Content = ({ onExploreClick }) => {
             if (res.ok) {
                 navigate("/map");
             } else {
-                alert("세션이 만료되어 다시 로그인해주세요.");
+
+                console.warn("세션이 만료되어 다시 로그인해주세요.");
                 window.location.reload();
             }
         } catch (err) {
             console.error("세션 확인 실패:", err);
-            alert("오류가 발생했습니다.");
+            console.error("오류가 발생했습니다.");
         }
     };
 
-
     return (
-        <div className="items-center flex h-[100%] left-0 absolute top-0 w-full z-3 ">
-            <div className="text-white left-[10%] max-w-[40%] relative">
+
+        <div className="relative top-0 left-0 w-full h-full z-70 flexmd:items-startmax-md:items-center max-md:justify-center">
+
+            <div className="relative text-whitemd:left-[10%] md:max-w-[40%] md:pt-16max-md:max-w-[85%] max-md:text-center max-md:px-4">
                 <h1
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-snug mb-4 text-white"
-                  style={{textShadow: "0 0 10px #0064ffb3"}}
+
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4 text-white"
+                    style={{textShadow: "0 0 10px #0064ffb3"}}
                 >
-                    Brighten up to Your Fragments
+                    Save the Memories Fragments
                 </h1>
-                <p className="text-[#e8e8e8] text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6"
-                style={{textShadow:"0 0 10px #0c7df5b3"}}>
-                    Share your travel memories and connect with explorers around the world
+                <p className="text-[#e8e8e8] text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6" style={{textShadow:"0 0 10px #0c7df5b3"}}>
+                    Welcome to the Photodump
+                </p>
+                <p className="text-[#e8e8e8] text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6" style={{textShadow:"0 0 10px #0c7df5b3"}}>
+                    Share your travel memories and share your own spots
                 </p>
 
+                <button
 
-                <button className="space-cta-button" onClick={ isLogin ? handleToMap : onExploreClick} >
+                    className="space-cta-button"
+                    onClick={ isLogin ? handleToMap : onExploreClick}
+                >
                     { isLogin ? "Go to your map" : "Start Explore" }
                 </button>
-
             </div>
         </div>
     );

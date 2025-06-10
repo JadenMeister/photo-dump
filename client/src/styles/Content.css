@@ -1,44 +1,3 @@
-.space-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-}
-
-
-
-
-/* 타이틀 컨테이너 */
-.space-title-container {
-    position: relative;
-    left: 10%;
-    max-width: 40%;
-    color: white;
-}
-
-
-.space-title {
-    font-size: 4rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 10px rgba(0, 100, 255, 0.7);
-    line-height: 1.2;
-}
-
-
-.space-subtitle {
-    color: #e8e8e8;
-    font-size: 1.5rem;
-    opacity: 0.8;
-    margin-bottom: 2rem;
-    text-shadow: 0 0 10px rgba(12, 125, 245, 0.7);
-}
-
-/* CTA 버튼 */
 .space-cta-button {
     background: linear-gradient(45deg,#071b4c, #0066ff, #213864, #3c55d5, #071b4c);
     color: white;
@@ -55,5 +14,3 @@
     transform: translateY(-3px);
     box-shadow: 0 0 20px rgba(0, 150, 255, 0.7);
 }
-
-
