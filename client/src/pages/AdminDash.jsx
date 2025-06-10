@@ -20,13 +20,13 @@ const {isLogin, user} = useAuth();
     useEffect(() => {
         const adminCheck = async () => {
             try {
-                const res = await fetch(`${import.meta.env.VITE_TEST_API_BASE_URL}/api/session`, { credentials: "include" });
+                const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/session`, { credentials: "include" });
                 if (!res.ok) throw new Error("권한 없음");
                 const data = await res.json();
                 if (!data.user || data.user.role !== "admin") throw new Error("권한 없음");
             } catch {
                 alert("관리자 권한이 없습니다.");
-                console.log("fetch url", `${import.meta.env.VITE_TEST_API_BASE_URL}/api/session`);
+                console.log("fetch url", `${import.meta.env.VITE_API_BASE_URL}/api/session`);
                 navigate("/", { replace: true });
             }
         };

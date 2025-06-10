@@ -84,7 +84,7 @@ router.get("/kakao/callback", async (req, res) => {
 
     req.session.save(() => {
       console.log("카카오세션", req.session.user);
-      res.redirect(`${process.env.TEST_CLIENT_BASE_URL}/map`);
+      res.redirect(`${process.env.CLIENT_BASE_URL}/map`);
     });
 
   } catch (err) {
