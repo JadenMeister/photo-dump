@@ -19,9 +19,24 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
     const [verificationSent, setVerificationSent] = useState(false);
     const [verificationCode, setVerificationCode] = useState("");
     const [emailVerified, setEmailVerified] = useState(false);
-
     const [timer, setTimer] = useState(0);
     const [cooldown, setCooldown] = useState(false);
+
+  const blockKorean = (value, field) => {
+    if (/[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(value)) {
+      setInputError(prev => ({ ...prev, [field]: "영어와 숫자만 입력할 수 있습니다." }));
+      return value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g, "");
+    } else {
+      setInputError(prev => ({ ...prev, [field]: "" }));
+      return value;
+    }
+  };
+  // username
+  const handleUsernameChange = (e) => {
+    const value = blockKorean(e.target.value, "username");
+    setFormData({ ...formData, username: value });
+  };
+
 
 
   useEffect(() => {
@@ -137,11 +152,13 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
             type="text"
             placeholder="your username"
             value={formData.username}
-            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+            onChange={handleUsernameChange}
             className="border border-gray-300 text-white rounded-md p-2"
             validate={isValidUsername}
         />
-
+        {inputError.username && (
+            <div className="text-red-400 mt-1 text-sm">{inputError.username}</div>
+        )}
         <div className="flex items-center justify-between w-full">
           <SafeInput
               type="text"
