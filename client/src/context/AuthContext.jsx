@@ -5,6 +5,16 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [isLogin, setIsLogin] = useState(null); // null: 초기 로딩 중
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+// 세션 확인 로직
+    useEffect(() => {
+        const checkSession = async () => {
+            // ... 세션 확인 로직
+            setLoading(false);
+        };
+        checkSession();
+    }, []);
 
     useEffect(() => {
         if (user) {

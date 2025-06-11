@@ -37,10 +37,11 @@ const Content = ({ onExploreClick, animationComplete }) => {
                     className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4 text-white"
                     style={{textShadow: "0 0 10px #0064ffb3"}}
                 >
-                    Save the Memories Fragments
+                    Project Photodump
+
                 </h1>
                 <p className="text-[#e8e8e8] text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6" style={{textShadow:"0 0 10px #0c7df5b3"}}>
-                    Welcome to the Photodump
+                    Save the Memories Fragments
                 </p>
                 <p className="text-[#e8e8e8] text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6" style={{textShadow:"0 0 10px #0c7df5b3"}}>
                     Share your travel memories and share your own spots

@@ -12,12 +12,17 @@ import LogOut from "../CommonComps/LogOut.jsx";
 
 const WorldMap = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const {user,isLogin, setIsLogin, setUser,} = useAuth();
+  const {user,isLogin, setIsLogin, setUser,loading} = useAuth();
 
   const Navigate = useNavigate() ;
   const [geoData, setGeoData] = useState(null);
   const [photos, setPhotos] = useState([]);
 
+
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
 
   useEffect(() => {
