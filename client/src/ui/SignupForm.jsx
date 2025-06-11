@@ -21,6 +21,8 @@ export function SignupForm({ formData, setFormData, setIsSignupModalOpen }) {
     const [emailVerified, setEmailVerified] = useState(false);
     const [timer, setTimer] = useState(0);
     const [cooldown, setCooldown] = useState(false);
+  const [inputError, setInputError] = useState({ username: "" });
+
 
   const blockKorean = (value, field) => {
     if (/[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(value)) {
