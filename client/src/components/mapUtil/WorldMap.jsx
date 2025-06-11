@@ -20,6 +20,23 @@ const WorldMap = () => {
   const [photos, setPhotos] = useState([]);
 
 
+  if (isLogin === null) {
+    // 세션 체크 중
+    return <div>로딩중...</div>
+  }
+  if (!isLogin) {
+
+    return null;
+  }
+
+
+  useEffect(() => {
+    if (!isLogin) {
+      alert("로그인이 필요합니다.");
+      Navigate("/");
+      return;
+    }
+  }, []);
 
 
 
