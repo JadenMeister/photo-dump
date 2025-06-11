@@ -60,6 +60,7 @@ app.use(
       saveUninitialized: false,
       store: sessionStore,
       cookie: {
+        domain: ".photodump.site",
         secure: true,
         sameSite: "none",
         httpOnly: true,
