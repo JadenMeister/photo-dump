@@ -18,17 +18,24 @@ const WorldMap = () => {
   const Navigate = useNavigate() ;
   const [geoData, setGeoData] = useState(null);
   const [photos, setPhotos] = useState([]);
-
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isLogin) {
+    if (isLogin !== undefined) {
+      setLoading(false);
+    }
+  }, [isLogin]);
+
+  useEffect(() => {
+    if (!loading && !isLogin) {
       alert("로그인이 필요합니다.");
       Navigate("/");
-      return;
     }
-  }, []);
+  }, [loading, isLogin]);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
 
   useEffect(() => {

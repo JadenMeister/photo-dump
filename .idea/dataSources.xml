@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="aws" uuid="8ce597e6-5912-4337-8d87-3c331eb3ab33">
+    <data-source source="LOCAL" name="photodump@jadenmeister.cxisc86mun3q.ap-northeast-2.rds.amazonaws.com [2]" uuid="c8ba1a75-0ff1-41c0-9323-99f162104b58">
+      <driver-ref>mysql_aurora_aws</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>software.amazon.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:aws-wrapper:mysql://jadenmeister.cxisc86mun3q.ap-northeast-2.rds.amazonaws.com:3306/photodump</jdbc-url>
+      <jdbc-driver>software.aws.rds.jdbc.mysql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql:aws://jadenmeister.cxisc86mun3q.ap-northeast-2.rds.amazonaws.com:3306/photodump</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
