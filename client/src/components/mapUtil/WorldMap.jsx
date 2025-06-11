@@ -5,7 +5,7 @@ import {MapContainer, TileLayer,  Marker, useMapEvents, GeoJSON,useMap} from "re
 import {UploadTooltip} from "./UploadTooltip";
 import {fetchUserPhotos} from "@/api/fetchDataApi.js";
 import {countryCoordinates} from "./CountryCordinates.jsx"
-import PhotoThumbnails from "./PhotoThumbnails.jsx";
+import PhotoThumbnails from "./PhotoTumbnails.jsx";
 
 
 

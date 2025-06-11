@@ -1,5 +1,4 @@
-import React, { useState, useContext, createContext, useEffect } from "react";
-import {Navigate} from "react-router-dom";
+import { useState, useContext, createContext, useEffect } from "react";
 
 const AuthContext = createContext();
 
@@ -14,26 +13,6 @@ export const AuthProvider = ({ children }) => {
             sessionStorage.setItem("permissions", JSON.stringify(user.permissions));
         }
     }, [user]);
-
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        if (isLogin !== undefined) {
-            setLoading(false);
-        }
-    }, [isLogin]);
-
-    useEffect(() => {
-        if (!loading && !isLogin) {
-            alert("로그인이 필요합니다.");
-            window.location.href = "/"; // 로그인 페이지로 리다이렉트
-        }
-    }, [loading, isLogin]);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
 
     const handleLogout = async () => {
         try {
