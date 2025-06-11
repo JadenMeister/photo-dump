@@ -11,6 +11,7 @@ router.post("/", (req, res) => {
             console.error("세션 삭제 실패:", err);
             res.status(500).json({ msg: "로그아웃실패" });
         } else {
+            res.sessionStorage.clear()
             res.clearCookie('connect.sid', {
                 path: '/',
                 secure: false,

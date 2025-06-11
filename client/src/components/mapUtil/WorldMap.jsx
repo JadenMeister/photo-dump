@@ -6,15 +6,14 @@ import {UploadTooltip} from "./UploadTooltip";
 import {fetchUserPhotos} from "@/api/fetchDataApi.js";
 import {countryCoordinates} from "./CountryCordinates.jsx"
 import PhotoThumbnails from "./PhotoThumbnails.jsx";
-
-
-
+import LogOut from "../CommonComps/LogOut.jsx";
 
 
 
 const WorldMap = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const {user,isLogin, setIsLogin, handleLogout, setUser,} = useAuth();
+  const {user,isLogin, setIsLogin, setUser,} = useAuth();
+
   const Navigate = useNavigate() ;
   const [geoData, setGeoData] = useState(null);
   const [photos, setPhotos] = useState([]);
@@ -49,11 +48,11 @@ const WorldMap = () => {
     Navigate("/mypage");
   }
 
-  const logout = () => {
-    alert(`로그아웃 되었습니다. ${user.username}님`);
-    handleLogout();
-    Navigate("/");
-  }
+  // const logout = () => {
+  //   alert(`로그아웃 되었습니다. ${user.username}님`);
+  //   handleLogout();
+  //   Navigate("/");
+  // }
 
 
 
@@ -103,8 +102,8 @@ const WorldMap = () => {
             <h2 className="text-lg font-semibold text-gray-800 mb-2">환영합니다, {user?.username}님!</h2>
             <p className="text-sm text-gray-900">지도에서 원하는 나라를 클릭하여 사진을 업로드하세요.</p>
 
-            <button className="mt-4 w-32 px-4 py-2 bg-red-950 text-white rounded hover:bg-red-700 mr-5"
-                    onClick={logout}>Logout
+            <button className="mt-4 w-32 px-4 py-2 bg-red-950 text-white rounded hover:bg-red-700 mr-5">
+              <LogOut/>
             </button>
 
             <button className="mt-4 w-32 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
