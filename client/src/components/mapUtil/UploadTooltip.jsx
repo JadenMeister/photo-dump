@@ -80,7 +80,7 @@ export function UploadTooltip({selectedCountry, setSelectedCountry }) {
                 onChange={(e) => setTravelDate(e.target.value)}
                 className="block w-full border border-gray-300 rounded px-3 py-2 mb-4" />
 
-            <SafeInput type="text" placeholder="photo spot: ex: Dumbo, Brooklyn" value={photoSpot} onChange={(e)=>setPhotoSpot((e.target.value))} className="block w-full border border-gray-300 rounded px-3 py-2 mb-4" />
+            <SafeInput type="text" placeholder="photo spot: ex: Dumbo, Brooklyn" maxLength={50} value={photoSpot} onChange={(e)=>setPhotoSpot((e.target.value))} className="block w-full border border-gray-300 rounded px-3 py-2 mb-4" />
 
             <button
                 className="w-full px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"

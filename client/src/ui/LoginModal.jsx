@@ -107,6 +107,7 @@ function LoginModal({ onClose, }) {
                         value={formData.username}
                         onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                         className="border border-gray-300 rounded-md p-3 w-full text-white"
+                        maxLength={20}
                     />
                     <SafeInput
                         type="password"
@@ -114,6 +115,7 @@ function LoginModal({ onClose, }) {
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         className="border border-gray-300 rounded-md p-3 w-full text-white"
+                        maxLength={20}
                     />
                     {error && <div className="text-red-500 text-sm text-center">{error}</div>}
                     <button
