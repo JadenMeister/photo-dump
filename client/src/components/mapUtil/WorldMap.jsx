@@ -53,12 +53,6 @@ const WorldMap = () => {
     Navigate("/mypage");
   }
 
-  // const logout = () => {
-  //   alert(`로그아웃 되었습니다. ${user.username}님`);
-  //   handleLogout();
-  //   Navigate("/");
-  // }
-
 
 
   const onEachCountry = (feature, layer) => {

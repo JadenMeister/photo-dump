@@ -40,8 +40,6 @@ export default function UserManage() {
             try{
                 const data = await fetchUsers();
                 setUserData(data);
-                console.log("유저 데이터", data); //디버깅용
-                console.log("유저 데이터", userData); //디버깅용
             } catch(err){
                 console.error("유저 데이터 가져오기 실패", err);
             } finally {
